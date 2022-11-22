@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/debt.css">
+    <%- include('../../header',{title:"Báo cáo | Công nợ"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                  <label>Hiển thị</label>
+                  <select onchange="getData()" id="selectLimit">
+                    <option value="<%- limit %>"><%- limit %></option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+                <div  class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                  <label>Tìm kiếm</label>
+                  <input  id="keyFind" placeholder="Mã phiếu , tên nhà cung cấp hoặc tên sản phẩm . . ." value="<%- key %>" class="form-control">
+                </div>
+                <div class="col-3 col-md-3 col-lg-2 col-xl-2">
+                    <label>Tổng nợ</label>
+                    <select id="selectDebt">
+                        <option value="">Tất cả</option>
+                        <option value="gt"> &gt; 0</option>
+                        <option value="ne"> != 0</option>
+                        <option value="lt">&lt;  0</option>
+                    </select>
+                    
+                </div>
+                <div class="col col-md-2  col-lg-4 col-xl-1 relative">
+                  <i onclick="showPopup('popupAdd',true)" class="fas fa-plus btn btn-success"></i>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                  <table class="table table-hover" id="table-main">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Tên khách hàng</th>                     
+                        <th>Số điện thoại</th>                     
+                        <th>Tổng nợ</th>
+                        <th>Chi tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyTable">
+                      
+                    </tbody>
+                </table>
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupEdit" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chi tiết phiếu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                     <table class="table">
+                      <tr>
+                        <th>Khách hàng</th>
+                        <th></th>
+                      </tr>
+                     
+                      <tr>
+                        <th>Ngày tạo</th>
+                        <th></th>
+                      </tr>
+                      <tr>
+                        <th>Người tạo</th>
+                        <th></th>
+                      </tr>
+                      <tr>
+                        <th>Hình thức thanh toán</th>
+                        <th>
+                           <select name="select_fundbook"></select>
+                        </th>
+                      </tr>
+                      <tr>
+                       <th>Nội dung thu/chi</th>
+                       <th>
+                          <select name="select_accounting"></select>
+                       </th>
+                     </tr>
+                      <tr>
+                        <th>Tổng tiền</th>
+                        <th><input class="form-control number" oninput="inputNumber()" value="0" placeholder="Nhập tổng thu"></th>
+                      </tr>
+                      <tr>
+                        <th>Ghi chú</th>
+                        <th>
+                          <input class="form-control" placeholder="Nhập ghi chú">
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Nguồn tạo</th>
+                        <th></th>
+                      </tr>
+                     </table>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" id="btnSaveEdit" class="btn btn-danger" >Lưu thay đổi</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!-- ====================================== -->
+        <div id="popupAdd" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Nhập công nợ đầu kỳ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                     <table class="table">
+                      <tr>
+                        <th>Khách hàng</th>
+                        <th>
+                          <div id="div_find_supplier" class="relative">
+                            <input placeholder="Nhập tên nhà cung cấp hoặc số điện thoại" type="text" oninput="findSupplier()" class="form-control">
+                            <div class="spinner-border text-primary" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                            <div onscroll="loadmoreSupplier()" id="div_list_supplier"></div>
+                          </div>
+                        </th>
+                      </tr>
+                      <tr>
+                          <th>Thông tin khách hàng</th>
+                          <th><input name="info" disabled placeholder="số điện thoại và địa chỉ" type="text" class="form-control"></th>
+                      </tr>
+                      <tr>
+                        <th>Tổng nợ</th>
+                        <th>
+                           <input type="text" class="number form-control" name="debt_money" placeholder="Nhập tiền" value="0" oninput="inputNumber()">
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Kiểu nợ</th>
+                        <th class="flex">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" value="export" id="export">
+                                <label class="form-check-label" for="export">
+                                  Phải thu
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" value="import" id="import" checked>
+                                <label class="form-check-label" for="import">
+                                  Phải chi
+                                </label>
+                              </div>
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Ghi chú</th>
+                        <th>
+                          <input class="form-control" name="note" type="text" placeholder="Nhập ghi chú">
+                        </th>
+                      </tr>                    
+                     </table>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" onclick="confirmSave()" class="btn btn-danger" >Lưu</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!--  -->
+        <div id="popupSelectTime" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chọn ngày báo cáo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <label>Từ ngày</label>
+                          <input class="form-control" type="date">
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <label>Đến ngày</label>
+                          <input class="form-control" type="date">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-danger" >Báo cáo</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!--  -->
+        <div id="popupDetail" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chi tiết công nợ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body" style="overflow: auto;">
+                    
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!--  -->
+        <%- include('../../footer') %>
+        
+        <script>
+              var limit = '<%- limit %>'
+              var page = '<%- page %>'
+              var key = '<%- key %>'
+  
+              var debt = '<% if(locals.debt){ %><%- debt %> <% }else { %><%} %>'
+     
+            $("#selectDebt").val(debt).change()
+            $("#selectDebt").attr("onchange",`getData()`)
+        </script>
+            <script src="/assets/dataTable/vfs_fonts.js"></script>
+            <script src="/assets/dataTable/pdfmake.min.js"></script>
+            <script src="/assets/dataTable/jszip.min.js"></script>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+            <script src="/assets/dataTable/buttons.print.min.js"></script>
+            <script src="/assets/dataTable/buttons.html5.min.js"></script>
+            <script src="/js/ReportsManagement/Debt/index.js"></script>
+          </body>
+
+</html>

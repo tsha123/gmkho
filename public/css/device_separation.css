@@ -1,0 +1,45 @@
+#headerFunction div:first-child div:nth-child(4){
+    position: relative;
+}
+
+#headerFunction div:first-child div:nth-child(4) button{
+    position: absolute;
+    top: 31px;
+}
+
+
+#div_output , #div_input{
+    /* padding: 5px;
+    border: 1px dotted; */
+    max-height: 640px;
+    overflow: auto;
+    height: 650px;
+}
+
+#div_input tbody tr td:nth-child(2),
+#div_output tbody tr td:nth-child(2)
+{
+    position: relative;
+}
+
+#div_input tbody tr td:nth-child(2) .spinner-border,
+#div_output tbody tr td:nth-child(2) .spinner-border
+{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 16px;
+    right: 9px;
+    display: none;
+}
+#div_output tbody tr td:nth-child(2) div:last-child{
+    position: absolute;
+    background-color: antiquewhite;
+    max-height: 150px;
+    overflow: auto;
+    width: max-content;
+    z-index: 100;
+}
+#detail_output , #detail_input{
+    margin-top: 10px;
+}

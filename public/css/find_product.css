@@ -1,0 +1,9 @@
+.div-input{
+    position: relative;
+}
+
+.div-input i{
+    position: absolute;
+    top: 34px;
+    right: 17px;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/branch.css">
+    <%- include('../../header',{title:"Quản lý phân quyền"}) %>
+
+        <div class="page-content">
+           
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm mới nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Popup -->
+        <div id="popupDetailPermission" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chi tiết quyền</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                 <div class="row">
+                   <div id="divPer1" class="col-12 col-md-6"></div>
+                   <div id="divPer2" class="col-12 col-md-6"></div>
+                 </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          <!-- End Popup -->
+          <!-- popup chỉnh sửa chức danh -->
+          <div id="popupEditGroup" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog popupGroup" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Chỉnh sửa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12">
+                            <label>Tên chức danh</label>
+                            <input autocomplete="off" class="form-control" id="edit_employee_group_name" placeholder="Nhập tên chức danh" >
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12">
+                          <label>Bộ phận</label>
+                          <select name="selectSuperGroup" id="editSuperGroup"></select>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="btnEditGroup" class="btn btn-primary">Lưu chỉnh sửa</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+            <script src="/js/SystemsManagement/Permission/index.js"></script>
+            </body>
+
+</html>

@@ -1,0 +1,75 @@
+#popupEdit .div-customer table b {
+    color: red;
+}
+.header-table .row div:last-child{
+    position: relative;
+}
+
+.header-table .row div:last-child button{
+    position: absolute;
+    top: 22px;
+}
+
+#div_find_supplier .spinner-border{
+    position: absolute;
+    top: 30px;
+    width: 17px;
+    height: 17px;
+    right: 4px;
+    display: none;
+}
+
+#popupCreateForm .div-product{
+    margin-top: 10px;
+}
+
+#popupCreateForm .div-product tbody td:first-child{
+    position: relative;
+}
+
+#popupCreateForm .div-product tbody td:first-child .spinner-border{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 23px;
+    right: 16px;
+    display: none;
+}
+
+#popupCreateForm .modal-body .div-product tbody tr td:first-child div:last-child{
+    position: absolute;
+    max-height: 150px;
+    overflow: auto;
+    background-color: aliceblue;
+    z-index: 10;
+}
+#popupCreateForm .div-customer .row div:nth-child(5){
+    position: relative;
+}
+#popupCreateForm .div-customer .row div:nth-child(5) button{
+    position: absolute;
+    top: 22px;
+    right: 13px;
+}
+#popupCreateForm .div-customer .row div:nth-child(6){
+    position: relative;
+}
+#popupCreateForm .div-customer .row div:nth-child(6) button{
+    position: absolute;
+    top: 22px;
+    right: 13px;
+}
+#popupCreateForm .div-customer .row div:first-child div div:last-child{
+    position: absolute;
+    background-color: aliceblue;
+    z-index: 20;
+    max-height: 150px;
+    overflow: auto;
+    
+}
+
+#popupCreateForm .div-customer .row div:first-child div div:last-child b{
+    
+    color: red;
+}
+

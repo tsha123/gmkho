@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="/css/menu.css">
+<link rel="stylesheet" href="/css/imageuploadify.min.css">
+<%- include("../../header",{title:"Quản lý content | Thành phần website"}) %>
+<div class="page-content">
+    <div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="collapseList">
+                <div class="collapseItem">
+                    <div class="btn-collapse" data-toggle="collapse" href="#panelsOpen-One" aria-expanded="false" aria-controls="panelsOpen-One" style="cursor: pointer;">
+                        Website GamingMarket
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="multi-collapse collapse show" id="panelsOpen-One">
+                        <div class="card card-body" id="div_website_component_1">
+                            <ul class="list-group" id="ul_website_component_1">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- ====================================== -->
+<%- include('../../footer') %>
+<script>
+  var page = '<%- page %>'
+</script>
+<script src="/js/ContentsManagement/Website-Component/website-component.js"></script>
+<script>
+    getData()
+</script>
+</body>
+</html>
+<div id="popup_Title" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Tiêu đề web site</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Tiêu đề</label>
+                <input placeholder="Nhập tiêu đề" id="edit_Title" class="form-control">
+                <label>Logo tiêu đề (click để chọn ảnh)</label>
+                <div class="div-logo">
+                    <img style="width: 300px; height: auto;">
+                    <input type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_Title">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_SEO_image" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Seo - image</label>
+                <div class="div-logo">
+                    <img id="img_seo_image" style="width: 300px; height: auto;">
+                    <input id="input_seo_image" type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_seo_img">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_SEO_image_alt" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - image:alt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_SEO_image_alt" type="text" class="form-control" placeholder="Nhập og:image:alt ..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_SEO_image_alt">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_SEO_description" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_SEO_description" type="text" class="form-control" placeholder="Nhập og:description..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_SEO_description">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_SEO_title" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_SEO_title" type="text" class="form-control" placeholder="Nhập og:title..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_SEO_title">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_SEO_url" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - url</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_SEO_url" type="text" class="form-control" placeholder="Nhập og:url..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_SEO_url">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_SEO_type" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEO - type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_SEO_type" type="text" class="form-control" placeholder="Nhập og:type..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_SEO_type">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_Operate_Time" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thời gian hoạt động</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_Operate_Time" type="text" class="form-control" placeholder="Nhập thời gian hoạt động..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_Operate_Time">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_Hotline" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-30">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hotline</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_Hotline" type="text" class="form-control" placeholder="Nhập hotline..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_Hotline">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_Footer_Branch" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Danh sách chi nhánh ở chân trang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-11 col-md-11">
+                        <label>Chọn chi nhánh</label>
+                        <select></select>
+                    </div>
+                    <div class="col-1 col-md-1 ralative">
+                        <div style="
+                        cursor: pointer;
+                        width: 100%;
+                        display: flex;
+                        height: 100%;
+                        align-items: flex-end;
+                        justify-content: flex-start;
+                        padding-bottom: 10px;">
+                            <i onclick="add_branch_into_table()" class="fas fa-plus text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-12" id="div_list_branch">
+                        <table class="table">
+    
+                        </table>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_Footer_Branch">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_footer_introduction" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Giới thiệu về công ty</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <label>Nội dung</label>
+                        <input class="form-control" id="input_Content_footer_introduction" placeholder="Nhập nội dung">
+                    </div>
+
+                    <div class="col-11 col-md-11">
+                        <label>Link bài biết</label>
+                        <input class="form-control" id="input_Link_footer_introduction" placeholder="Nhập link bài viết">
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                        <div style="cursor: pointer;width: 100%;display: flex;height: 100%;align-items: flex-end;justify-content: flex-start;padding-bottom: 10px;">
+                            <i onclick="add_footer_introduction()" class="fas fa-plus text-success"></i>
+                        </div>      
+                    </div>
+
+                </div>
+                <div>
+                    <table class="table">
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_footer_introduction">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_footer_suport" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Các chính sách hỗ trợ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <label>Nội dung</label>
+                        <input class="form-control" id="input_Content_footer_suport" placeholder="Nhập nội dung">
+                    </div>
+
+                    <div class="col-11 col-md-11">
+                        <label>Link bài biết</label>
+                        <input class="form-control" id="input_Link_footer_suport" placeholder="Nhập link bài viết">
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                        <div style="cursor: pointer;width: 100%;display: flex;height: 100%;align-items: flex-end;justify-content: flex-start;padding-bottom: 10px;">
+                            <i onclick="add_footer_suport()" class="fas fa-plus text-success"></i>
+                        </div>      
+                    </div>
+
+                </div>
+                <div>
+                    <table class="table">
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_footer_suport">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_footer_common_policy" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Các chính sách hỗ trợ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <label>Nội dung</label>
+                        <input class="form-control" id="input_Content_footer_common_policy" placeholder="Nhập nội dung">
+                    </div>
+
+                    <div class="col-11 col-md-11">
+                        <label>Link bài biết</label>
+                        <input class="form-control" id="input_Link_footer_common_policy" placeholder="Nhập link bài viết">
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                        <div style="cursor: pointer;width: 100%;display: flex;height: 100%;align-items: flex-end;justify-content: flex-start;padding-bottom: 10px;">
+                            <i onclick="add_footer_common_policy()" class="fas fa-plus text-success"></i>
+                        </div>      
+                    </div>
+
+                </div>
+                <div>
+                    <table class="table">
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_footer_common_policy">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_footer_promotion" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Các chính sách hỗ trợ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <label>Nội dung</label>
+                        <input class="form-control" id="input_Content_footer_promotion" placeholder="Nhập nội dung">
+                    </div>
+
+                    <div class="col-11 col-md-11">
+                        <label>Link bài biết</label>
+                        <input class="form-control" id="input_Link_footer_promotion" placeholder="Nhập link bài viết">
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                        <div style="cursor: pointer;width: 100%;display: flex;height: 100%;align-items: flex-end;justify-content: flex-start;padding-bottom: 10px;">
+                            <i onclick="add_footer_promotion()" class="fas fa-plus text-success"></i>
+                        </div>      
+                    </div>
+
+                </div>
+                <div>
+                    <table class="table">
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_footer_promotion">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pupup_footer_description" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mô tả trang web chân trang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea rows="5" id="input_footer_description" type="text" class="form-control" placeholder="Nhập mổ tả ..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_footer_description">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_footer_facebook" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Link facebook</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="input_footer_facebook" type="text" class="form-control" placeholder="Link ..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_footer_facebook">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_footer_note" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ghi chú chân trang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea rows="5" id="input_footer_note" type="text" class="form-control" placeholder="Ghi chú ..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_footer_note">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_footer_business_license" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Giấy phép đăng ký kinh doanh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea rows="5" id="input_footer_business_license" type="text" class="form-control" placeholder="Thông tin GPDKKD ..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_footer_business_license">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup_home_image_banner_flash_sale" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh banner flash sale</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Ảnh banner flash sale</label>
+                <div class="div-logo">
+                    <img id="img_home_image_banner_flash_sale" style="width: 300px; height: auto;">
+                    <input id="input_home_image_banner_flash_sale" type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_home_image_banner_flash_sale">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_mobile_home_image_banner_flash_sale" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh banner flash sale</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Ảnh banner flash sale</label>
+                <div class="div-logo">
+                    <img id="img_mobile_home_image_banner_flash_sale" style="width: 300px; height: auto;">
+                    <input id="input_mobile_home_image_banner_flash_sale" type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_mobile_home_image_banner_flash_sale">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_logo_header" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh logo thương hiệu ( header)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Ảnh logo thương hiệu ( header)</label>
+                <div class="div-logo">
+                    <img id="img_logo_header" style="width: 300px; height: auto;">
+                    <input id="input_logo_header" type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_logo_header">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_mobile_logo_header" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh logo thương hiệu ( header)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Ảnh logo thương hiệu ( header)</label>
+                <div class="div-logo">
+                    <img id="img_mobile_logo_header" style="width: 300px; height: auto;">
+                    <input id="input_mobile_logo_header" type="file" oninput="changeImage(this)" accept="image/*">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_mobile_logo_header">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_home_flash_sale_products" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sản phẩm FlashSale:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-11 col-md-11">
+                            <label>Chọn sản phẩm</label>
+                            <input autocomplete="off"  id="input_find_home_flash_sale_products" oninput="find_Product('div_load_home_flash_sale_products','input_find_home_flash_sale_products')" name="" class="form-control" type="text" placeholder="Nhập tên sản phẩm . . .">
+                            <div class="spinner-border" role="status" style="display: none;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            
+                            <div id="div_load_home_flash_sale_products"></div>
+                        </div>
+                        <div class="col-1 col-md-1 ralative">
+                            <div style="
+                            cursor: pointer;
+                            width: 100%;
+                            display: flex;
+                            height: 100%;
+                            align-items: flex-end;
+                            justify-content: flex-start;
+                            padding-bottom: 10px;">
+                                <button type="button" class="btn btn-success" onclick="add_product_to_list_flash_sale('input_find_home_flash_sale_products','div__list_home_flash_sale_products')"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="div__list_home_flash_sale_products" class="row">
+                        <div class="col">
+                            <table class="table">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_home_flash_sale_products">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup_home_slide_banner" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Banner xu hướng tìm kiếm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-12">
+                    <p><b>Ảnh banner:</b></p>
+                    <div class="row" id="div__home_slide_banner" style="height: auto; overflow: visible;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="add_more_home_slide_banner()">Thêm 1 dòng</button>
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_home_slide_banner">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_mobile_home_slide_banner_1" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Banner xu hướng tìm kiếm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-12">
+                    <p><b>Ảnh banner:</b></p>
+                    <div class="row" id="div__mobile_home_slide_banner_1" style="height: auto; overflow: visible;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="add_more_mobile_home_slide_banner_1()">Thêm 1 dòng</button>
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_mobile_home_slide_banner_1">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_mobile_home_slide_banner_2" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Banner xu hướng tìm kiếm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-12">
+                    <p><b>Ảnh banner:</b></p>
+                    <div class="row" id="div__mobile_home_slide_banner_2" style="height: auto; overflow: visible;">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="add_more_mobile_home_slide_banner_2()">Thêm 1 dòng</button>
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_mobile_home_slide_banner_2">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup_home_banner_gaming_market_01" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row" style="height: 100%; overflow: visible;">
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_00" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_00:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_00" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_00" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_00" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_00" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_00" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_01" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_01:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_01" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_01" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_01" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_01" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_01" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_02" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_02:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_02" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_02" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_02" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_02" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_02" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_03" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_03:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_03" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_03" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_03" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_03" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_03" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_04" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_04:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_04" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_04" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_04" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_04" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_04" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_05" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_05:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_05" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_05" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_05" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_05" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_05" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row" id="div__home_banner_gaming_market_01__banner_06" >
+                        <div style="position: relative; border-style: ridge; margin-bottom: 20px; padding: 10px;">
+                            <p><b>Ảnh banner_06:</b></p>
+                            <div class="row">
+                                <div class="col col-md-9">
+                                    <label><b>Tiêu đề:</b></label>
+                                    <input autocomplete="off" class="form-control" id="title_home_banner_gaming_market_01__banner_06" value="">
+                                    <label><b>Link bài viết:</b></label>
+                                    <input autocomplete="off" class="form-control" id="link_home_banner_gaming_market_01__banner_06" value="">
+                                </div>
+                                <div class="col col-md-3">
+                                    <img id="image_home_banner_gaming_market_01__banner_06" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" src="">
+                                    <input id="name_image_home_banner_gaming_market_01__banner_06" value="" style="display:none;">
+                                    <input id="input_image_home_banner_gaming_market_01__banner_06" accept="image/*" type="file"  onchange="changeImage(this)" placeholder="Chọn file ảnh">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal-body">
+                <div class="row gx-2 mb-2">
+                    <div class="col-2">
+                        <div style="border: 1px solid #ddd; width: 100%; height: 100%; min-height: 40vh;">
+                            Menu
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="row gx-2 mb-2">
+                            <div class="col-10">
+                                <div style="border: 1px solid #ddd; width: 100%; height: 100%; min-height: 30vh;">
+                                    Ảnh slide banner
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="row gx-2"  style=" width: 100%; height: 100%; min-height: 30vh;">
+                                    <div class="col-12" style="border: 1px solid #ddd; width: 100%; height: 48%; max-height: 48%;">
+                                    </div>
+                                    <div class="col-12" style="border: 1px solid #ddd; width: 100%; height: 48%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gx-2">
+                            <div class="col-6">
+                                <div style="border: 1px solid #ddd; width: 100%; min-height: 20vh;"></div>
+                            </div>
+                            <div class="col-6">
+                                <div style="border: 1px solid #ddd; width: 100%; min-height: 20vh;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-2 mb-2">
+                    <div class="col-6">
+                        <div style="border: 1px solid #ddd; width: 100%; min-height: 20vh;"></div>
+                    </div>
+                    <div class="col-6">
+                        <div style="border: 1px solid #ddd; width: 100%; min-height: 20vh;"></div>
+                    </div>
+                </div>
+            </div> -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="show_position_home_banner_gaming_market_01(true)">Vị trí ảnh</button>
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_home_banner_gaming_market_01">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup_template-home_banner_gaming_market_01" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-60">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vị trí các banner</h5>
+                <button type="button" class="close" onclick="show_position_home_banner_gaming_market_01(false)" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-12" style="max-height: fit-content; max-width: fit-content;">
+                    <img style="width: 100%; height: 100%;" src="./images/images_website_component/constant-images/template-home_banner_gaming_market_01.png" alt="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="show_position_home_banner_gaming_market_01(false)">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pupup_contact_info" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin liên hệ ( chi nhánh tổng )</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Tên công ty:</label>
+                <input id="input_contact_info__name_company" type="text" class="form-control" placeholder="Nhập tên công ty..."></input>
+                <label>Địa chỉ:</label>
+                <input id="input_contact_info__address" type="text" class="form-control" placeholder="Nhập địa chỉ..."></input>
+                <label>Hotline:</label>
+                <input id="input_contact_info__hotline" type="text" class="form-control" placeholder="Nhập hotline..."></input>
+                <label>Email:</label>
+                <input id="input_contact_info__email" type="text" class="form-control" placeholder="Nhập email..."></input>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_edit_contact_info">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pupup_menu_build_pc" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Menu danh mục dựng máy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="div-find-category-menu-build-pc">
+                    <label>Tìm kiếm danh mục</label>
+                    <div>
+                        <input class="form-control" oninput="find_data_category()" id="input_find_category" placeholder="Nhập tên danh mục">
+                        <button onclick="add_category_to_menu()" class="btn btn-primary">Thêm</button>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="show-data-find-category"></div>
+                    </div>
+                </div>
+                <div class="div-list-menu-build-pc">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_menu_build_pc">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pupup_list_subcategory_build_pc" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Menu sản phẩm dựng máy</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="div-find-category-menu-build-pc">
+                    <label>Tìm kiếm sản phẩm</label>
+                    <div>
+                        <input class="form-control" oninput="findSubCategory(false, success_find_subcategory_build_pc)" id="input_data_subcategory_build_pc"  placeholder="Nhập tên sản phẩm">
+                        <button onclick="add_subcategory_to_menu()" class="btn btn-primary">Thêm</button>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div onscroll="loadmoreSubCategory(success_find_subcategory_build_pc)" id="div_data_subcategory_build_pc" class="show-data-find-category"></div>
+                    </div>
+                </div>
+                <div class="div-list-menu-build-pc">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_list_subcategory_build_pc">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pupup_banner_build_pc" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ảnh banner</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="old-images">
+                   
+                </div>
+                <div class="new-images div-multiple-image">
+                    <input class="multiple_image_select" type="file" accept="image/*" multiple>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn_Save_banner_build_pc">Lưu thay đổi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/imageuploadify.js"></script>
+<script>
+     $('input.multiple_image_select').imageuploadify();
+</script>

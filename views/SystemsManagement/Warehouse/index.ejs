@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <%- include('../../header',{title:"Quản lý kho"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="page-header">
+                    <button onclick="showPopup('popupAdd',true)" class="btn btn-primary">Thêm mới <i class="mdi mdi-plus-circle"></i></button>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <!-- Popup thêm mới -->
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới kho <i class="mdi mdi-database-plus"></i></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-4">
+                                <b>Tên kho</b>
+                                <input class="form-control" id="addName" placeholder="Nhập tên kho">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Số điện thoại</b>
+                                <input class="form-control" id="addPhone" placeholder="Nhập số điện thoại của kho">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Địa chỉ</b>
+                                <input class="form-control" id="addAddress" placeholder="Địa chỉ kho">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới kho <i class="mdi mdi-database-plus"></i></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                         </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-4">
+                                <b>Tên kho</b>
+                                <input class="form-control" id="editName" placeholder="Nhập tên kho">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Số điện thoại</b>
+                                <input class="form-control" id="editPhone" placeholder="Nhập số điện thoại của kho">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Địa chỉ</b>
+                                <input class="form-control" id="editAddress" placeholder="Địa chỉ kho">
+                            </div>
+                        </div>
+                        <div>
+                            <label>Trạng thái</label>
+                            <div class="form-group">
+                                <div class="form-check form-check-success">
+                                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="editStatus" value="true" checked=""> Đang hoạt động <i class="input-helper"></i></label>
+                                </div>
+                                <div class="form-check form-check-primary">
+                                    <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="editStatus" value="false" checked=""> Đã dừng hoạt động <i class="input-helper"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnConfirmEdit" class="btn btn-primary">Lưu chỉnh sửa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <!-- <script src="/assets/dataTable/vfs_fonts.js"></script>
+            <script src="/assets/dataTable/pdfmake.min.js"></script>
+            <script src="/assets/dataTable/jszip.min.js"></script> -->
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+
+            <!-- <script src="/assets/dataTable/buttons.print.min.js"></script>
+            <script src="/assets/dataTable/buttons.html5.min.js"></script> -->
+            <script src="/js/SystemsManagement/Warehouse/index.js"></script>
+            </body>
+
+</html>

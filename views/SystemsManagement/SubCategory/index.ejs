@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="/css/subcategory.css">
+        <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+        <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+        <%- include('../../header',{title:"Quản lý sản phẩm"}) %>
+
+            <div class="page-content">
+                <div class="header-table">
+                    <div class="row">
+                        <div class="col-4 col-md-2 col-lg-2">
+                            <label>Hiển thị</label>
+                            <select onchange="getData()" id="selectLimit">
+                                <option value="<%- limit %>">
+                                    <%- limit %>
+                                </option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <div class="col-4 col-md-2 col-lg-2">
+                            <label>Danh mục</label>
+                            <select onchange="getData()" name="selectCategory" id="selectCategory">
+
+                            </select>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label>Tìm kiếm</label>
+                            <input id="keyFind" autocomplete="off" value="<%- key %>"
+                                placeholder="Nhập tên sản phẩm . . ." type="text" class="form-control">
+                        </div>
+                        <div class="col-2 col-md-1 col-lg-4 col-xl-4 div-btn">
+                            <button id="btnAdd" onclick="showPopup('popupAdd',true)" class="btn btn-success"><i
+                                    class="mdi mdi-cart-plus"></i> <span class="hide-on-mobile hide-on-tablet">Thêm
+                                    mới</span> </button>
+                            <button id="btnAddExcel" onclick="selectAdddExcel()" class="btn btn-success"><i
+                                    class="mdi mdi-file-excel"></i> <span class="hide-on-mobile hide-on-tablet"> Thêm
+                                    nhiều </span></button>
+                            <button onclick="downloadTemplate()" class="btn btn-success"><i
+                                    class="mdi mdi-download"></i> <span class="hide-on-mobile hide-on-tablet">
+                                    Mẫu</span></button>
+                            <input oninput="changeFileExcel(this)" type="file"
+                                accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel , .xls"
+                                id="inputAddExcel" style="display: none;">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="div-table">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Danh mục</th>
+                                    <th>Giá nhập</th>
+                                    <th>Giá bán</th>
+                                    <th>Giảm giá</th>
+                                    <th>Part thưởng</th>
+                                    <th>Điểm thưởng</th>
+                                    <th>Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyTable"></tbody>
+                        </table>
+                    </div>
+                    <div id="divPagination"></div>
+                </div>
+            </div>
+            <!-- POPUP ====================================-->
+            <!-- Popup thêm mới -->
+            <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog model-90" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm mới sản phẩm <i class="mdi mdi-cart-plus"></i> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <label>Danh mục</label>
+                                    <select name="selectCategory" id="addCategory"></select>
+                                </div>
+                                <div class="col-12 col-md-5">
+                                    <label>Tên sản phẩm</label>
+                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" id="addName">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <label>Giá bán trên web</label>
+                                    <input type="text" id="addExportPriceWeb" oninput="inputNumber()" value="0" class="number form-control" placeholder="nhập giá bán trên web">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 col-md-3">
+                                    <label>Giá nhập</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addImportPrice"
+                                        placeholder="Nhập giá nhập">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Giá bán</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addExportPrice"
+                                        placeholder="Nhập giá bán">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>VAT(%)</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addVAT"
+                                        placeholder="Nhập thuế VAT">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Chiết khấu(%)</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addCK"
+                                        placeholder="Nhập chiết khấu">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Giảm giá</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addDiscount"
+                                        placeholder="Giảm giá">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Bảo hành (tháng)</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addWarranty"
+                                        placeholder="Bảo hành">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Part thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addPart"
+                                        placeholder="Part thưởng">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Điểm thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addPoint"
+                                        placeholder="Điểm thưởng">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6">
+                                    <label>Số lượng cảnh báo</label>
+                                    <input class="number form-control" oninput="inputNumber(this)" id="addWarning"
+                                        placeholder="Tồn tối đa">
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <label>Đơn vị tính</label>
+                                    <input class="form-control" value="Chiếc" id="addUnit" placeholder="Tồn tối đa">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+
+            <!-- Popup Chi tieet -->
+            <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog model-90" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chỉnh sửa <i class="mdi mdi-cart-plus"></i> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <label>Danh mục</label>
+                                    <select name="selectCategory" id="editCategory"></select>
+                                </div>
+                                <div class="col-12 col-md-5">
+                                    <label>Tên sản phẩm</label>
+                                    <input  type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                                        id="editName">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <label>Giá bán trên web</label>
+                                    <input type="text" id="editExportPriceWeb" value="0" class="number form-control" oninput="inputNumber()" placeholder="Nhập giá bán trên web">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 col-md-3">
+                                    <label>Giá nhập</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editImportPrice"
+                                        placeholder="Nhập giá nhập">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Giá bán</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editExportPrice"
+                                        placeholder="Nhập giá bán">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>VAT(%)</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editVAT"
+                                        placeholder="Nhập thuế VAT">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Chiết khấu(%)</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editCK"
+                                        placeholder="Nhập chiết khấu">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Giảm giá</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editDiscount"
+                                        placeholder="Giảm giá">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Bảo hành (tháng)</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editWarranty"
+                                        placeholder="Bảo hành">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Part thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editPart"
+                                        placeholder="Part thưởng">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Điểm thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editPoint"
+                                        placeholder="Điểm thưởng">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6">
+                                    <label>Đơn vị tính</label>
+                                    <input class="form-control" value="Chiếc" id="editUnit" placeholder="Tồn tối đa">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnConfirmEdit" class="btn btn-danger">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  -->
+
+            <!-- Popup thêm mới -->
+            <div id="popupAddExcel" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog model-100" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm mới sản phẩm <i class="mdi mdi-cart-plus"></i> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="divTableAddExcel" class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="confirmAddExcel()" class="btn btn-primary">Thêm mới</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ====================================== -->
+            <%- include('../../footer') %>
+                <script src="/assets/dataTable/vfs_fonts.js"></script>
+                <script src="/assets/dataTable/pdfmake.min.js"></script>
+                <script src="/assets/dataTable/jszip.min.js"></script>
+                <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+                <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+
+                <script src="/assets/dataTable/buttons.print.min.js"></script>
+                <script src="/assets/dataTable/buttons.html5.min.js"></script>
+                <script>
+                    var limit = '<%- limit %>'
+                    var page = '<%- page %>'
+                    var key = '<%- key %>'
+                    var id_category = '<%- id_category %>'
+                </script>
+                <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+                <script src="/assets/js/xlsx.core.min.js"></script>
+                <script src="/js/SystemsManagement/SubCategory/index.js"></script>
+
+                </body>
+
+</html>

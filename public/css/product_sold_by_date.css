@@ -1,0 +1,20 @@
+.container-fluid .div-table table tbody tr td:nth-child(4) ,
+.container-fluid .div-table table tbody tr td:nth-child(5) ,
+.container-fluid .div-table table tbody tr td:nth-child(6) ,
+.container-fluid .div-table table tbody tr td:nth-child(7),
+.container-fluid .div-table table tfoot tr td:nth-child(4) ,
+.container-fluid .div-table table tfoot tr td:nth-child(5) ,
+.container-fluid .div-table table tfoot tr td:nth-child(6) ,
+.container-fluid .div-table table tfoot tr td:nth-child(7)
+{
+    text-align: right;
+}
+
+.page-header div:first-child div:nth-child(5){
+    position: relative;
+}
+
+.page-header div:first-child div:nth-child(5) button{
+    position: absolute;
+    top: 21px;
+}

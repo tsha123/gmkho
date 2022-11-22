@@ -1,0 +1,168 @@
+.header-table div:first-child div:nth-child(3),
+.header-table div:first-child div:nth-child(4),
+.header-table div:first-child div:nth-child(5),
+.header-table div:first-child div:nth-child(6),
+.header-table div:first-child div:nth-child(7),
+.header-table div:first-child div:nth-child(8)
+ {
+    position: relative;
+}
+
+.header-table div:first-child div:nth-child(3) i,
+.header-table div:first-child div:nth-child(4) i,
+.header-table div:first-child div:nth-child(5) i,
+.header-table div:first-child div:nth-child(6) i,
+.header-table div:first-child div:nth-child(7) i,
+.header-table div:first-child div:nth-child(8) i
+{
+    position: absolute;
+    top: 23px;
+}
+
+#dataTable thead tr:first-child th {
+    width: max-content;
+}
+
+#popupAdd tbody tr td:first-child {
+    position: relative;
+}
+
+#popupAdd tbody tr td:first-child div {
+    position: absolute;
+    top: 22px;
+    width: 15px;
+    height: 15px;
+    right: 13px;
+    display: none;
+}
+
+.row-supplier div:first-child {
+    position: relative;
+}
+
+.row-supplier div:first-child .spinner-border {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 22px;
+    right: 13px;
+    display: none;
+}
+
+.row-supplier div:first-child .spinner-border {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 22px;
+    right: 13px;
+    display: none;
+}
+
+.row-supplier div:first-child div:last-child {
+    position: absolute;
+    z-index: 100;
+    background-color: #f7f7f7;
+    max-height: 80px;
+    overflow: auto;
+}
+
+#popupAdd tbody tr td:nth-child(6) {
+    position: relative;
+}
+
+#popupAdd tbody tr td:nth-child(6) .spinner-border {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 22px;
+    right: 13px;
+    display: none;
+}
+
+#popupAdd tbody tr td:nth-child(6) div:last-child {
+    position: absolute;
+    z-index: 100;
+    background-color: antiquewhite;
+}
+
+.row-supplier div:first-child div:last-child {
+    position: absolute;
+    z-index: 100;
+    background-color: #f7f7f7;
+    max-height: 80px;
+    overflow: auto;
+}
+
+#dataTable tbody tr td:nth-child(7),
+#dataTable tbody tr td:nth-child(8),
+#dataTable tbody tr td:nth-child(9),
+#dataTable tbody tr td:nth-child(10),
+#dataTable tbody tr td:nth-child(11),
+#dataTable tbody tr td:nth-child(12),
+#dataTable tbody tr td:nth-child(13) {
+    text-align: center;
+}
+
+
+#popup_send_supplier .modal-body div:first-child div:nth-child(5),
+#popup_receive_supplier .modal-body div:first-child div:nth-child(5),
+#popup_change_supplier .modal-body div:first-child div:nth-child(5),
+#popup_return_customer .modal-body div:first-child div:nth-child(5),
+#popup_change_customer .modal-body div:first-child div:nth-child(5)
+{
+    position: relative;
+}
+#popup_send_supplier .modal-body div:first-child div:nth-child(5) button,
+#popup_receive_supplier .modal-body div:first-child div:nth-child(5) button,
+#popup_return_customer .modal-body div:first-child div:nth-child(5) button,
+#popup_change_supplier .modal-body div:first-child div:nth-child(5) button,
+#popup_change_customer .modal-body div:first-child div:nth-child(5) button
+{
+    position: absolute;
+    top: 21px;
+}
+
+#dataTable thead div{
+    width: max-content;
+}
+
+.div-product{
+    margin-top: 15px;
+}
+
+#popup_change_supplier .div-product tbody td:last-child div:first-child,
+#popup_change_customer .div-product tbody td:last-child div:first-child
+{
+    display: flex;
+}
+#popup_change_supplier .div-product tbody td:last-child div:first-child div,
+#popup_change_customer .div-product tbody td:last-child div:first-child div
+{
+    margin-left: 5px;
+}
+
+
+
+#popup_change_new .modal-body div:first-child ,
+#popup_change_other .modal-body div:first-child
+{
+    position: relative;
+}
+
+#popup_change_new .modal-body div:first-child .spinner-border,
+#popup_change_other .modal-body div:first-child .spinner-border
+{
+    width: 15px;
+    position: absolute;
+    top: 8px;
+    right: 0;
+    height: 15px;
+    display: none;
+
+}
+
+#popup_change_new .modal-body div:first-child div{
+    position: absolute;
+    z-index: 100;
+    background-color: aliceblue;
+}

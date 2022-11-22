@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/receive.css">
+    <%- include('../../header',{title:"Chuyển quỹ"}) %>
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-2 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                            <option value="<%- limit %>"><%- limit %></option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-5 col-md-3 col-lg-3 col-xl-2">
+                        <label>Từ ngày</label>
+                        <input id="fromdate" onchange="getData()" value="<%- fromdate %>" type=date class="form-control">
+                    </div>
+                    <div class="col-5 col-md-3 col-lg-3 col-xl-2">
+                        <label>Đến ngày</label>
+                        <input onchange="getData()" id="todate" type="date" value="<%- todate %>" class="form-control">
+                    </div>
+                    <div class="col-8 col-md-6 col-lg-6 col-xl-2">
+                        <label>Tổng tiền</label>
+                        <div class="row">
+                            <div class="col-6 col-md-6 flex">
+                                <b>Từ: </b>
+                                <input class="number form-control" id="from_money" oninput="getData()" placeholder="Nhập giá trị tiền">
+                            </div>
+                            <div class="col-6 col-md-6 flex">
+                                <b>Đến: </b>
+                                <input class="number form-control" id="to_money" oninput="getData()" placeholder="Nhập giá trị tiền">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-6 col-md-2 col-lg-2 col-xl-2">
+                        <label>Từ sổ quỹ</label>
+                        <select id="select_from_fundbook" onchange="getData()" name="select_fundbook">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-2 col-lg-2 col-xl-2">
+                        <label>Đến sổ quỹ</label>
+                        <select id="select_to_fundbook"  onchange="getData()" name="select_fundbook">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="col col-md-2  col-lg-1 col-xl-1 relative">
+                        <i onclick="showPopup('popupAdd',true)" class="fas fa-plus btn btn-success"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                    <table class="table table-hover" id="table-main">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã phiếu</th>
+                                <th>Người tạo</th>
+                                <th>Chuyển từ</th>
+                                <th>Đến</th>
+                                <th>Tổng</th>
+                                <th>Ghi chú</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div id="divPagination">
+
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal fade" style="display: none;" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> <i class="fas fa-plus"></i> Thêm mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+             </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-6">
+                                <label>Từ sổ quỹ</label>
+                                <select name="select_fundbook"></select>
+                            </div>
+
+                            <div class="col-6 col-md-6">
+                                <label>Đến sổ quỹ</label>
+                                <select name="select_fundbook"></select>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Giá trị</label>
+                            <input class="number form-control" value="0" type="text" oninput="inputNumber()">
+                        </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <input class="form-control" type="text" placeholder="nhập ghi chú">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="saveAdd()" class="btn btn-danger">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupDelete" class="modal fade" style="display: none;" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-confirm">
+                <div class="modal-content" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> <i class="fas fa-plus"></i> Xóa chuyển quỹ</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+             </button>
+                    </div>
+                    <div class="modal-body">
+                       <span>Bạn có chắc muốn xóa chuyển quỹ này</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="btn_confirm_delete" class="btn btn-danger">Xóa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('../../footer') %>
+
+            <script src="/js/BusinessManagement/TranferFundbook/index.js"></script>
+            </body>
+
+</html>

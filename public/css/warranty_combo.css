@@ -1,0 +1,42 @@
+.div-contents
+{
+    margin-top: 10px;
+    width: 100%;
+    max-height: 300px;
+    height: 300px;
+    border: 1px dotted;
+    overflow: auto;
+}
+
+#btnAdd
+{
+    top: 21px;
+}
+.icon-content
+{
+    position: absolute;
+    top: 34px;
+    right: 14px;
+    font-size: 22px;
+    padding: 3px 0;
+}
+.input-content
+{
+    padding-right: 25px !important;
+}
+
+.div-contents td:first-child {
+    width: 5%;
+}
+.div-contents td:nth-child(2) {
+    width: 90%;
+}
+
+.div-contents td:last-child {
+    width: 5%;
+}
+.div-contents tr
+{
+    display: flex;
+    width: 100%;
+}

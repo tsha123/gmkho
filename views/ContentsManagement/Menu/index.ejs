@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="/css/menu.css">
+<%- include("../../header",{title:"Quản lý content | Menu hiển thị"}) %>
+<div class="page-content">
+    <div class="header-table">
+        <div class="row">
+            <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+            <label>Hiển thị</label>
+            <select onchange="getData()" id="selectLimit">
+                <option value="<%- limit %>"><%- limit %></option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            </div>
+            <div class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                <label>Tìm kiếm</label>
+                <input autocomplete="off" id="keyFind" placeholder="Tên menu..." type="text" class="form-control">
+            </div>
+            <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                <label>Menu cha</label>
+                <select id="select_Menu" onchange="getData()">
+                    <option value="">Tất cả</option>
+                </select>
+            </div>
+            <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                <label>Website</label>
+                <select id="select_website_component" onchange="getData()">
+                    <option value="">Tất cả</option>
+                </select>
+            </div>
+            <div class="col col-md-2 col-lg-2 col-xl-2">
+                <button onclick="showPopupAdd()" class="btn btn-success">Thêm mới</button>
+            </div>
+        </div> 
+    </div>
+    <div class="container-fluid">
+        <div class="div-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                      <th class="text-center">STT</th>
+                      <th class="text-center" style="width:100px">STT hiển thị</th>
+                      <th class="text-center">Tên Menu</th>
+                      <th class="text-center">Menu Cha</th>
+                      <th class="text-center">Link</th>
+                      <th class="text-center">Thuộc website</th>
+                      <th class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyTable"></tbody>
+                <tfoot id="tfootTable"></tfoot>
+            </table>
+        </div>
+        <div id="divPagination"></div>
+    </div>
+</div>
+
+<!-- ====================================== -->
+<%- include('../../footer') %>
+<script>
+  var page = '<%- page %>'
+</script>
+<script src="/js/ContentsManagement/Menu/index.js"></script>
+</body>
+</html>
+<!-- POPUP ====================================-->
+<!-- Popup thêm mới -->
+<div id="popupAddMenu" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog model-70" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> <i class="fas fa-bars"></i> Thêm mới menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                        <div class="row">
+                            <div class="col col-md-8">
+                                <div class="col">
+                                    <b>Nhập tên menu:</b>
+                                    <input autocomplete="off" id="name_Menu_add" type="text" placeholder="Nhập tên danh mục" class="form-control">
+                                </div>
+                                <div class="col">
+                                    <b>Menu cha:</b>
+                                    <select id="select_parent_menu_add" name="parent_id_add" class="form-control">
+                                        <!-- <option value="">?</option>
+                                        <option value="??">??</option>
+                                        <option value="?????">?????</option>
+                                        <option value="???????????">???????????</option> -->
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <b>Link trang:</b>
+                                    <b>(<-host>/danh-muc/<-part link>):</b>
+                                    <input autocomplete="off" class="form-control" type="text" id="link_add">
+                                </div>
+                                <div class="col col-md-3">
+                                    <b>Thứ tự hiển thị:</b>
+                                    <input autocomplete="off" class="form-control" type="number" id="serial_number_add">
+                                </div>
+                            </div>
+                            <div class="col col-md-4">
+                                <label>Hiển thị</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_app_add" onchange="changeShow(this)">
+                                    <label class="form-check-label" for="display_app_add">
+                                      Hiển thị ở trên app
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_website_add" onchange="changeShow(this)">
+                                    <label class="form-check-label" for="display_website_add">
+                                      Hiển thị ở website
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_tree_add" onchange="changeShow(this)">
+                                    <label class="form-check-label" for="display_tree_add">
+                                      Hiển thị ở cây danh mục
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_home_add" onchange="changeShow(this)">
+                                    <label class="form-check-label" for="display_home_add">
+                                        Hiển thị ở trang chủ
+                                    </label>
+                                </div>
+                                <div>
+                                    <b>Danh mục đại diện:</b>
+                                    <select id="select_represent_category_add" name="select_represent_category_add" class="form-control">
+                                        <!-- <option value="?">?</option>
+                                        <option value="??">??</option>
+                                        <option value="?????">?????</option>
+                                        <option value="???????????">???????????</option> -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Website</label>
+                                    <select id="add_select_website_component" onchange="getData()">
+                                        <option value="">Tất cả</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div style="margin-top:20px;" class="col col-md-6">
+                                    <b>Ảnh menu:</b>
+                                    <img id="add_image_menu" alt="Vui lòng chọn ảnh" style="width:200px; height: 200px;" title="" class="img-circle img-thumbnail isTooltip" data-original-title="Usuario">
+                                    <input autocomplete="off" accept="image/*" type="file" id="add_input_image_menu" oninput="showImageEdit(this,'add_image_menu','add_image_menu_change')" placeholder="Chọn file ảnh">
+                                    <input id="add_image_menu_change" name="add_image_menu_change" value="0" style="display: none;">
+                                    <button onclick="delete_curent_image('add_image_menu_change','add_image_menu','add_input_image_menu')" class="btn btn-danger form-control" style="width: 150px;" type="button">Xóa</button>
+                                </div>
+                                <div style="margin-top:20px;" class="col col-md-6">
+                                    <b>Icon:</b>
+                                    <img id="add_icon_menu" alt="Vui lòng chọn ảnh" style="width:200px; height: 200px;" title="" class="img-circle img-thumbnail isTooltip" data-original-title="Usuario">
+                                    <input autocomplete="off" accept="image/*" type="file" id="add_input_icon_menu" name="backGroundImg" oninput="showImageEdit(this,'add_icon_menu','add_icon_menu_change')" placeholder="Chọn file ảnh">
+                                    <input id="add_icon_menu_change" name="add_icon_menu_change" value="0" style="display: none;">
+                                    <button onclick="delete_curent_image('add_icon_menu_change','add_icon_menu','add_input_icon_menu')" class="btn btn-danger form-control" style="width: 150px;" type="button">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnConfirmAdd" onclick="confirmAdd()" class="btn btn-danger">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog model-70" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title"> <i class="fas fa-bars"></i> Chỉnh sửa menu</h5>
+              <button type="button"class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+                  <input autocomplete="off" id="idEditCategory" type="text" style="display: none;" name="idCategory">
+                  <div id="divEditOneCategory">
+                      <div class="row">
+                          <div class="col col-md-8">
+                              <div class="col">
+                                  <b>Nhập tên menu:</b>
+                                  <input autocomplete="off" id="name_Menu_edit" type="text" placeholder="Nhập tên menu" class="form-control">
+                              </div>
+                              <div class="col">
+                                  <b>Menu cha:</b>
+                                  <select id="select_parent_menu_edit" class="form-control">
+                                      <!-- <option value="?">?</option>
+                                      <option value="??">??</option>
+                                      <option value="?????">?????</option>
+                                      <option value="???????????">???????????</option> -->
+                                  </select>
+                              </div>
+                              <div class="col">
+                                  <b>Link trang:</b>
+                                  <b>(<-host>/danh-muc/<-part link>):</b>
+                                  <input autocomplete="off" class="form-control" type="text" id="link_edit">
+                              </div>
+                              <div class="col col-md-3">
+                                  <b>Thứ tự hiển thị:</b>
+                                  <input autocomplete="off" class="form-control" type="number" id="serial_number_edit">
+                              </div>
+                          </div>
+                          <div class="col col-md-4">
+                              <label>Hiển thị</label>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="0" id="display_app_edit" onchange="changeShow(this)">
+                                  <label class="form-check-label" for="display_app_edit">
+                                    Hiển thị ở trên app
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="display_website_edit" onchange="changeShow(this)">
+                                  <label class="form-check-label" for="display_website_edit">
+                                    Hiển thị ở website
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="display_tree_edit" onchange="changeShow(this)">
+                                  <label class="form-check-label" for="display_tree_edit">
+                                      Hiển thị ở cây danh mục
+                                  </label>
+                              </div>
+                              <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="display_home_edit" onchange="changeShow(this)">
+                                  <label class="form-check-label" for="display_home_edit">
+                                      Hiển thị ở trang chủ
+                                  </label>
+                              </div>
+                              <div>
+                                  <b>Danh mục đại diện:</b>
+                                  <select id="select_represent_category_edit"  class="form-control">
+                                      <!-- <option value="?">?</option>
+                                      <option value="??">??</option>
+                                      <option value="?????">?????</option>
+                                      <option value="???????????">???????????</option> -->
+                                  </select>
+                              </div>
+                              
+                              <div>
+                                <label>Website</label>
+                                <select id="edit_select_website_component" onchange="getData()">
+                                    <option value="">Tất cả</option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                              <div style="margin-top:20px;" class="col col-md-6">
+                                  <b>Ảnh menu:</b>
+                                  <img id="edit_image_menu" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" title="" class="img-circle img-thumbnail isTooltip" data-original-title="Usuario">
+                                  <input id="edit_input_image_menu" oninput="showImageEdit(this,'edit_image_menu','edit_image_menu_change')" autocomplete="off" accept="image/*" type="file" placeholder="Chọn file ảnh">
+                                  <input id="edit_image_menu_change" name="edit_image_menu_change" value="0" style="display: none;">
+                                  <button onclick="delete_curent_image('edit_image_menu_change','edit_image_menu','edit_input_image_menu')" class="btn btn-danger form-control" style="width: 150px;" type="button">Xóa</button>
+                              </div>
+                              <div style="margin-top:20px;" class="col col-md-6">
+                                  <b>Icon:</b>
+                                  <img id="edit_icon_menu" alt="Vui lòng chọn ảnh" style="width:200px; height: auto;" title="" class="img-circle img-thumbnail isTooltip" data-original-title="Usuario">
+                                  <input id="edit_input_icon_menu" oninput="showImageEdit(this,'edit_icon_menu','edit_icon_menu_change')" autocomplete="off" accept="image/*" type="file"  name="backGroundImg" placeholder="Chọn file ảnh">
+                                  <input id="edit_icon_menu_change" name="edit_icon_menu_change" value="0" style="display: none;">
+                                  <button onclick="delete_curent_image('edit_icon_menu_change','edit_icon_menu','edit_input_icon_menu')" class="btn btn-danger form-control" style="width: 150px;" type="button">Xóa</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              <button type="button" id="btnConfirmEdit" class="btn btn-danger">Lưu lại</button>
+          </div>
+      </div>
+  </div>
+</div>

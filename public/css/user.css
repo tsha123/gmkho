@@ -1,0 +1,43 @@
+#btnAdd {
+    top: 20px;
+}
+
+.div-image input {
+    display: none;
+}
+
+.div-image img {
+    height: 100%;
+    width: 200px;
+    border: 1px dotted;
+}
+.div-image {
+    max-height: 200px;
+    height: 200px;
+    width: 100%;
+    text-align: center;
+}
+.div-image b {
+    top: -19px;
+    right: 50%;
+}
+
+.form-check {
+    margin-left: 10px;
+}
+
+#popupAddExcel .modal-body{
+    overflow: auto;
+}
+
+#popupAddExcel .fas.fa-file-excel{
+    margin-left: 10px;
+}
+
+#popupAddExcel .fas.fa-file-excel:hover{
+    background-color: blue;
+}
+
+#popupAddExcel input[type="file"]{
+    display: none;
+}

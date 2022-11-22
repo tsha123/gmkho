@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="/css/menu.css">
+<%- include("../../header",{title:"Quản lý content | Chính sách"}) %>
+<div class="page-content">
+    <div class="header-table">
+        <div class="row">
+            <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+            <label>Hiển thị</label>
+            <select onchange="getData()" id="selectLimit">
+                <option value="<%- limit %>"><%- limit %></option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            </div>
+            <div class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                <label>Tìm kiếm</label>
+                <input autocomplete="off" onchange="getData()" id="inputKey" placeholder="Nhập tên chính sách" class="form-control" type="input">
+            </div>
+            <div class="col col-md-2 col-lg-2 col-xl-2">
+                <label>Thêm mới</label>
+                <button onclick="showPopupAdd()" class="btn btn-success"><i class="fas fa-plus"></i></button>
+            </div>
+        </div> 
+    </div>
+    <div class="container-fluid">
+        <div class="div-table">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                      <th class="text-center">STT</th>
+                      <th class="text-center">Chính sách</th>
+                      <th class="text-center">Ghi chú</th>
+                      <th class="text-center" style="width: 150px;">Chi tiết/Chỉnh sửa</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyTable"></tbody>
+                <tfoot id="tfootTable"></tfoot>
+            </table>
+        </div>
+        <div id="divPagination"></div>
+    </div>
+</div>
+
+<!-- ====================================== -->
+<%- include('../../footer') %>
+<script>
+  var limit = '<%- limit %>'
+  var page = '<%- page %>'
+</script>
+<script src="/js/ContentsManagement/Policy/policy.js"></script>
+<script>
+    getData();
+</script>
+</body>
+</html>
+<!-- POPUP ====================================-->
+<div id="popupAdd"  class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> <i class="fas fa-plus"></i> Thêm mới</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col col-md-6">
+                        <div>
+                            <label>Tên:</label>
+                            <input class="form-control" id="addNameCombo" placeholder="Nhập tên ...">
+                        </div>
+                        <div>
+                            <label>Ghi chú:</label>
+                            <input class="form-control" id="addNoteCombo" placeholder="Nhập ghi chú...">
+                        </div>
+                    </div>
+                    <div class="col col-md-6">
+                        <label><b>Hiển thị:</b></label>
+                        <div class="form-check">
+                            <input class="form-check-input" name="Active_Website_GamingMarket" type="checkbox" value="" id="Active_Website_GamingMarket" onchange="changeShow(this)">
+                            <label class="form-check-label" for="Active_Website_GamingMarket">
+                                Hiển thị ở website Gaming Market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px;" class="row">
+                    <div class="col-md-12">
+                        <label>Nội dung:</label>
+                        <div  style="max-width: 100%;" class="row">
+                            <div class="col col-md-6">
+                                <input class="form-control" id="inputaddContentCombo" placeholder="Nhập nội dung...">
+                            </div>
+                            <div class="col col-md-5">
+                                <input class="form-control" id="inputLink" placeholder="Link đính kèm...">
+                            </div>
+                            <div class="col col-md-1">
+                                <button onclick="addRowCombo()" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-12">
+                                <label>Mô tả</label>
+                                <textarea id="add_description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div id="divAddContentCombo" style="margin-top: 20px; height: 300px; max-height: 300px; border-style: dotted;  overflow-y: auto; overflow-x: hidden;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" onclick="comfirmAddNew()">Thêm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popupEdit"  class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog model-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> <i class="fas fa-tools"></i> Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col col-md-6">
+                        <div>
+                            <label>Tên:</label>
+                            <input class="form-control" id="editNameCombo" placeholder="Nhập tên combo">
+                        </div>
+                        <div>
+                            <label>Ghi chú:</label>
+                            <input class="form-control" id="editNoteCombo" placeholder="Nhập ghi chú...">
+                        </div>
+                    </div>
+                    <div class="col col-md-6">
+                        <label><b>Hiển thị:</b></label>
+                        <div class="form-check">
+                            <input class="form-check-input" name="Active_Website_GamingMarket_edit" type="checkbox" value="" id="Active_Website_GamingMarket_edit" onchange="changeShow(this)">
+                            <label class="form-check-label" for="Active_Website_GamingMarket_edit">
+                                Hiển thị ở website Gaming Market
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; max-width: 100%;" class="row">
+                    <div class="col-md-12">
+                        <label>Nội dung:</label>
+                        <div class="row">
+                            <div class="col col-md-4">
+                                <input class="form-control" id="inputeditContentCombo" placeholder="Nhập nội dung...">
+                            </div>
+                            <div class="col col-md-4">
+                                <input class="form-control" id="inputLinkEdit" placeholder="Link đính kèm...">
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="addRowComboEdit()" class="btn btn-success"><i class="fas fa-plus-circle"></i></button>
+                            </div>
+                            <div class="col col-md-2">
+                                <button id="btnEditContent" style="display: none;" class="btn btn-success"><i class="far fa-check-square"></i></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-12">
+                                <label>Mô tả</label>
+                                <textarea id="edit_description" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div id="divEditContentCombo" style="margin-top: 20px; height: 300px; max-height: 300px; border-style: dotted;  overflow-y: auto; overflow-x: hidden;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnConfirmEdit" class="btn btn-danger" >Lưu lại</button>
+            </div>
+        </div>
+    </div>
+</div>

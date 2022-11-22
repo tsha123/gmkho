@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/warranty.css">
+    <%- include('../../header',{title:"Bảo hành | Tìm kiếm"}) %>
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                    <option value="<%- limit %>"><%- limit %></option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                        <label>Kho</label>
+                        <select id="selectWarehouse" name="select_warehouse">
+                  </select>
+                    </div>
+                    <div class="col col-md-2  col-lg-1 col-xl-1">
+                        <i onclick="showPopupAdd()" class="fas fa-plus btn btn-success"></i>
+                    </div>
+                    <div class="col col-md-3  col-lg-2 col-xl-1">
+                        <i onclick="show_popup_send_supplier()" class="fas fa-share btn btn-success">Gửi nhà cc</i>
+                    </div>
+                    <div class="col col-md-3  col-lg-2 col-xl-1">
+                        <i onclick="show_receive_supplier()" class="fas fa-share btn btn-success">Nhận trả ncc</i>
+                    </div>
+                    <div class="col col-md-3  col-lg-2 col-xl-1">
+                        <i onclick="show_change_supplier()" class="fas fa-share btn btn-success">Đổi khác ncc</i>
+                    </div>
+                    <div class="col col-md-3  col-lg-2 col-xl-1">
+                        <i onclick="show_return_customer()" class="fas fa-share btn btn-success">Trả KH</i>
+                    </div>
+                    <div class="col col-md-3  col-lg-2 col-xl-1">
+                        <i onclick="show_change_customer()" class="fas fa-share btn btn-success">Đổi khác KH</i>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                    <table class="table table-hover" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Stt</th>
+                                <th><div>Tên KH</div></th>
+                                <th><div>Số ĐT</div></th>
+                                <th><div>Ngày nhận bảo hành</div></th>
+                                <th><div>Tên sản phẩm</div></th>
+                                <th><div>Mã sản phẩm</div></th>
+                                <th><div>Gửi nhà cc</div></th>
+                                <th><div>Nhận lại ncc</div></th>
+                                <th><div>Đổi trả với ncc</div></th>
+                                <th><div>Trả bh khách hàng</div></th>
+                                <th><div>Đổi trả bảo hành</div></th>
+                                <th><div>Thất bại</div></th>
+                                <th><div>Thành công</div></th>
+                                <th><div>Ngày gửi BH cho ncc</div></th>
+                                <th><div>Nhà cung cấp</div></th>
+                                <th><div>Ghi chú</div></th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <div><input id="find_name_customer" oninput="getData()" class="form-control" type="text" placeholder="Nhập tên kh"></div>
+                                </th>
+                                <th>
+                                    <div><input id="find_phone_customer" oninput="getData()" class="form-control" type="text" placeholder="Số điện thoại kh"></div>
+                                </th>
+                                <th>
+                                    <div class="row">
+                                        <div class="col col-md-6">
+                                            <input onchange="getData()" type="date" value="<%- fromdate %>" id="fromdate" class="form-control">
+                                        </div>
+                                        <div class="col col-md-6">
+                                            <input onchange="getData()" type="date" value="<%- todate %>" id="todate" class="form-control">
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div><input oninput="getData()" id="subcategory_name" class="form-control" type="text" placeholder="Tên sản phẩm"></div>
+                                </th>
+                                <th>
+                                    <div><input oninput="getData()" id="id_product" class="form-control" type="text" placeholder="Mã sản phẩm"></div>
+                                </th>
+                                <th>
+                                    <div>
+                                        <select onchange="getData()" id="status_send_supplier">
+                                            <option value="">Tất cả</option>
+                                            <option value="true">Đã gửi</option>
+                                            <option value="false">Chưa gửi</option>
+                                        </select>
+                                    </div>
+                                   
+                                </th>
+                                <th>
+                                    <div>
+                                        <select onchange="getData()" id="status_receive_supplier">
+                                            <option value="">Tất cả</option>
+                                            <option value="true">Đã nhận</option>
+                                            <option value="false">Chưa nhận</option>
+                                        </select>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div>
+                                    <select onchange="getData()" id="status_change_supplier">
+                                    <option value="">Tất cả</option>
+                                    <option value="true">Đã đổi</option>
+                                    <option value="false">Chưa đổi</option>
+                                </select>
+                            </div>
+                                </th>
+                                <th>
+                                <div>
+                                    <select id="status_return_customer" onchange="getData()">
+                                    <option value="">Tất cả</option>
+                                    <option value="true">Đã trả</option>
+                                    <option value="false">Chưa trả</option>
+                                </select>
+                            </div>
+                                </th>
+                                <th>
+                                <div>
+                                    <select id="status_change_customer" onchange="getData()">
+                                    <option value="" >Tất cả</option>
+                                    <option value="true">Đã đổi</option>
+                                    <option value="false">Chưa đổi</option>
+                                </select>
+                            </div>
+                                </th>
+                                <th>
+                                    <div>
+                                    <select onchange="getData()" id="status_failed">
+                                    <option value="">Tất cả</option>
+                                    <option value="true">Thất bại</option>
+                                    <option value="false">Khác</option>
+                                </select>
+                            </div>
+                                </th>
+                                <th>
+                                <div>
+                                    <select onchange="getData()" id="status_success">
+                                    <option value="">Tất cả</option>
+                                    <option value="true">Thành công</option>
+                                    <option value="false">Khác</option>
+                                </select>
+                            </div>
+                                </th>
+                                <th>
+                                    <input id="date_send_supplier" onchange="getData()" type="date" class="form-control">
+                                </th>
+                                <th>
+                                    <div><input oninput="getData()" id="supplier_name" class="form-control" type="text" placeholder="Tên nhà cung cấp"></div>
+                                </th>
+                                <th>
+                                    <div><input class="form-control" type="text" placeholder="Ghi chú"></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="divPagination">
+
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+        <div id="popupAdd" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nhận bảo hành</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên khách hàng</label>
+                                <input type="text" oninput="find_customer_callback(success_get_customer_add)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_customer_add)"></div>
+                            </div>
+                            <div class="col col-md-3">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-3">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-3">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                <option value="">----------------</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Ngày xuất bán</th>
+                                        <th>Thời gian BH</th>
+                                        <th>Thời gian còn lại</th>
+                                        <th>Nhà cung cấp</th>
+                                        <th>Ghi chú</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="confirmSave()" class="btn btn-danger">Nhận bảo hanh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popup_send_supplier" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gửi nhà cung cấp</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên nhà cung cấp</label>
+                                <input type="text" oninput="find_customer_callback(success_get_customer_send_supplier)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_customer_send_supplier)"></div>
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                    <option value="">----------------</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="find_product_send_supplier()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div class="div-product">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="confirm_send_supplier()" class="btn btn-danger">Xác nhận gửi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+
+        <div id="popup_receive_supplier" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nhận hàng trả lại từ nhà cung cấp</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên nhà cung cấp</label>
+                                <input type="text" oninput="find_customer_callback(success_get_supplier_receive)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_supplier_receive)"></div>
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                    <option value="">----------------</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="find_product_receive_supplier()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div class="div-product">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="confirm_receive_supplier()" class="btn btn-danger">Nhận lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div id="popup_change_supplier" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">NCC đổi sản phẩm khác</h5>
+                        <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên nhà cung cấp</label>
+                                <input type="text" oninput="find_customer_callback(success_get_supplier_change)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_supplier_change)"></div>
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                    <option value="">----------------</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="find_product_change_supplier()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div class="div-product">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="popup_change_customer" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đổi sản phẩm cho khách hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên khách hàng</label>
+                                <input type="text" oninput="find_customer_callback(success_get_customer_change)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_customer_change)"></div>
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                    <option value="">----------------</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="find_product_change_customer()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div class="div-product">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div id="popup_return_customer" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gửi nhà cung cấp</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row row-supplier">
+                            <div class="col col-md-3">
+                                <label>Tên nhà cung cấp</label>
+                                <input type="text" oninput="find_customer_callback(success_get_customer_return_customer)" class="form-control" placeholder="nhập tên hoắc số điện thoại">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmore_customer(success_get_customer_return_customer)"></div>
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Số điện thoại</label>
+                                <input type="text" class="form-control" disabled placeholder="số điện thoại">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Địa chỉ</label>
+                                <input type="text" class="form-control" disabled placeholder="Địa chỉ kh">
+                            </div>
+                            <div class="col col-md-2">
+                                <label>Chọn kho</label>
+                                <select name="select_warehouse">
+                                    <option value="">----------------</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-2">
+                                <button onclick="find_product_return_customer()" class="btn btn-primary">Tìm kiếm</button>
+                            </div>
+                        </div>
+                        <div class="div-product">
+                            
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="confirm_return_customer()" class="btn btn-danger">Xác nhận trả</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popup_change_new" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đổi sản phẩm mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" onclick="showPopup('popup_change_supplier',false,'popup_change_new')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                          <label>Tên sản phẩm</label>
+                        <input oninput="findSubCategory()" class="form-control" type="text" name="" placeholder="Nhập tên sản phẩm . . .">
+                        <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div onscroll="loadmoreSubCategory()" class="div-product"></div>
+                      </div>
+                      <div>
+                          <label>Mã phụ (nếu có)</label>
+                          <input class="form-control" type="text" placeholder="Nhập mã phụ . . .">
+                      </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <input class="form-control" type="text" placeholder="ghi chú . . .">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="showPopup('popup_change_supplier',false,'popup_change_new')"  data-dismiss="modal">Đóng</button>
+                        <button type="button"  class="btn btn-danger">Xác nhận đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="popup_change_other" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đổi sản phẩm khác</h5>
+                        <button type="button" class="close close-model" data-dismiss="modal"  aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label>Mã sản phẩm</label>
+                            <input onkeypress="find_id_product_callback(find_product_id_to_change)" type="text" class="form-control" name="" placeholder="Nhập tên sản phẩm . . .">
+                            <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Tên sản phẩm</label>
+                            <input class="form-control" type="text" disabled placeholder="Tên sản phẩm . . .">
+                        </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <input class="form-control" type="text" placeholder="ghi chú . . .">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary close-model"   data-dismiss="modal">Đóng</button>
+                        <button type="button"  class="btn btn-danger">Xác nhận đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../../footer') %>
+
+            <script>
+                var limit = '<%- limit %>'
+                var page = '<%- page %>'
+                var key = '<%- key %>'
+                var fromdate = '<%- fromdate %>'
+                var todate = '<%- todate %>'
+                var warranty_status = '<% if(locals.warranty_status){ %><%- warranty_status %><% }else{ %><% } %>';
+                var id_warehouse = '<% if(locals.id_warehouse){%><%- id_warehouse %><%}else{%><%}%>';
+            </script>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+            <script src="/assets/dataTable/vfs_fonts.js"></script>
+            <script src="/assets/dataTable/pdfmake.min.js"></script>
+            <script src="/assets/dataTable/jszip.min.js"></script>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+            <script src="/assets/dataTable/buttons.print.min.js"></script>
+            <script src="/assets/dataTable/buttons.html5.min.js"></script>
+            <script src="/js/BusinessManagement/Warranty/index.js"></script>
+            </body>
+
+</html>

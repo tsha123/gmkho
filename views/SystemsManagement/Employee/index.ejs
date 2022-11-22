@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/employee.css">
+    <%- include('../../header',{title:"Quản lý nhân viên"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                      <option value="<%- limit %>"><%- limit %></option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                  </select>
+                    </div>
+                    <div class="col-8 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" value="<%- key %>" placeholder="Nhập tên hoặc số điện thoại . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-7 col-md-2">
+                        <label>Chức danh</label>
+                        <select onchange="getData()" name="selectGroup" id="selectEmployeeGroup">
+                          <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                <div class="col-5 col-md-2 relative">
+                  <button id="btnAdd" onclick="showPopup('popupAdd',true)" class="btn btn-success absulate"><i class="mdi mdi-account-plus"></i> <span class="hide-on-mobile">Thêm mới</span> </button>
+                </div>
+                <div class="col-5 col-md-3 relative">
+                  <button style="top: 21px;" onclick="showPopup('popupAddGroup',true)" class="btn btn-warning absulate"><i class="mdi mdi-account-plus"></i> <span class="hide-on-mobile">Thêm chức danh</span> </button>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên nhân viên</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Chức danh</th>
+                            <th>Trạng thái</th>
+                            <th>Chi tiết</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-80" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm mới  <i class="mdi mdi-account-minus"></i> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-6 col-md-3">
+                      <b>Tên nhân viên</b>
+                      <input placeholder="Nhập tên nhân viên" type="text" class="form-control" id="addName">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Số điện thoại</b>
+                      <input placeholder="Số điện thoại" type="text" autocomplete="off" class="form-control" id="addPhone">
+                    </div>
+                    <div class="col-6 col-md-6">
+                      <b>Địa chỉ</b>
+                      <input placeholder="Địa chỉ nhân viên" type="text" class="form-control" id="addAddress">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Tài khoản bank</b>
+                      <input placeholder="Tài khoản ngân hàng" type="text" class="form-control" id="addBanknumber">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Tên bank</b>
+                      <input placeholder="Tên ngân hàng" type="text" class="form-control" id="addBankname">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Chức vụ</b>
+                      <select id="addSelectGroup" name="selectGroup"></select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Trình độ học vấn</b>
+                      <input placeholder="Trình độ học vấn" type="text" class="form-control" id="addLevel">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Lương cơ bản</b>
+                      <input placeholder="Lương cơ bản" type="text" oninput="inputNumber(this)" class="number form-control" id="addSalary">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Lương trực</b>
+                      <input placeholder="Lương trực" type="text" oninput="inputNumber(this)" class="number form-control" id="addSalaryDuty">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Phụ cấp ăn trưa</b>
+                      <input placeholder="Phụ cấp ăn trưa" type="text" oninput="inputNumber(this)" class="number form-control" id="addLunchAllowance">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>% Doanh số</b>
+                      <input placeholder="% doanh số của chi nhánh" type="text" class="form-control" id="addPercent">
+                    </div>
+                    <div class="col-6 col-md-12">
+                      <b>Mật khẩu</b>
+                      <input placeholder="Mât khẩu" type="text" type="text" class="form-control" id="addPassword">
+                    </div>
+                    
+                  </div>
+                  
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12 div-image relative">
+                  <b class="absulate">Ảnh đại diện</b>
+                    <img id="imageAdd" onclick="changeImage( 'inputAddImage')">
+                    <input oninput="paste_Image(this, 'imageAdd')" id="inputAddImage" type="file" accept="image/*">
+                </div>
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-80" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa <i class="mdi mdi-account-minus"></i> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-6 col-md-3">
+                      <b>Tên nhân viên</b>
+                      <input placeholder="Nhập tên nhân viên" class="form-control" id="editName">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Số điện thoại</b>
+                      <input placeholder="Số điện thoại" autocomplete="off" class="form-control" id="editPhone">
+                    </div>
+                    <div class="col-6 col-md-6">
+                      <b>Địa chỉ</b>
+                      <input placeholder="Địa chỉ nhân viên" class="form-control" id="editAddress">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Tài khoản bank</b>
+                      <input placeholder="Tài khoản ngân hàng" class="form-control" id="editBanknumber">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Tên bank</b>
+                      <input placeholder="Tên ngân hàng" class="form-control" id="editBankname">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Chức vụ</b>
+                      <select id="editSelectGroup" name="selectGroup"></select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Trình độ học vấn</b>
+                      <input placeholder="Trình độ học vấn" class="form-control" id="editLevel">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Lương cơ bản</b>
+                      <input placeholder="Lương cơ bản" oninput="inputNumber(this)" class="number form-control" id="editSalary">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Lương trực</b>
+                      <input placeholder="Lương trực" oninput="inputNumber(this)" class="number form-control" id="editSalaryDuty">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>Phụ cấp ăn trưa</b>
+                      <input placeholder="Phụ cấp ăn trưa" oninput="inputNumber(this)" class="number form-control" id="editLunchAllowance">
+                    </div>
+                    <div class="col-6 col-md-3">
+                      <b>% Doanh số</b>
+                      <input value="0" placeholder="% doanh số của chi nhánh" class="form-control" id="editPercent">
+                    </div>
+                    <div class="col-6 col-md-12">
+                      <b>Cơ sở công tác</b>
+                      <select name="select_branch" id="edit_select_branch">
+                        <%- html_branch %>
+                      </select>
+                    </div>
+                    <div class="col-6 col-md-12">
+                      <b>Mật khẩu</b>
+                      <input placeholder="Mât khẩu" type="text" class="form-control" id="editPassword">
+                    </div>
+                    
+                  </div>
+                  <div class="row">
+                    <b>Trạng thái</b>
+                    <div style="display: flex;">
+                      <div class="form-check form-check-success">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="editStatus" value="true" checked=""> Đang hoạt động <i class="input-helper"></i>
+                        </label>
+                      </div>
+                      <div class="form-check form-check-primary">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="editStatus" value="false" > Đã nghỉ <i class="input-helper"></i>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12 div-image relative">
+                  <b class="absulate">Ảnh đại diện</b>
+                    <img id="imageEdit" onclick="changeImage( 'inputEditImage')">
+                    <input oninput="paste_Image(this, 'imageEdit')" id="inputEditImage" type="file" accept="image/*">
+                </div>
+              </div>
+              
+              <div class="modal-footer">
+                <button type="button" id="confirmEdit" class="btn btn-danger">Chỉnh sửa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="popupAddGroup" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm chức danh nhân viên <i class="mdi mdi-account-minus"></i> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div>
+                    <label>Nhập tên chức danh</label>
+                    <input class="form-control" type="text" placeholder="nhập tên chức danh nhân viên">
+                  </div>
+                  <div>
+                    <label>Chọn nhóm</label>
+                    <select name="supper_group"></select>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" onclick="confirm_add_group()" class="btn btn-danger">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+        <script src="css-login/js/sha512.min.js"></script>
+
+        <script>
+            var limit = '<%- limit %>'
+            var page = '<%- page %>'
+            var id_employee_group = '<%- id_employee_group %>'
+            var key = '<%- key %>'
+        </script>
+        <script src="/js/SystemsManagement/Employee/index.js"></script>
+
+            </body>
+
+</html>

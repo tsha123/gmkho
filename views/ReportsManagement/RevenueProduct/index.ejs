@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/revenue_product.css">
+    <%- include('../../header',{title:"Báo cáo | Thống kê lợi nhuận theo sản phẩm"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-5 col-md-3 col-lg-3 col-xl-3">
+                            <label>Từ ngày</label>
+                            <input value="<%- fromdate %>" type="date" class="form-control">
+                        </div>
+                        <div class="col-5 col-md-3 col-lg-3 col-xl-3">
+                            <label>Đến ngày</label>
+                            <input value="<%- todate %>" type="date" class="form-control">
+                        </div>
+                        <div class="col-5 col-md-2 col-lg-2 col-xl-2">
+                            <label>Danh mục</label>
+                            <select>
+                                <option>Tất cả</option>
+                            </select>
+                        </div>
+                        <div class="col-5 col-md-3 col-lg-2 col-xl-2">
+                            <label>Chọn kho</label>
+                            <select></select>
+                        </div>
+                        <div class="col-2 col-md-2 col-lg-2 col-xl-2">
+                            <button class="btn btn-primary"><span class="hide-on-mobile">Tìm kiếm</span> <i  class="fas fa-search"></i></button>
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+                
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+
+        <script src="/assets/dataTable/vfs_fonts.js"></script>
+        <script src="/assets/dataTable/pdfmake.min.js"></script>
+        <script src="/assets/dataTable/jszip.min.js"></script>
+        <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+        <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+        <script src="/assets/dataTable/buttons.print.min.js"></script>
+        <script src="/assets/dataTable/buttons.html5.min.js"></script>
+        <script>
+            var id_warehouse = '<% if(locals.id_warehouse){ %> <%- id_warehouse %>  <% } else { %><% } %>'
+            var id_category = '<% if(locals.id_category){ %> <%- id_category %>  <% } else { %><% } %>'
+        </script>
+        <script src="/js/ReportsManagement/RevenueProduct/index.js"></script>
+        </body>
+</html>

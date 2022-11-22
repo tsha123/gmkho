@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="/css/debt.css"> -->
+    <%- include('../../header',{title:"Báo cáo | Nhập xuất tồn"}) %>
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-6 col-md-3 col-lg-3 col-xl-2">
+                        <label>Từ ngày</label>
+                        <input id="fromdate" onchange="getData()" value="<%- fromdate %>" type=date class="form-control">
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-3 col-xl-2">
+                        <label>Đến ngày</label>
+                        <input onchange="getData()" id="todate" type="date" value="<%- todate %>" class="form-control">
+                    </div>
+                    <div class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3 ">
+                        <label>Lọc tồn</label>
+                        <select id="selectInventory" onchange="changeDraw()">
+                        <option value="all">Tất cả</option>
+                        <option value="lt"> &lt; 0 </option>
+                        <option value="gt"> &gt; 0 </option>
+                        <option value="ne"> &ne; 0 </option>
+
+                    </select>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 col-sm-3 ">
+                        <label>Chọn kho</label>
+                        <select onchange="getData()" id="selectWarehouse">
+                  </select>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-3 col-xl-3 col-sm-3 ">
+                        <label>Danh mục</label>
+                        <select onchange="changeDraw()" id="selectCategory">
+                      <option value="">Tất cả</option>
+                  </select>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+
+                </div>
+                <div id="divPagination">
+
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+        <!--  -->
+        <%- include('../../footer') %>
+            <script src="/assets/dataTable/vfs_fonts.js"></script>
+            <script src="/assets/dataTable/pdfmake.min.js"></script>
+            <script src="/assets/dataTable/jszip.min.js"></script>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <!-- <script src="/assets/dataTable/dataTables.fixedHeader.min.js"></script> -->
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+            <script src="/assets/dataTable/buttons.print.min.js"></script>
+            <script src="/assets/dataTable/buttons.html5.min.js"></script>
+            <script src="/js/ReportsManagement/Inventory/index.js"></script>
+            </body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link href="/css/voucher.css" rel="stylesheet" type="text/css">
+    <%- include('../../header',{title:"Quản lý mã giảm giá"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-1">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                            <option value="<%- limit %>"><%- limit %></option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Từ ngày</label>
+                        <input class="form-control" onchange="getData()" id="fromdate" value="<%- fromdate %>" type="date">
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Đến ngày</label>
+                        <input class="form-control" onchange="getData()" id="todate" value="<%- todate %>" type="date">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" autocomplete="off" value="<%- key %>" onkeypress="findData()" placeholder="Nhập mã giảm giá hoặc mô tả . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 relative">
+                        <button onclick="showPopup('popupAdd',true)" class="btn btn-success"><i class="fas fa-plus"></i> <span class="hide-on-mobile hide-on-tablet">Thêm mới</span> </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Stt</th>
+                                <th>Mã giảm giá</th>
+                                <th>Loại</th>
+                                <th>Giá trị</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>Thời gian | Sở hữu</th>
+                                <th>Lượt dùng</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <!-- Popup thêm mới -->
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới mã giảm giá</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-6 col-md-6">
+                                    <label>Hình thức giảm giá</label>
+                                    <select id="voucher_type">
+                                        <option value="money">Khoảng tiền (tổng đơn trên X tiền)</option>
+                                        <option value="percent">% trên tổng đơn (Tổng đơn dưới x tiền)</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <label>Giá trị</label>
+                                    <input id="voucher_value" class="number form-control" oninput="inputNumber(this)">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <label>Giới hạn tổng đơn</label>
+                                    <input class="number form-control" id="voucher_limit_total" oninput="inputNumber(this)" >
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label>Số lần áp dụng</label>
+                                    <input class="number form-control" id="voucher_limit_user" value="1" oninput="inputNumber(this)" >
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label>Khác</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="fasle" onchange="changeValueCheckbox()" id="voucher_is_limit_time">
+                                        <label class="form-check-label" for="voucher_is_limit_time">
+                                          Giới hạn thời gian sử dụng
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" onchange="changeValueCheckbox()" id="voucher_is_own">
+                                        <label class="form-check-label" for="voucher_is_own">
+                                          Có thể sưu tập
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <label>Từ ngày</label>
+                                    <input class="form-control" disabled id="voucher_time_start" type="datetime-local"  >
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label>Đến ngày</label>
+                                    <input class="form-control" id="voucher_time_end" disabled type="datetime-local"  >
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label>Số lượng</label>
+                                    <input class="number form-control" type="text" id="voucher_quantity"  oninput="inputNumber(this)" >
+                                </div>
+                            </div>
+                            <div>
+                                <label>Ghi chú</label>
+                                <input class="form-control" id="voucher_description" placeholder="Nhập ghi chú  . . ">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+     
+        <!-- Popup -->
+        <script>
+            var limit = '<%- limit %>'
+            var page = '<%- page %>'
+            var key = '<%- key %>'
+        </script>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+
+            <script src="/js/SystemsManagement/Voucher/index.js"></script>
+            </body>
+
+</html>

@@ -1,0 +1,179 @@
+#div_find_supplier .spinner-border {
+    top: 32px;
+    position: absolute;
+    right: 13px;
+    width: 18px;
+    height: 18px;
+    display: none;
+}
+
+#div_list_supplier {
+    width: 85%;
+    max-height: 200px;
+    z-index: 100;
+    position: absolute;
+    background-color: white;
+    overflow: auto;
+}
+
+#table-main i {
+    font-size: 20px;
+    color: red;
+}
+
+#table-main td:first-child {
+    position: relative;
+}
+
+#table-main td:first-child .spinner-border {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 23px;
+    right: 16px;
+    display: none;
+}
+
+#table-main td:first-child .div-product {
+    position: absolute;
+    z-index: 100;
+    overflow: auto;
+    background-color: white;
+    max-height: 150px;
+    width: 100%;
+}
+
+#divPagination {
+    margin-top: 20px;
+    border: 1px solid black;
+}
+@media only screen and (max-width: 1366px) {
+    #table-main th:nth-child(1) {
+        width: 24%;
+    }
+    #table-main th:nth-child(2),
+    #table-main th:nth-child(5),
+    #table-main th:nth-child(8) {
+        width: 15%;
+    }
+    
+    #table-main th:nth-child(4),
+    #table-main th:nth-child(3),
+    #table-main th:nth-child(6) {
+        width: 9%;
+    }
+    #table-main th:nth-child(7) {
+        width: 15%;
+    }
+    #table-main td:first-child {
+        position: relative;
+    }
+    .table input {
+        font-size: 13px;
+    }
+    #table-main tr td:first-child input {
+        font-size: 11px;
+    }
+    .table {
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 1280px) {
+    table input {
+        font-size: 11px;
+    }
+
+    .table {
+        font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 1024) {
+    table input {
+        font-size: 9px;
+    }
+
+    .table {
+        font-size: 9px;
+    }
+}
+.div-table {
+    overflow: unset !important;
+}
+
+#divPagination table tr:nth-child(2) td:nth-child(2),
+#divPagination table tr:nth-child(2) td:nth-child(4) {
+    position: relative;
+}
+#divPagination table tr:nth-child(2) td:nth-child(2) button,
+#divPagination table tr:nth-child(2) td:nth-child(4) button {
+    position: absolute;
+    padding: 3px;
+    border-radius: 0;
+    top: 15px;
+    right: 15px;
+}
+#divPagination table tr:nth-child(2) td:nth-child(2) input,
+#divPagination table tr:nth-child(2) td:nth-child(4) input {
+    padding-right: 67px;
+}
+
+#btn_show_popup_supplier {
+    position: absolute;
+    top: 155px;
+    /* right: 30px; */
+}
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 10px !important;
+    }
+}
+
+#table-main th:nth-child(1) {
+    width: 24%;
+}
+#table-main th:nth-child(2),
+#table-main th:nth-child(5),
+#table-main th:nth-child(8) {
+    width: 15%;
+}
+#table-main th:nth-child(4),
+#table-main th:nth-child(3),
+#table-main th:nth-child(6) {
+    width: 9%;
+}
+#table-main th:nth-child(7) {
+    width: 10%;
+}
+#table-main th:nth-child(8) {
+    width: 10%;
+}
+#table-main td:first-child {
+    position: relative;
+}
+.table input {
+    font-size: 15px;
+}
+.table {
+    font-size: 15px;
+}
+#table-main tbody td:nth-child(7) {
+    position: relative;
+}
+#table-main tbody td:nth-child(7) .spinner-border {
+    position: absolute;
+    top: 23px;
+    right: 11px;
+    width: 15px;
+    height: 15px;
+    display: none;
+}
+
+#table-main tbody td:nth-child(7) .div-employee {
+    z-index: 100;
+    background-color: #ced4da;
+    position: absolute;
+    max-height: 110px;
+    overflow: auto;
+    width: 230px;
+}

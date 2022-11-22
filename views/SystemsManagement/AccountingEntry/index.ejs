@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/accounting_entry.css">
+    <%- include('../../header',{title:"Bút toán thu chi"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                          <option value="<%- limit %>"><%- limit %></option>
+                          <option>10</option>
+                          <option>20</option>
+                          <option>50</option>
+                          <option>80</option>
+                          <option>100</option>
+                      </select>
+                    </div>
+                    <div class="col-8 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" onkeypress="findByName()" autocomplete="off" value="<%- key %>" placeholder="Nhập tên bút toán . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-7 col-md-3">
+                        <label>Loại</label>
+                        <select id="selectType">
+                            <option value="">Tất cả</option>
+                            <option value="receive">Thu</option>
+                            <option value="payment">Chi</option>
+                        </select>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-2 col-xl-2 relative">
+                        <div class="btn-add">
+                            <div><button id="btnAdd" onclick="showPopup('popupAdd',true)" class="btn btn-success"><i class="fas fa-pen-fancy"></i><span class="hide-on-mobile"> Thêm mới </span></button></div>
+                        </div>
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên bút toán</th>
+                                <th>Loại</th>
+                                <th>Là chi phí</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+      
+        <!-- Popup thêm mới -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới bút toán <i class="fas fa-pen-fancy text-success"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label>Tên bút toán</label>
+                                <input class="form-control" type="text" id="addName" placeholder="Nhập tên bút toán">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Loại</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addType"  value="receive" checked > Thu<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addType" value="payment" >Chi<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Là chi phí</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addDebt"  value="false" > Có<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addDebt" value="true" checked>Không<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirmAdd()" class="btn btn-danger">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- chỉnh sửa -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới bút toán <i class="fas fa-pen-fancy text-success"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label>Tên bút toán</label>
+                                <input class="form-control" type="text" id="editName" placeholder="Nhập tên bút toán">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Loại</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="editType"  value="receive" checked > Thu<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="editType" value="payment" >Chi<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Là chi phí</label>
+                                <div class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="editDebt"  value="false" > Có<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="editDebt" value="true" checked>Không<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnConfirmEdit" class="btn btn-danger">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script>
+                var limit = '<%- limit %>'
+                var page = '<%- page %>'
+                var type = '<%- type %>';
+                var key = '<%- key %>';
+                $("#selectType").val(type).change()
+                $("#selectType").attr("onchange",`getData()`)
+            </script>
+            <script src="/js/SystemsManagement/AccountingEntry/index.js"></script>
+
+            </body>
+</html>

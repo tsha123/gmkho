@@ -1,0 +1,16 @@
+#div_find_supplier .spinner-border{
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 9px;
+    right: 3px;
+    display: none;
+}
+
+#div_list_supplier{
+
+    position: absolute;
+    background-color: aliceblue;
+    max-height: 150px;
+    overflow: auto;
+}

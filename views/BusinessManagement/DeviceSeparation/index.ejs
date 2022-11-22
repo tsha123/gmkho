@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link href="/css/device_separation.css" rel="stylesheet" type="text/css">
+    <%- include('../../header',{title:"Bóc tách và dựng máy"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-1">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                            <option value="<%- limit %>"><%- limit %></option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Từ ngày</label>
+                        <input class="form-control" onchange="getData()" id="fromdate" value="<%- fromdate %>" type="date">
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Đến ngày</label>
+                        <input class="form-control" onchange="getData()" id="todate" value="<%- todate %>" type="date">
+                    </div>
+                    <div class="col col-md-2 col-xl-2 col-lg-2" >
+                        <label><b>Chọn kho</b></label>
+                        <select id="select_warehouse" onchange="getData()" name="select_warehouse"></select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" autocomplete="off" value="<%- key %>" onkeypress="findData()" placeholder="Nhập mã giảm giá hoặc mô tả . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 relative">
+                        <button onclick="showPopupAdd()" class="btn btn-success"><i class="fas fa-plus"></i> <span class="hide-on-mobile hide-on-tablet">Thêm mới</span> </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">STT</th>
+                                <th class="text-center">Nhân viên</th>
+                                <th class="text-center">Tên sản phẩm</th>
+                                <th class="text-center">Giá trị đầu vào</th>
+                                <th class="text-center">Tên sản phẩm ra</th>
+                                <th class="text-center">Giá trị đầu ra</th>
+                                <th class="text-center">Thuộc kho</th>
+                                <th class="text-center">Ghi chú</th>
+                                <th class="text-center">Chi tiết</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal fade" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-confirm modal-90">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> <i class="fas fa-cogs"></i> Tạo phiếu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                           <div class="col col-md-6" id="div_input">
+                               <b>Đầu vào</b>
+                               <table class="table">
+                                   <thead>
+                                       <tr>
+                                           <th>STT</th>
+                                           <th>Mã sản phẩm</th>
+                                           <th>Tên sản phẩm</th>
+                                           <th>Giá vốn</th>
+                                           <th>Bảo hành</th>
+                                           <th></th>
+                                       </tr>
+                                   </thead>
+                                   <tbody></tbody>
+                               </table>
+                               <div>
+                                   <label>Tổng giá trị đầu vào: <b id="total_input" style="color: blue;"></b></label>
+                               </div>
+                           </div>
+                           <div class="col col-md-6" id="div_output">
+                            <b>Đầu ra</b>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Mã phụ</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá vốn</th>
+                                        <th>Bảo hành</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div>
+                                <label >Tổng giá trị đầu ra: <b style="color:blue;" id="total_output"></b></label>
+                            </div>
+                           </div>
+                        </div>
+                        <div>
+                            <label>Ghi chú</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                        <button type="button" onclick="confirm_process()" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup thêm mới -->
+        <div id="popupDetail" class="modal fade" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-confirm modal-90">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> <i class="fas fa-cogs"></i> Chi tiết bóc tách</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#detail_input" role="tab" aria-controls="home" aria-selected="true">Chi tiết đầu vào</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#detail_output" role="tab" aria-controls="profile" aria-selected="false">Chi tiết đầu ra</a>
+                            </li>
+                   
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="detail_input" role="tabpanel" aria-labelledby="home-tab">
+                              
+                            </div>
+                            <div class="tab-pane fade" id="detail_output" role="tabpanel" aria-labelledby="profile-tab">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+        <script>
+            var limit = '<%- limit %>'
+            var page = '<%- page %>'
+            var key = '<%- key %>'
+            const id_warehouse = '<% if(locals.id_warehouse){%><%- id_warehouse %><%}else{%><%} %>'
+        </script>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+
+            <script src="/js/BusinessManagement/DeviceSeparation/index.js"></script>
+            </body>
+
+</html>

@@ -1,0 +1,38 @@
+#popupAdd table {
+    margin-top: 20px;
+}
+#popupAdd .div-employee {
+    position: relative;
+}
+#popupAdd .div-employee .spinner-border {
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    top: 29px;
+    right: 14px;
+    display: none;
+}
+#popupAdd .div-employee div:last-child {
+    position: absolute;
+    background-color: antiquewhite;
+}
+#popupAdd table tbody td:first-child {
+    position: relative;
+}
+#popupAdd table tbody td:first-child .spinner-border {
+    position: absolute;
+    width: 18px;
+    position: absolute;
+    height: 18px;
+    top: 19px;
+    right: 13px;
+    display: none;
+}
+.header-table .relative i {
+    position: absolute;
+    top: 25px;
+}
+
+#popupEdit table:last-child {
+    margin-top: 15px;
+}

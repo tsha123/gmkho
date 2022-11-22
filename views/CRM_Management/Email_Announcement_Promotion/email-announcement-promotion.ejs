@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/css/warranty_combo.css" />
+        <%- include("../../header",{title:"Email nhận thông báo người dùng"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Hiển thị</label>
+                        <select onchange="changeLimit()" id="selectLimit">
+                            <option value="<%- limit %>"><%- limit %></option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-8 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" value="<%- key %>" placeholder="Nhập email cần tìm..." autocomplete="off" type="text" class="form-control" oninput="change_key_search()" />
+                    </div>
+                    <div class="col-5 col-md-3 relative">
+                        <label>Tải DS</label><br />
+                        <button id="btn-download-excel" onclick="download_excel_email_announcement_promotion()" class="btn btn-success" title="Tải xuống dánh sách Email"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 70px">STT</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Số lượt đăng ký</th>
+                                <th class="text-center" style="width: 200px">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+        <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+        <script src="/assets/js/xlsx.core.min.js"></script>
+        <script>
+            var limit = "<%- limit %>"
+            var page = "<%- page %>"
+            var key = "<%- key %>"
+        </script>
+        <script src="/js/CRM_Management/Email_Announcement_Promotion/email-announcement-promotion.js"></script>
+    </head>
+</html>

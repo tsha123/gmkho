@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link rel="stylesheet" href="/css/employee.css">
+        <%- include('../../header',{title:"Quản lý nhân viên"}) %>
+
+            <div class="page-content">
+                <div class="header-table">
+                    <div class="row">
+                        <div class="col-4 col-md-2 col-lg-2">
+                            <label>Hiển thị</label>
+                            <select onchange="getData()" id="selectLimit">
+                                <option value="<%- limit %>">
+                                    <%- limit %>
+                                </option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <div class="col-8 col-md-3">
+                            <label>Tìm kiếm</label>
+                            <input id="keyFind" value="<%- key %>" placeholder="Nhập tên sản phẩm . . ." type="text"
+                                class="form-control">
+                        </div>
+                        <div class="col-5 col-md-3 relative">
+                            <button id="btnAdd" onclick="showPopup('popupAdd',true)" class="btn btn-success absulate">
+                                <i class="mdi mdi-plus"></i> <span class="hide-on-mobile">Thêm mới</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="div-table">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Vị trí</th>
+                                    <th>Ngày sử dụng</th>
+                                    <th>Nguyên giá</th>
+                                    <th>Thời hạn sử dụng (Tháng)</th>
+                                    <th>Giá trị khấu hao</th>
+                                    <th>Giá trị còn lại</th>
+                                    <th>Người sử dụng</th>
+                                    <th>Ghi chú</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyTable"></tbody>
+                        </table>
+                    </div>
+                    <div id="divPagination"></div>
+                </div>
+            </div>
+            <!-- POPUP ====================================-->
+            <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog model-80" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm mới<i class="mdi mdi-account-minus"></i> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="addIdAsset">Mã sản phẩm</label>
+                                    <input type="text" class="form-control" name="addIdAsset" id="addIdAsset"
+                                        aria-describedby="helpId" placeholder="Nhập mã sản phẩm" autocomplete="off">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="addAssetName">Tên sản phẩm</label>
+                                    <input type="text" class="form-control" name="addAssetName" id="addAssetName"
+                                        aria-describedby="helpId" placeholder="Nhập tên sản phẩm" autocomplete="off">
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label for="selectUser">Người sử dụng</label>
+                                    <select class="form-control" name="selectUser" id="selectUser">
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label for="addAssetTime">Ngày đưa vào sử dụng</label>
+                                    <input type="date" class="form-control" name="addAssetTime" id="addAssetTime"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="addAssetExpiry">Hạn sử dụng(Tháng)</label>
+                                    <input type="text" class="form-control" name="addAssetExpiry" id="addAssetExpiry"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="addAssetPrice">Nguyên giá</label>
+                                    <input type="text" class="form-control" name="addAssetPrice" id="addAssetPrice"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="addAssetPosition">Vị trí</label>
+                                    <input type="text" class="form-control" name="addAssetPosition"
+                                        id="addAssetPosition" aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="addAssetNote">Ghi chú</label>
+                                    <textarea class="form-control" name="addAssetNote" id="addAssetNote"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popup -->
+            <!-- Popup edit -->
+            <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog model-80" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chỉnh sửa <i class="mdi mdi-account-minus"></i> </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="editIdAsset">Mã sản phẩm</label>
+                                    <input type="text" class="form-control" name="editIdAsset" id="editIdAsset"
+                                        aria-describedby="helpId" placeholder="Nhập mã sản phẩm" autocomplete="off"
+                                        disabled>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="editAssetName">Tên sản phẩm</label>
+                                    <input type="text" class="form-control" name="editAssetName" id="editAssetName"
+                                        aria-describedby="helpId" placeholder="Nhập tên sản phẩm" autocomplete="off">
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label for="selectUser">Người sử dụng</label>
+                                    <select class="form-control" name="selectUser" id="selectEditUser">
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <label for="editAssetTime">Ngày đưa vào sử dụng</label>
+                                    <input type="date" class="form-control" name="editAssetTime" id="editAssetTime"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="editAssetExpiry">Hạn sử dụng(Tháng)</label>
+                                    <input type="text" class="form-control" name="editAssetExpiry" id="editAssetExpiry"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="editAssetPrice">Nguyên giá</label>
+                                    <input type="text" class="form-control" name="editAssetPrice" id="editAssetPrice"
+                                        aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="editAssetPosition">Vị trí</label>
+                                    <input type="text" class="form-control" name="editAssetPosition"
+                                        id="editAssetPosition" aria-describedby="helpId" autocomplete="off">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editAssetNote">Ghi chú</label>
+                                    <textarea class="form-control" name="editAssetNote" id="editAssetNote"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id='confirmEdit' type="button" onclick="confirmEdit()" class="btn btn-primary">
+                                Chỉnh sửa
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ====================================== -->
+            <%- include('../../footer') %>
+                <script src="css-login/js/sha512.min.js"></script>
+
+                <script>
+                    var limit = '<%- limit %>'
+                    var page = '<%- page %>'
+                    var key = '<%- key %>'
+                </script>
+                //
+                <script src="/js/SystemsManagement/Asset/index.js"></script>
+
+                </body>
+
+</html>

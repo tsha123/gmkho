@@ -1,0 +1,88 @@
+#tbodyTable td:first-child {
+    text-align: center;
+}
+#tbodyTable td:nth-child(6) {
+    text-align: right;
+}
+
+#popupEdit .col.col-md-12:first-child table tr:nth-child(5) td {
+    color: red;
+}
+
+#popupEdit .col.col-md-12:first-child table tr:nth-child(4) td {
+    color: blue;
+}
+
+#popupEdit .col.col-md-12:nth-child(2) table thead th:nth-child(9) {
+    display: none;
+}
+#popupEdit .col.col-md-12:nth-child(2) table tr td:nth-child(9) {
+    display: none;
+}
+
+.div-payment:has(input[type="checkbox"]) {
+    position: relative;
+}
+#payment_zero {
+    position: absolute;
+    top: 22px;
+    right: 0;
+}
+
+.header-table .relative button {
+    position: absolute;
+    top: 23px;
+}
+
+.div-warehouse {
+    margin-bottom: 15px;
+}
+.modal .spinner-border {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 23px;
+    right: 16px;
+    display: none;
+}
+
+.modal tr td:first-child {
+    position: relative;
+}
+.modal tr td:first-child .div-product {
+    position: absolute;
+    z-index: 100;
+    overflow: auto;
+    background-color: white;
+    max-height: 150px;
+    width: 100%;
+}
+
+.div-note {
+    justify-content: end;
+    display: flex;
+}
+.div-note div:first-child {
+    border: 1px solid;
+}
+
+.mdi-delete-forever {
+    color: red;
+}
+#div_find_supplier .spinner-border {
+    top: 32px;
+    position: absolute;
+    right: 13px;
+    width: 18px;
+    height: 18px;
+    display: none;
+}
+
+#div_list_supplier {
+    width: 85%;
+    max-height: 200px;
+    z-index: 100;
+    position: absolute;
+    background-color: white;
+    overflow: auto;
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/borrow.css">
+    <%- include('../../header',{title:"Mượn kho | Tìm kiếm"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                  <label>Hiển thị</label>
+                  <select onchange="getData()" id="selectLimit">
+                    <option value="<%- limit %>"><%- limit %></option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+                <div  class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                  <label>Tìm kiếm</label>
+                  <input  id="keyFind" placeholder="Mã phiếu , tên người mượn. . ." value="<%- key %>" class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Từ ngày</label>
+                  <input id="fromdate" onchange="getData()" value="<%- fromdate %>" type=date class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Đến ngày</label>
+                  <input onchange="getData()" id="todate" type="date" value="<%- todate %>" class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Chọn kho</label>
+                  <select onchange="getData()" id="selectWarehouse"> 
+                  </select>
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Trạng thái</label>
+                  <select onchange="getData()" id="selectStatus"> 
+                    <option value="">Tất cả</option>
+                    <option value="Đang mượn">Đang mượn</option>
+                    <option value="Đã trả">Đang trả</option>
+                  </select>
+                </div>
+                <div class="col col-md-2  col-lg-4 col-xl-1 relative">
+                  <i onclick="showPopupAdd()" class="fas fa-plus btn btn-success"></i>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                  <table class="table table-hover" id="table-main">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Mã phiếu</th>                     
+                        <th>Ngày tạo</th>
+                        <th>Người mượn</th>
+                        <th>Sản phẩm</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyTable">
+                      
+                    </tbody>
+                </table>
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupEdit" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chi tiết phiếu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                   
+                      <table class="table info-employee"></table>
+                    
+                    <div>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>STT</th>
+                            <th>Mã SP</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Ngày trả</th>
+                            <th>Trạng thái</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!-- ====================================== -->
+        <div id="popupAdd" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Thêm phiếu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col col-md-4 col-lg-3 div-employee">
+                        <label>Tên nhân viên</label>
+                        <input class="form-control" oninput="findEmployee()" id="inputFindEmployee" placeholder="Nhập tên nhân viên" type="text">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                        <div onscroll="loadMoreEmployee()" style="z-index:1000;">
+                        </div>
+                      </div>
+                      <div class="col col-md-4 col-lg-3">
+                        <label>Số điện thoại</label>
+                        <input class="form-control" disabled placeholder="Số đt nhân viên" name="phone_employee" type="text">
+                      </div>
+                      <div class="col col-md-4 col-lg-4">
+                        <label>Địa chỉ</label>
+                        <input class="form-control" disabled placeholder="Địa chỉ" name="address_employee" type="text">
+                      </div>
+                    </div>
+                    <div>
+                       <table class="table table-hover">
+                         <thead>
+                           <tr>
+                             <th>Mã sản phẩm</th>
+                             <th>Tên sản phẩm</th>
+                             <th></th>
+                           </tr>
+                         </thead>
+                         <tbody></tbody>
+                       </table>
+                    </div>
+                    <div>
+                      <label>Ghi chú:</label>
+                      <textarea class="form-control" id="input_note"></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" onclick="confirmAdd()" class="btn btn-danger" >Tạo phiếu</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!--  -->
+        <%- include('../../footer') %>
+        
+        <script>
+              var limit = '<%- limit %>'
+              var page = '<%- page %>'
+              var key = '<%- key %>'
+              var fromdate = '<%- fromdate %>'
+              var todate = '<%- todate %>'
+              var id_warehouse = '<%- id_warehouse %>'
+              var borrow_status = '<%- borrow_status %>'
+        </script>
+
+        <script src="/js/BusinessManagement/Borrow/index.js"></script>
+          </body>
+
+</html>

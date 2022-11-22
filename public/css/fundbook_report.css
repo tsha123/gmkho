@@ -1,0 +1,26 @@
+.page-header .row div:nth-child(4){
+    position: relative;
+}
+
+.page-header .row div:nth-child(4) button{
+    position: absolute;
+    top:22px
+}
+
+#divTable tbody td:nth-child(6) ,
+#divTable tbody td:nth-child(7) ,
+#divTable tbody td:last-child,
+#divTable tfoot td:last-child,
+#divTable tfoot td:nth-child(6),
+#divTable tfoot td:nth-child(7)
+{
+    text-align: right;
+}
+
+#divTable tfoot td:last-child{
+    color: red;
+}
+#divTable tfoot td:nth-child(6),
+#divTable tfoot td:nth-child(7){
+    color: blue;
+}

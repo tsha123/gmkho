@@ -1,0 +1,128 @@
+/* .branch-header-content{
+    font-size: ;
+} */
+
+.logo-branch{
+    max-width: 100%;
+}
+.info-date{
+    text-align: center;
+}
+b {
+    font-family: "Times New Roman", Times, serif;
+}
+
+.div-print,
+.div-print label,
+.div-print h1,
+.div-print td,
+.div-print b {
+    font-family: 'Times New Roman', Times, serif !important;
+}
+
+.div-print .logo-branch {
+    width: 100%;
+    height: auto;
+}
+
+
+.div-print .info-branch {
+    margin-left: 10px;
+}
+
+.div-print .info-branch .branch-header-content {
+    font-size: 22px;
+}
+.div-print .info-customer{
+    font-size: 20px;
+}
+/* .div-print .info-branch label {
+    font-size: 18px;
+} */
+
+.div-print div:first-child div:nth-child(3) {
+    text-align: right;
+}
+
+.div-print div:first-child div:nth-child(3) svg {
+    width: 250px;
+}
+
+.div-print .info-date {
+    text-align: center;
+}
+
+.div-print .info-date b {
+    font-size: 40px;
+}
+/* .div-print .content-product table{
+    font-size: 18px;
+} */
+.div-print .info-customer {
+    margin-top: 15px;
+    /* font-size: 18px; */
+}
+
+.div-print .content-product table tbody td:nth-child(3),
+.div-print .content-product table tbody td:nth-child(4),
+.div-print .content-product table tbody td:nth-child(5),
+.div-print .content-product table tbody td:nth-child(6),
+.div-print .content-product table tbody td:nth-child(7),
+.div-print .content-product table tbody td:nth-child(8),
+.div-print .content-product table tbody td:nth-child(9),
+.div-print .content-product table tbody td:nth-child(10),
+.div-print .content-product table tbody td:nth-child(11) {
+    text-align: right;
+    /* font-size: 20px; */
+}
+
+.div-print .content-product table tfoot td:nth-child(3),
+.div-print .content-product table tfoot td:nth-child(4),
+.div-print .content-product table tfoot td:nth-child(5),
+.div-print .content-product table tfoot td:nth-child(6),
+.div-print .content-product table tfoot td:nth-child(7),
+.div-print .content-product table tfoot td:nth-child(8),
+.div-print .content-product table tfoot td:nth-child(9),
+.div-print .content-product table tfoot td:nth-child(10),
+.div-print .content-product table tfoot td:nth-child(11) {
+    text-align: right;
+}
+
+
+
+.div-print .content-product table thead,
+.div-print .content-product table tbody,
+.div-print .content-product table tfoot,
+.div-print .content-product table th,
+.div-print .content-product table td {
+    border-style: double !important;
+    border-color: black !important;
+    border-width: 1px !important;
+}
+
+.div-print .text-number {
+    margin-top: 20px;
+}
+
+.div-print .div-money div b {
+    text-align: left;
+}
+
+.div-print .note {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.div-print .signature {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.div-button-relative {
+    position: relative;
+}
+
+.div-button-relative button {
+    position: absolute;
+    top: 21px;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+<head>
+
+    <link rel="stylesheet" href="/css/up_product_to_website.css">
+    <link rel="stylesheet" href="/css/imageuploadify.min.css">
+
+    <%- include('../../header',{title:"Quản lý bài viết danh mục"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+             
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="container">
+                    <div class="post">
+                       
+                        <div class="post__title relative">
+                          <span>Quản lý bài viết</span>
+                          <span>
+                            <button onclick="confirmSave()" class="btn btn-danger absulate btn-save">Lưu thay đổi</button>
+                          </span>
+                        </div>
+                    </div>
+                    <div> 
+                      <b>Bài viết</b>
+                      <textarea id="editor" class="form-control"></textarea>
+                    </div>
+                    <span>
+                        <button onclick="confirmSave()" class="btn btn-danger absulate btn-save">Lưu thay đổi</button>
+                    </span>
+                </div>
+                
+             
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+        <%- include('../../footer') %>
+<!--  -->
+        <!-- ====================================== -->
+        <script src="/assets/ckeditor/ckeditor.js"></script>
+        <script src="/assets/ckeditor/samples/js/sample.js"></script>
+       
+        <script>
+          initSample();
+          const id_category = '<%- id_category %>'
+        </script>
+        <script src="/js/SystemsManagement/Category/content.js"></script>
+
+</body>
+</html>

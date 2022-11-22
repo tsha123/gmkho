@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/combo_product_to_sale.css">
+    <%- include('../../header',{title:"Combo sản phẩm"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-1">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                            <option value="<%- limit %>"><%- limit %></option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label>Loại combo</label>
+                        <select onchange="getData()" id="find_select_type">
+                            <option value="">____Tất cả_____</option>
+                            <option value="Combo bán lẻ">Combo bán lẻ</option>
+                            <option value="Combo khuyến mại">Combo khuyến mại</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input id="keyFind" autocomplete="off" value="<%- key %>" onkeypress="findData()" placeholder="Nhập tên combo . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2 div-button-relative">
+                        <button onclick="showPopupAdd()" class="btn btn-success"><i class="fas fa-plus"></i> <span class="hide-on-mobile hide-on-tablet">Thêm mới</span> </button>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div  class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td>STT</td>
+                                <td>Người tạo</td>
+                                <td>Tên combo</td>
+                                <td>Loại combo</td>
+                                <td>Sản phẩm</td>
+                                <td>Hành động</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog  modal-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới combo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Tên combo</label>
+                                    <input class="form-control" id="add_combo_name" placeholder="Nhập tên combo" type="text">
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Loại combo</label>
+                                    <select id="select_type">
+                                        <option value="">_________</option>
+                                        <option value="Combo bán lẻ">Combo bán lẻ</option>
+                                        <option value="Combo khuyến mại">Combo khuyến mại</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="div-find-subcategory">
+                                <label>Nhập tên sản phẩm:</label>
+                                <input oninput="findSubCategory(false, callback_subcategory)" class="form-control" name="" placeholder="Nhập tên sản phẩm . . .">
+                                <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmoreSubCategory(callback_subcategory )" class="div-product"></div>
+                            </div>
+                            <div class="div-table-subcategory">
+                                <table class="table table-hover" id="table_add">
+                                    <thead>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" onclick="confirm_add()" class="btn btn-danger">Lưu</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog  modal-80" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm mới combo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Tên combo</label>
+                                    <input class="form-control" id="edit_combo_name" placeholder="Nhập tên combo" type="text">
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Loại combo</label>
+                                    <select id="edit_select_type">
+                                        <option value="Combo bán lẻ">Combo bán lẻ</option>
+                                        <option value="Combo khuyến mại">Combo khuyến mại</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="div-find-subcategory">
+                                <label>Nhập tên sản phẩm:</label>
+                                <input oninput="findSubCategory(false, callback_subcategory)" class="form-control" name="" placeholder="Nhập tên sản phẩm . . .">
+                                <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                                </div>
+                                <div onscroll="loadmoreSubCategory(callback_subcategory )" class="div-product"></div>
+                            </div>
+                            <div class="div-table-subcategory">
+                                <table class="table table-hover" id="table_edit">
+                                    <thead>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Xóa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btn_confirm_save" class="btn btn-danger">Lưu</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupDelete" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Xóa phiếu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có chắc muốn xóa combo này không?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" data-dismiss="modal" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+
+            <script src="/js/SystemsManagement/ComboProduct/index.js"></script>
+            </body>
+
+</html>

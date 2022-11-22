@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/category.css">
+    <%- include('../../header',{title:"Quản lý danh mục"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                          <option value="<%- limit %>"><%- limit %></option>
+                          <option>10</option>
+                          <option>20</option>
+                          <option>50</option>
+                          <option>80</option>
+                          <option>100</option>
+                      </select>
+                    </div>
+                    <div class="col-8 col-md-3">
+                        <label>Tìm kiếm</label>
+                        <input oninput="getData(false)" id="keyFind" autocomplete="off" value="<%- key %>" placeholder="Nhập tên hoặc số điện thoại . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-2 col-xl-2 relative">
+                        <div class="btn-add">
+                            <div><button id="btnAdd" onclick="showPopupAdd()" class="btn btn-success"><i class="mdi mdi-chart-pie"></i> <span class="hide-on-mobile"> Thêm mới </span></button></div>
+                            <div id="btnDownloadCategory" onclick="downloadCategory()">
+                                <i class="mdi mdi-download text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1 col-md-1 relative">
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên danh mục</th>
+                                <th>Hình ảnh</th>
+                                <th>Trạng thái</th>
+                                <th>Danh mục cha</th>
+                                <th>Slide banner</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAddSuper" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới danh mục lớn</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Tên danh mục lớn</label>
+                        <input class="form-control" type="text" id="addNameSuper" placeholder="Nhập tên danh mục">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirmAddSuper()" class="btn btn-danger">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup thêm mới -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới danh mục <i class="mdi mdi-account-minus"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label>Tên danh mục</label>
+                                <input class="form-control" type="text" id="addName" placeholder="Nhập tên danh mục">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Danh mục cha:</b>
+                                <select id="select_parent_category_add" name="parent_id_add" class="form-control"></select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Slide banner:</b>
+                                <select id="select_slide_banner_add" name="slide_banner_add" class="form-control"></select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Part thưởng:</b>
+                                <input class="number form-control" id="addPart" type="text" value="0">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Trạng thái hoạt động:</label>
+                                <div style="display: flex;" class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addStatus"  value="true"  checked=""> Đang hoạt động <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="addStatus" value="false" >Không hoạt động<i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <label><b>Trạng thái hiển thị:</b></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_app_add" onchange="changeValueStatus(this)">
+                                    <label class="form-check-label" for="display_app_add">
+                                       Hiển thị trên app
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_website_add" onchange="changeValueStatus(this)">
+                                    <label class="form-check-label" for="display_website_add">
+                                       Hiển thị trên website
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-image relative col-12 col-md-12">
+                            <b>Chọn ảnh</b>
+                            <br>
+                            <img id="imgAdd" onclick="changeImage('inputAddImage')">
+                            <input onchange="paste_Image(this,'imgAdd')" id="inputAddImage" type="file" accept="image/*">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirmAdd()" class="btn btn-danger">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa <i class="mdi mdi-account-minus"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label>Tên danh mục</label>
+                                <input class="form-control" type="text" id="editName" placeholder="Nhập tên danh mục">
+                            </div>
+                            
+                            <div class="col-12 col-md-3">
+                                <b>Danh mục cha:</b>
+                                <select id="select_parent_category_edit"  class="form-control"></select>
+                            </div>
+                            
+                            <div class="col-12 col-md-3">
+                                <b>Slide banner:</b>
+                                <select id="select_slide_banner_edit" name="slide_banner_edit" class="form-control"></select>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Part thưởng:</b>
+                                <input class="number form-control" id="editPart" type="text" value="0">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Trạng thái hoạt động</label>
+                                <div style="display: flex;" class="form-group">
+                                    <div class="form-check form-check-success">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="editStatus"  value="true"  checked="">Đang hoạt động<i class="input-helper"></i></label>
+                                    </div>
+                                    <div class="form-check form-check-primary">
+                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="editStatus" value="false" >Không hoạt động<i class="input-helper"></i></label>
+                                    </div>
+                                </div>
+                                <label><b>Trạng thái hiển thị:</b></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_app_edit" onchange="changeValueStatus(this)">
+                                    <label class="form-check-label" for="display_app_edit">
+                                       Hiển thị trên app
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="display_website_edit" onchange="changeValueStatus(this)">
+                                    <label class="form-check-label" for="display_website_edit">
+                                       Hiển thị trên website
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-image relative col-12 col-md-12">
+                            <b>Chọn ảnh</b>
+                            <br>
+                            <img id="imgEdit" onclick="changeImage('inputEditImage')">
+                            <input onchange="paste_Image(this,'imgEdit')" id="inputEditImage" type="file" accept="image/*">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="confirmEdit" class="btn btn-danger">Lưu thay đổi</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div id="popupDetailKey" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa từ khóa<i class="mdi mdi-account-minus"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="divTableKey">
+                            <button onclick="showPopup('popupAddKey',true, 'popupDetailKey')" class="btn btn-success">Thêm mới +</button>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Số tt</th>
+                                        <th>Từ khóa</th>
+                                        <th>Tên thay thế</th>
+                                        <th>Giá trị</th>
+                                        <th>Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyKey"></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupAddKey" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới<i class="mdi mdi-account-minus"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Từ khóa</label>
+                        <input placeholder="Nhập từ khóa" type="text" id="add_category_options_name" class="form-control">
+                        <label>Tên thay thế</label>
+                        <input placeholder="Nhập tên thay thế, viết thường , không dấu cách" type="text" id="add_category_options_alt" class="form-control">
+                        <br>
+                        <label>Giá trị (enter để phân biệt)</label>
+                        <input placeholder="Nhập giá trị" type="text" onkeypress="changeValueKey(this)" id="add_category_options_values" class="form-control">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="confirmAddKey" class="btn btn-danger">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+
+        <div id="popupEditKey" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa từ khóa<i class="mdi mdi-account-minus"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        <label>Từ khóa</label>
+                        <input placeholder="Nhập từ khóa" type="text" id="edit_category_options_name" class="form-control">
+                        <label>Tên thay thế</label>
+                        <input placeholder="Nhập tên thay thế, viết thường , không dấu cách" type="text" id="edit_category_options_alt" class="form-control">
+                        <br>
+                        <label>Giá trị (enter để phân biệt)</label>
+                        <input placeholder="Nhập giá trị" type="text" onkeypress="changeValueKey(this)" id="edit_category_options_values" class="form-control">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnconfirmEditKey" class="btn btn-danger">Lưu chỉnh sửa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+        <div id="popupDeleteKey" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xóa từ khóa<i class="mdi mdi-delete-forever text-danger"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc muốn xóa từ khóa này không?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="btnconfirmDeleteKey" class="btn btn-danger">Xóa/button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="popupDelete" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xóa danh mục<i class="mdi mdi-delete-forever text-danger"></i> </h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có chắc muốn xóa danh mục này không?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Xóa</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script>
+                var limit = '<%- limit %>'
+                var page = '<%- page %>'
+                var key = '<%- key %>'
+            </script>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+            <script src="/js/SystemsManagement/Category/index.js"></script>
+
+            </body>
+
+</html>

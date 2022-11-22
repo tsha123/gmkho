@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/export_product/add_export_sale.css">
+    <%- include('../../header',{title:"Dịch vụ sửa chữa ngoài | Xuất mới"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div>
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a class="nav-link" href="/external-repair-service">Tìm kiếm</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="/external-repair-service/export">Xuất mới</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/external-repair-service/import">Nhận lại</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="row">
+                <div id="div_find_supplier" class="col-6 col-md-3 relative">
+                  <label>Khách hàng</label>
+                  <input placeholder="Nhập tên nhà cung cấp hoặc số điện thoại" oninput="findSupplier()" class="form-control">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div onscroll="loadmoreSupplier()" id="div_list_supplier"></div>
+                </div>
+                <div class="col-3 col-md-2">
+                  <label>Số điện thoại</label>
+                  <input disabled placeholder="Số điện thoại" class="form-control">
+                </div>
+                <div class="col-3 col-md-2">
+                  <label>Địa chỉ</label>
+                  <input disabled placeholder="Địa chỉ nhà cung cấp" class="form-control">
+                </div>
+                <div class="col-3 col-md-3 col-sm-4 col-lg-3 col-xl-2">
+                  <label>Điểm khách hàng</label>
+                  <input id="point_current" value="0" disabled class="form-control">
+                </div>
+                <div class="col-1 col-md-1 ralative">
+                  <button id="btn_show_popup_supplier" onclick="showPopup('popupAdd',true)" class="btn btn-primary hide-on-mobile"><i class="mdi mdi-account-plus" title="Thêm mới nhà cung cấp"></i></button>
+                </div>
+                <div class="col-3 col-md-3 col-sm-4 col-lg-3 col-xl-2 div-employee-setting none">
+                  <label>Nhân viên lắp ráp</label>
+                  <input class="form-control" oninput="findEmployee()" placeholder="nhập tên nhân viên lắp rap">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div onscroll="loadmoreEmployee()" class="div-employee"></div>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table row">
+                  <div class="col col-md-9">
+                    <table class="table table-hover" id="table-main">
+                      <thead>
+                        <tr>
+                          <th>Mã SP</th>
+                          <th>Giá xuất</th>
+                          <th>VAT</th>
+                          <th>CK</th>
+                          <th>Giảm giá</th>
+                          <th>Bảo hành</th>
+                          <th>Nhân viên</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbodyTable">
+                        
+                      </tbody>
+                  </table>
+                  </div>
+                  <div class="col col-md-3">
+                    <table id="table-two" class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Tên SP</th>
+                          <th>Slượng</th>
+                          <th>Tổng</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbodySmall">
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                  </table>
+                  </div>
+                </div>
+                <div id="divPagination">
+                    <table class="table">
+                        <tr>
+                          <td>Tổng tiền</td>
+                          <td><input id="totalMoney" class="form-control number" value="0" disabled></td>
+                          <td>Đã thanh toán</td>
+                          <td><input id="paid" disabled oninput="changeMoney()" class="form-control number" value="0"></td>
+                          <td>Còn nợ</td>
+                          <td><input id="debt" class="form-control number" disabled value="0"></td>
+                          <td class="none">Hình thức TT</td>
+                          <td class="none"><select id="selectTypePayment"></select></td>
+                        </tr>
+                        <tr class="none">
+                          <td>Mã giảm giá</td>
+                          <td>
+                             <input  class="form-control" value="" id="input_code_discount"  placeholder="Nhập mã giảm giá">
+                             <button class="btn btn-success" onclick="getValueCodeDiscount()">Áp dụng</button>
+                          </td>
+                          <td>Đổi điểm</td>
+                          <td>
+                              <input  class="form-control number" oninput="getMoneyPoint()" value="0" id="input_point"  placeholder="Nhập số điểm cần đổi">
+                              <button onclick="getMoneyPoint()" class="btn btn-success">ÁP Dụng</button>
+                          </td>
+                          <td></td>
+                          <td colspan="3">
+                            <span >Mã giảm giá: 0         &emsp;&emsp; &emsp;&emsp;     Điểm: 0</span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Ghi chú</td>
+                          <td colspan="6"><input name="note" class="form-control" placeholder="Nhập ghi chú"></td>
+                          <td class="center"><button data-target="#popupConfirm" data-toggle="modal" class="btn btn-primary">Xác nhận</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div class="modal" id="popupConfirm" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Xác nhận nhập</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Hãy kiểm tra kĩ các thông tin trước khi xuất hàng!</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="btnConfirm" class="btn btn-danger">Xác nhận</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ====================================== -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-80" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm khách hàng<i class="mdi mdi-account-minus"></i> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label>SĐT</label>
+                    <input type="text" class="form-control" aria-describedby="helpId" autocomplete="off" placeholder="Nhập SĐT">
+                  </div>
+                  <div class="col-sm-6">
+                    <label >Tên khách hàng</label>
+                    <input type="text" class="form-control" 
+                      aria-describedby="helpId" placeholder="Nhập tên khách hàng" autocomplete="off">
+                  </div>
+                  <div class="col-sm-12 col-md-3">
+                    <label >Ngày sinh</label>
+                    <input type="date" class="form-control">
+                    </input>
+                  </div>
+                  <div class="col-sm-12 col-md-3">
+                    <label>Giới tính</label>
+                    <select class="form-control" >
+                      <option value="Nam" selected>Nam</option>
+                      <option value="Nữ">Nữ</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <label>Mật khẩu</label>
+                    <input type="text" class="form-control" 
+                      aria-describedby="helpId" autocomplete="off" placeholder="Nhập mật khẩu">
+                  </div>
+                 
+                  <div class="col-sm-4">
+                    <label >Email</label>
+                    <input type="text" class="form-control" 
+                      aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ email">
+                  </div>
+                 
+                  <div class="col-sm-8">
+                    <label >Địa chỉ</label>
+                    <input type="text" class="form-control" 
+                      aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ liên hệ">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%- include('../../footer') %>
+        <script>
+            const type_export = "Xuất hàng dịch vụ sửa chữa ngoài"
+        </script>
+          <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+        <script src="/assets/js/xlsx.core.min.js"></script>
+        <script src="/js/BusinessManagement/ExternalRepairService/add.js"></script>
+     </body>
+</html>

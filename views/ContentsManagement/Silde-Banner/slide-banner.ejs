@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/warranty_combo.css">
+    <%- include("../../header",{title:"Quản lý slide banner"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-4 col-md-2 col-lg-2">
+                  <label>Hiển thị</label>
+                  <select onchange="changeLimit()" id="selectLimit">
+                      <option value="<%- limit %>"><%- limit %></option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                  </select>
+                </div>
+                <div class="col-8 col-md-3">
+                  <label>Tìm kiếm</label>
+                  <input id="keyFind"  value="<%- key %>" placeholder="Nhập tên, mô tả..." autocomplete="off" type="text" class="form-control" oninput="change_key_search()">
+                </div>
+                <div class="col-5 col-md-3 relative">
+                  <button id="btnAdd" onclick="showPopupAdd_new_slide_banner()" class="btn btn-success absulate"><i class="mdi mdi-account-plus"></i> Thêm mới </button>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th class="text-center" style="width: 70px;">STT</th>
+                            <th class="text-center">Tên</th>
+                            <th class="text-center">Mô tả</th>
+                            <th class="text-center">Hiển thị mobile</th>
+                            <th class="text-center" style="width: 200px;">Hành động</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+<!-- ====================================== -->
+<%- include('../../footer') %>
+<script>
+    var limit = '<%- limit %>'
+    var page = '<%- page %>'
+    var key = '<%- key %>'
+</script>
+<script src="/js/ContentsManagement/Silde-Banner/slide-banner.js"></script>
+
+</body>
+</html>
+
+<div id="popup_edit_slide_banner" class="modal fade" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog model-80">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Banner: </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body row">
+              <div class="col-12">
+                <label>Tiêu đề:</label>
+                <input class="form-control" autocomplete="off" type="text" placeholder="Nhập tiêu đề..." id="title_edit_slide_banner">
+              </div>
+              <div class="col-12">
+                <label>Mô tả:</label>
+                <input class="form-control" autocomplete="off" type="text" placeholder="Nhập mô tả..." id="des_edit_slide_banner">
+              </div>
+              <div class="col-12">
+                <label>Banner:</label>
+                  <div  id="div_edit_slide_banner" style="height: auto; overflow: visible;">
+
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-success" onclick="add_more__slide_banner(`edit_slide_banner`)">Thêm 1 dòng</button>
+              <button type="button" class="btn btn-primary" id="btn_Save_edit_slide_banner">Lưu thay đổi</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>
+<div id="popup_add_slide_banner" class="modal fade" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog model-80">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Banner: </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body row">
+              <div class="col-12">
+                <label>Tiêu đề:</label>
+                <input class="form-control" autocomplete="off" type="text" placeholder="Nhập tiêu đề..." id="title_add_slide_banner">
+              </div>
+              <div class="col-12">
+                <label>Mô tả:</label>
+                <input class="form-control" autocomplete="off" type="text" placeholder="Nhập mô tả..." id="des_add_slide_banner">
+              </div>
+              <div class="col-12">
+                <label>Banner:</label>
+                  <div id="div_add_slide_banner" style="height: auto; overflow: visible;">
+
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-success" onclick="add_more__slide_banner(`add_slide_banner`)">Thêm 1 dòng</button>
+              <button type="button" class="btn btn-primary" onclick="confirm_save_add_slide_banner()">Thêm mới</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          </div>
+      </div>
+  </div>
+</div>

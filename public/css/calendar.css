@@ -1,0 +1,29 @@
+.relative i {
+    font-size: 18px;
+    top: 26px;
+    position: absolute;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 500px !important;
+        margin: 30px auto !important;
+    }
+}
+
+#dataTable td {
+    text-align: center !important;
+    font-size: 10px;
+    position: relative;
+}
+
+#dataTable th {
+    width: 13%;
+    text-align: center;
+}
+
+#dataTable td i {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

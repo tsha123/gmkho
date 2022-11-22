@@ -1,0 +1,25 @@
+.header-table .row div:first-child{
+    position: relative;
+}
+
+.header-table .row div:first-child button{
+    position: absolute;
+    top: 22px;
+    right: -41px;
+}
+.header-table .row div:first-child .spinner-border{
+    width: 15px;
+    position: absolute;
+    top: 33px;
+    right: 52px;
+    height: 15px;
+    display: none;
+}
+
+.header-table .div-product{
+    z-index: 100;
+    /* position: absolute; */
+    max-height: 150px;
+    overflow: auto;
+    background-color: aliceblue;
+}

@@ -1,0 +1,35 @@
+.div-find-subcategory{
+    position: relative;
+}
+.div-find-subcategory .spinner-border{
+    right: 5px;
+    top: 33px;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    display: none;
+}
+.div-find-subcategory .div-product{
+
+    position: absolute;
+    max-height: 200px;
+    overflow: auto;
+    z-index: 100;
+    background-color: aliceblue;
+}
+.div-table-subcategory{
+    max-height: 500px;
+    margin-top: 10px;
+    overflow: auto;
+}
+.div-table-subcategory table thead th:first-child,
+.div-table-subcategory table thead th:last-child{
+    width: 0%;
+}
+.div-table-subcategory table thead th:nth-child(3){
+    width: 10%;
+}
+
+.div-table-subcategory table tbody tr td:nth-child(3) input{
+    text-align: right;
+}

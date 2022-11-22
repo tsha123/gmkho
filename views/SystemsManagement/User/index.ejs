@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/user.css">
+    <%- include('../../header',{title:"Quản lý khách hàng"}) %>
+
+      <div class="page-content">
+        <div class="header-table">
+          <div class="row">
+            <div class="col-4 col-md-2 col-lg-2">
+              <label>Hiển thị</label>
+              <select onchange="getData()" id="selectLimit">
+                <option value="<%- limit %>">
+                  <%- limit %>
+                </option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <div applyCategFoodSearch=""; class="col-8 col-md-3">
+              <label>Tìm kiếm</label>
+              <input id="keyFind" applyCategFoodSearch="" value="<%- key %>"  placeholder="Tên khách hàng . . ." autocomplete="off" type="text" class="form-control">
+            </div>
+           
+            <div class="col mt-auto">
+              <button id="btnAdd" onclick="showPopup('popupAdd',true)" class="btn btn-success">
+                <i class="mdi mdi-account-plus"></i>&nbsp;<span class="hide-on-mobile">Thêm mới</span>
+              </button>
+              <button onclick="showPopupExcel()" class="btn btn-success">
+                <i class="mdi mdi-account-multiple-plus"></i>&nbsp;<span class="hide-on-mobile">Thêm nhiều</span>
+              </button>
+              <button id="downloadTemplate" class="btn btn-success" onclick="downloadTemplate()">
+                <i class="mdi mdi-download"></i>&nbsp;<span class="hide-on-mobile">Mẫu</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="div-table">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên khách hàng</th>
+                  <th>SĐT</th>
+                  <th>Địa chỉ</th>
+                  <th>Ngày sinh</th>
+                  <th>Giới tính</th>
+                  <th>Điểm</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyTable"></tbody>
+            </table>
+          </div>
+          <div id="divPagination"></div>
+        </div>
+      </div>
+      <!-- POPUP ====================================-->
+      <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog model-80" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Thêm khách hàng<i class="mdi mdi-account-minus"></i> </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label>SĐT</label>
+                  <input type="text" class="form-control" aria-describedby="helpId" autocomplete="off" placeholder="Nhập SĐT">
+                </div>
+                <div class="col-sm-6">
+                  <label >Tên khách hàng</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" placeholder="Nhập tên khách hàng" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-md-3">
+                  <label >Ngày sinh</label>
+                  <input type="date" class="form-control">
+                  </input>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                  <label>Giới tính</label>
+                  <select class="form-control" >
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label>Mật khẩu</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập mật khẩu">
+                </div>
+               
+                <div class="col-sm-4">
+                  <label >Email</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ email">
+                </div>
+               
+                <div class="col-sm-8">
+                  <label >Địa chỉ</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ liên hệ">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog model-80" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Thêm khách hàng<i class="mdi mdi-account-minus"></i> </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label>SĐT</label>
+                  <input type="text" class="form-control" aria-describedby="helpId" autocomplete="off" placeholder="Nhập SĐT">
+                </div>
+                <div class="col-sm-6">
+                  <label >Tên khách hàng</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" placeholder="Nhập tên khách hàng" autocomplete="off">
+                </div>
+                <div class="col-sm-12 col-md-3">
+                  <label >Ngày sinh</label>
+                  <input type="date" class="form-control">
+                  </input>
+                </div>
+                <div class="col-sm-12 col-md-3">
+                  <label>Giới tính</label>
+                  <select class="form-control" >
+                    <option value="Nam" selected>Nam</option>
+                    <option value="Nữ">Nữ</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label>Mật khẩu</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập mật khẩu">
+                </div>
+               
+                <div class="col-sm-4">
+                  <label >Email</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ email">
+                </div>
+               
+                <div class="col-sm-8">
+                  <label >Địa chỉ</label>
+                  <input type="text" class="form-control" 
+                    aria-describedby="helpId" autocomplete="off" placeholder="Nhập địa chỉ liên hệ">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button"  class="btn btn-primary">Lưu chỉnh sửa</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="popupAddExcel" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog model-80" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Thêm mới khách hàng&nbsp;<i class="mdi mdi-account-multiple-plus"></i> </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div>
+              <i class="fas fa-file-excel btn btn-success" onclick="selectFile()"> Chọn file</i>
+              <input type="file" oninput="file_change(this)" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel , .xls">
+            </div>
+            <div class="modal-body">
+             
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="confirmAddExcel()" class="btn btn-primary">Thêm mới</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================== -->
+      <%- include('../../footer') %>
+        <script src="css-login/js/sha512.min.js"></script>
+        <script src="/assets/dataTable/vfs_fonts.js"></script>
+        <script src="/assets/dataTable/pdfmake.min.js"></script>
+        <script src="/assets/dataTable/jszip.min.js"></script>
+        <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+        <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+
+        <script src="/assets/dataTable/buttons.print.min.js"></script>
+        <script src="/assets/dataTable/buttons.html5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+        <script src="/assets/js/xlsx.core.min.js"></script>
+
+        <script>
+          var limit = '<%- limit %>'
+          var page = '<%- page %>'
+          var key = '<%- key %>'
+        </script>
+        //
+        <script src="/js/SystemsManagement/User/index.js"></script>
+
+        </body>
+
+</html>

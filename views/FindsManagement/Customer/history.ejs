@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="/css/history_customer.css">
+    <%- include('../../header',{title:"Tìm kiếm | Lịch sử khách hàng"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-4">
+                    <label>Nhập Tên hoặc số điện thoại</label>
+                    <div id="div_find_supplier" class="relative">
+                        <input placeholder="Nhập tên nhà cung cấp hoặc số điện thoại" type="text" oninput="findSupplier()" class="form-control">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                        <div onscroll="loadmoreSupplier()" id="div_list_supplier"></div>
+                      </div>
+                  </div>
+              </div>
+              <br>
+             
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                   
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupDetailImport" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết phiếu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col col-md-12">
+                              <table class="table">
+                                
+                              </table>
+                            </div>
+                            <div class="col col-md-12">
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>STT</th>                             
+                                      <th>Tên SP</th>
+                                      <th>Mã phụ</th>
+                                      <th>Giá nhập</th>
+                                      <th>VAT</th>
+                                      <th>CK</th>
+                                      <th>Số lượng</th>
+                                      <th>Bảo hành</th>
+                                      <th>Giảm giá</th>
+                                      <th>Tổng tiền</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody></tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-payment">
+                     
+                    </div>
+  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+               
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div id="popupEditExport" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chi tiết phiếu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col col-md-12">
+                            <table class="table">
+                              
+                            </table>
+                          </div>
+                          <div class="col col-md-12">
+                            <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>STT</th>                             
+                                    <th>Tên SP</th>
+                                    <th>Mã sp</th>
+                                    <th>Giá xuất</th>
+                                    <th>VAT</th>
+                                    <th>CK</th>
+                                    <th>Số lượng</th>
+                                    <th>Bảo hành</th>
+                                    <th>Giảm giá</th>
+                                    <th>Tổng tiền</th>
+                                  </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+                 
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div id="popupEditImport" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog model-90" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết phiếu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col col-md-12">
+                          <table class="table">
+                            
+                          </table>
+                        </div>
+                        <div class="col col-md-12">
+                          <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>STT</th>                             
+                                  <th>Tên SP</th>
+                                  <th>Mã phụ</th>
+                                  <th>Giá nhập</th>
+                                  <th>VAT</th>
+                                  <th>CK</th>
+                                  <th>Số lượng</th>
+                                  <th>Bảo hành</th>
+                                  <th>Giảm giá</th>
+                                  <th>Tổng tiền</th>
+                                </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!--  -->
+        <%- include('../../footer') %>
+            <script src="/js/FindsManagement/Customer/history.js"></script>
+          </body>
+
+</html>

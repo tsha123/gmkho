@@ -1,0 +1,38 @@
+#tbodyTable td:nth-child(4) {
+    text-align: right;
+}
+.header-table .relative i {
+    position: absolute;
+    top: 25px;
+}
+#div_find_supplier .spinner-border {
+    top: 10px;
+    position: absolute;
+    right: 13px;
+    width: 18px;
+    height: 18px;
+    display: none;
+}
+
+#div_list_supplier {
+    width: 85%;
+    max-height: 200px;
+    z-index: 100;
+    position: absolute;
+    background-color: white;
+    overflow: auto;
+}
+#popupAdd div.form-check {
+    margin-left: 20px;
+}
+#popupDetail table {
+    width: 100% !important;
+    overflow: auto;
+}
+
+#popupDetail tfoot td:last-child {
+    color: red;
+}
+/* #popupDetail table th{
+    width: 0%;
+} */

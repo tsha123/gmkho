@@ -1,0 +1,41 @@
+.page-header .row div:nth-child(3){
+    position: relative;
+}
+
+.page-header .row div:nth-child(3) button{
+    position: absolute;
+    top:22px
+}
+
+#divTable tbody td:nth-child(6) ,
+#divTable tbody td:nth-child(7) ,
+#divTable tbody td:last-child,
+#divTable tfoot td:last-child,
+#divTable tfoot td:nth-child(6),
+#divTable tfoot td:nth-child(7)
+{
+    text-align: right;
+}
+
+#divTable tfoot td:last-child{
+    color: red;
+}
+#divTable tfoot td:nth-child(6),
+#divTable tfoot td:nth-child(7){
+    color: blue;
+}
+
+#table_payment tr td:nth-child(3) ,#table_payment tr td:nth-child(4){
+    text-align: right;
+}
+#table_receive tr td:nth-child(3) ,#table_receive tr td:nth-child(4){
+    text-align: right;
+}
+
+#table_payment tfoot {
+    color: red;
+}
+
+#table_receive tfoot {
+    color: red;
+}

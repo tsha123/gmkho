@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/fundbook.css">
+    <%- include('../../header',{title:"Sổ quỹ | Danh sách"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="page-header">
+                    <button onclick="showPopup('popupAdd',true)" class="btn btn-primary">Thêm mới <i class="mdi mdi-plus-circle"></i></button>
+                    <a href="/fundbook-management/report" class="btn btn-success">Báo cáo <i class="fas fa-file-chart-pie"></i></a>
+                    <button class="btn btn-warning" onclick="showPopup('popupPeriod',true)" >Nhập tồn quỹ</button>
+                </div>
+                
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm mới </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">'
+                    <div class="col-12 col-md-12">
+                        <label>Tên sổ quỹ</label>
+                        <input class="form-control" type="text" id="add_fundbook_name" placeholder="Nhập tên sổ quỹ">
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <label>Loại</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="add_fundbook_type" value="cash"> Tiền mặt <i class="input-helper"></i>&nbsp;<i class="fas fa-money-bill-alt text-success"></i></label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="add_fundbook_type" value="bank" checked=""> Ngân hàng <i class="input-helper"></i>&nbsp;<i class="fas fa-money-check-alt"></i></label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="add_fundbook_type"  value="other">Khác<i class="input-helper"></i> &nbsp;<i class="fas fa-piggy-bank"></i></label>
+                              </div>
+                          </div>
+                    </div>
+                </div>
+        
+              </div>
+          
+              <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Popup thêm mới -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chỉnh sửa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">'
+                    <div class="col-12 col-md-12">
+                        <label>Tên sổ quỹ</label>
+                        <input class="form-control" type="text" id="edit_fundbook_name" placeholder="Nhập tên sổ quỹ">
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <label>Loại</label>
+                        <div class="form-group">
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="edit_fundbook_type" value="cash"> Tiền mặt <i class="input-helper"></i>&nbsp;<i class="fas fa-money-bill-alt text-success"></i></label>
+                            </div>
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="edit_fundbook_type" value="bank" checked=""> Ngân hàng <i class="input-helper"></i>&nbsp;<i class="fas fa-money-check-alt"></i></label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                  <input type="radio" class="form-check-input" name="edit_fundbook_type"  value="other">Khác<i class="input-helper"></i> &nbsp;<i class="fas fa-piggy-bank"></i></label>
+                              </div>
+                          </div>
+                    </div>
+                </div>
+        
+              </div>
+          
+              <div class="modal-footer">
+                <button type="button" id="btnConfirmEdit" class="btn btn-primary">Chỉnh sửa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="popupPeriod" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Nhập tồn quỹ đầu kỳ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-12 col-md-12">
+                        <label>Chọn sổ quỹ</label>
+                        <select name="select_fundbook"></select>
+                      </div>
+                      <div class="col-12 col-md-12">
+                        <label>Tồn từ ngày</label>
+                        <input class="form-control" type="date" >
+                      </div>
+                      <div class="col-12 col-md-12">
+                        <label>Giá trị tồn</label>
+                        <input oninput="inputNumber()" class="form-control number" type="text" >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-danger" >Lưu</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+            <script src="/js/ReportsManagement/FundBook/index.js"></script>
+            </body>
+
+</html>

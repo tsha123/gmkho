@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+<head>
+    <link rel="stylesheet" href="/css/edit_news.css">
+
+
+    <%- include('../../../header',{title:"Thêm/Sửa tin tức"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+             
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="container">
+                    <div class="post">
+                       
+                        <div class="post__title relative">
+                          <span>Chỉnh sửa/ Thêm tin tức</span>
+                          <span>
+                            <button onclick="confirmSave()" class="btn btn-danger absulate btn-save">Lưu thay đổi</button>
+                          </span>
+                        </div>
+                        <div class="post__form">
+                          <div>
+                            <label class="form-label">Thứ tự hiển thị</label>
+                            <input class="number form-control" id="inputIndex" value="0" oninput="inputNumber()" >
+                          </div>
+                        </div>
+                        <div class="post__form">
+                          <div>
+                            <label class="form-label">Loại tin tức</label>
+                            <select id="select_type_news"></select>
+                          </div>
+                        </div>
+                        <div class="post__form">
+                          <div class="mb-3">
+                            <label for="descriptPro2" class="form-label">Tiêu đề tin tức</label>
+                            <input type="text" class="form-control" name="title_news" placeholder="Nhập tiêu đề tin tức..." aria-describedby="descriptHelp" value="" />
+                          </div>
+                        </div>
+                    </div>
+                    <div class="">
+                      <b>Tóm tắt</b>
+                      <textarea class="form-control" id="new_brief"></textarea>
+                    </div>
+                    <div >
+                      <b>Ảnh nổi bật</b>
+                      <div class="div-image">
+                        <div class="image_warp">
+                          <img > 
+                          <div class="before-image"><b>Click để chọn ảnh</b></div>
+                        </div>
+                        <input type="file" oninput="paste_Image(this)" id="news_image" accept="image/*" >
+                      </div>
+                    </div>
+                    <div> 
+                      <b>Bài viết</b>
+                      <textarea id="editor" class="form-control"></textarea>
+                    </div>
+                      <div>
+                        <button onclick="confirmSave()" class="btn btn-danger btn-save">Lưu thay đổi</button>
+                      </div>
+                    </div>
+                    
+                </div>
+                
+             
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+        <%- include('../../../footer') %>
+<!--  -->
+        <!-- ====================================== -->
+        <script src="/assets/ckeditor/ckeditor.js"></script>
+        <script src="/assets/ckeditor/samples/js/sample.js"></script>
+
+        <script>
+
+          initSample();
+          const id_news = '<% if(locals.id_news){ %><%- id_news %><% }else { %><% } %>'
+     
+        </script>
+        <script src="/js/ContentsManagement/GM-Feed/News/edit_add_news.js"></script>
+        
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/find_product.css">
+    <%- include('../../header',{title:"Tìm kiếm | Sản phẩm"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-6 col-md-4 col-lg-4 col-xl-4 div-input">
+                    <label>Nhập mã sản phẩm</label>
+                    <input placeholder="nhập mã sản phẩm" id="keyFind"  value="<%- key %>" type=text class="form-control">
+                    <i class="fas fa-trash text-danger"></i>
+                  </div>
+              </div>
+              <br>
+              <div>
+                  <b>Thông tin sản phẩm:</b>
+                  <div id="header_info" class="row">
+                      <div class="col-6 col-md-3 col-lg-3 col-xl-3">
+                          <label>Tên sản phẩm</label>
+                          <input disabled type="text" class="form-control" placeholder="tên sản phẩm">
+                      </div>
+                      <div class="col-6 col-md-3 col-lg-3 col-xl-3">
+                        <label>Mã hệ thống</label>
+                        <input disabled type="text" class="form-control" placeholder="Mã hệ thống sinh">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Mã phụ</label>
+                        <input disabled type="text" class="form-control" placeholder="Mã có sẵn từ nhà cc">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Danh mục</label>
+                        <input disabled type="text" class="form-control" placeholder="Danh mục">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Thuộc kho</label>
+                        <input disabled type="text" class="form-control" placeholder="Kho hiện tại của danh mục">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Ngày tạo</label>
+                        <input disabled type="text" class="form-control" placeholder="Ngày nhập vào hệ thống">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Tồn hệ thống</label>
+                        <input disabled type="text" class="form-control" placeholder="Tồn toàn hệ thống">
+                      </div>
+                      <div class="col-4 col-md-2 col-lg-2 col-xl-2">
+                        <label>Trạng thái</label>
+                        <input disabled type="text" class="form-control" placeholder="Trạng thái hiện tại">
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                   
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupDetailImport" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết phiếu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col col-md-12">
+                              <table class="table">
+                                
+                              </table>
+                            </div>
+                            <div class="col col-md-12">
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>STT</th>                             
+                                      <th>Tên SP</th>
+                                      <th>Mã phụ</th>
+                                      <th>Giá nhập</th>
+                                      <th>VAT</th>
+                                      <th>CK</th>
+                                      <th>Số lượng</th>
+                                      <th>Bảo hành</th>
+                                      <th>Giảm giá</th>
+                                      <th>Tổng tiền</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody></tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-payment">
+                     
+                    </div>
+  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+               
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div id="popupDetailExport" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-90" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết phiếu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col col-md-12">
+                              <table class="table">
+                                
+                              </table>
+                            </div>
+                            <div class="col col-md-12">
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>STT</th>                             
+                                      <th>Tên SP</th>
+                                      <th>Mã sp</th>
+                                      <th>Giá xuất</th>
+                                      <th>VAT</th>
+                                      <th>CK</th>
+                                      <th>Số lượng</th>
+                                      <th>Bảo hành</th>
+                                      <th>Giảm giá</th>
+                                      <th>Tổng tiền</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody></tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-payment">
+                  
+                    </div>
+  
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+         
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <%- include('../../footer') %>
+        <script src="/assets/dataTable/vfs_fonts.js"></script>
+        <script src="/assets/dataTable/pdfmake.min.js"></script>
+        <script src="/assets/dataTable/jszip.min.js"></script>
+        <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+        <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+        <script src="/assets/dataTable/buttons.print.min.js"></script>
+        <script src="/assets/dataTable/buttons.html5.min.js"></script>
+            <script src="/js/FindsManagement/Product/index.js"></script>
+          </body>
+
+</html>

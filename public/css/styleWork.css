@@ -1,0 +1,23 @@
+#btnDownload
+{
+    position: absolute;
+    top: 121px;
+}
+
+
+
+@media (min-width: 576px)
+{
+    .modal-dialog
+    {
+        max-width: 500px !important;
+        margin: 30px auto !important;
+    }
+}
+
+#btnAdd
+{
+    position: absolute ;
+    font-size: 12px;
+    top: 121px;
+}

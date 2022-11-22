@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+  
+<head>
+
+    <link rel="stylesheet" href="/css/up_product_to_website.css">
+    <link rel="stylesheet" href="/css/imageuploadify.min.css">
+
+    <%- include('../../header',{title:"Quản lý bài viết"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+             
+            </div>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-12 grid-margin stretch-card">
+                  <div class="container">
+                    <div class="post">
+                       
+                        <div class="post__title relative">
+                          <span>Quản lý bài viết và video</span>
+                          <span>
+                            <button onclick="confirmSave()" class="btn btn-danger absulate btn-save">Lưu thay đổi</button>
+                          </span>
+                        </div>
+                        
+                        <div class="post__form">
+                          <div class="mb-3">
+                            <label for="descriptPro2" class="form-label">Tên sản phẩm hiển thị trên web</label>
+                            <input type="text" class="form-control" name="replace_name" placeholder="Nhập tên sản phẩm hiện thị trên web..." aria-describedby="descriptHelp" value="" />
+                          </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><i
+                                        class="fab fa-youtube post__form-icon"></i></span>
+                                <input type="text" class="form-control" name="link_video" aria-label="Username" aria-describedby="basic-addon1" placeholder="Nhập link video từ youtube nếu có . . ." />
+                            </div>
+            
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Tags</label>
+                                <textarea class="form-control"  id="tags"></textarea>
+                                    
+                            </div>
+            
+                            <div class="mb-3">
+                                <label for="InputLink" class="form-label">SEO Image:</label>
+                                <input type="text" class="form-control" id="seo_image" placeholder="seo meta hình ảnh" />
+                            </div>
+            
+                            <div class="mb-3">
+                                <label for="namePro" class="form-label">SEO meta keyword</label>
+                                <input type="text" class="form-control" id="seo_meta_keyword" aria-describedby="nameHelp" placeholder="seo meta từ khóa"/>
+                            </div>
+            
+                            <div class="mb-3">
+                                <label for="descriptPro" class="form-label">SEO meta description</label>
+                                <input type="text" class="form-control" id="seo_meta_description" aria-describedby="descriptHelp" placeholder="Seo mata mô tả sản phẩm"/>
+                            </div>
+            
+                            <div class="post__form-option">
+                              <div class="row">
+                                <div class="col-11 col-md-11 relative">
+                                  <label class="post__form-option-header">Trạng thái</label>
+                                  <select id="select_subcategory_sale_status">
+                                    <option value="Hot">Hot</option>
+                                    <option value="New">New</option>
+                                    <option value="Sale off">Sale off</option>
+                                    <option value="Bình thường">Bình thường</option>
+                                  </select>
+                                  <i onclick="addStatus()" class="mdi mdi-plus-circle text-success absulate btn-add-statuts"></i>
+                                </div>
+                                
+                              </div>
+                              <div class="div-subcategory_sale_status" id="div_status"></div>
+                            </div>
+            
+                            <div class="post__form-endow">
+                                <div class="row">
+                                    <div class="col col-lg-6 col-md-6" data-select2-id="select2-data-32-hgid">
+                                        <label>Khuyến mại:</label>
+                                        <select id="selectPromotion">
+                                            <option value="">_________________</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="col col-lg-6 col-md-6" data-select2-id="select2-data-36-uf9k">
+                                        <label>Chính sách bảo hành:</label>
+                                        <select id="selectWarranty">
+                                          <option value="">_________________</option>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="subcategory_specifications" class="custom">
+                      <div>
+                        <label>Thông số kĩ thuật</label>
+                        <button onclick="add_specifications()" class="btn btn-success">Thêm giá trị</button>
+                      </div>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Stt</th>
+                            <th>Thuộc tính</th>
+                            <th>Giá trị</th>
+                            <th>Xóa</th>
+                          </tr> 
+                        </thead>
+                        <tbody id="tbody_specifications">
+                          <tr>
+                            <td><input oninput="inputNumber(this)" value="0" class="number form-control text-center" ></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập thuộc tính"></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập giá trị"></td>
+                            <td><i class="mdi mdi-delete-forever text-danger"></i></td>
+                          </tr>
+                          <tr>
+                            <td><input oninput="inputNumber(this)" value="0" class="number form-control text-center" ></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập thuộc tính"></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập giá trị"></td>
+                            <td><i class="mdi mdi-delete-forever text-danger"></i></td>
+                          </tr>
+                          <tr>
+                            <td><input oninput="inputNumber(this)" value="0" class="number form-control text-center" ></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập thuộc tính"></td>
+                            <td><input type="text" class="form-control" placeholder="Nhập giá trị"></td>
+                            <td><i class="mdi mdi-delete-forever text-danger"></i></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+            
+                    <div>
+                      <label>Thông số từ danh mục</label>
+                      <div>
+                        <table id="table_category_specifications" class="table category_specifications">
+                           
+                        </table>
+                      </div>
+                    </div>
+                    <div> 
+                      <b>Bài viết</b>
+                      <textarea id="editor" class="form-control"></textarea>
+                    </div>
+                    <div>
+                        <label>Ảnh trước đó</label>
+                        <div class="div-image-period row">
+                          
+                        </div>
+                    </div>
+                    <div class="div-image" >
+                      <b>Ảnh sản phẩm</b>
+                      <input autocomplete="off" type="file" name="image_product" id="inputSelectMoreImage" accept="image/*" multiple>
+                    </div>
+            
+                    <div class="div-main-related">
+                      <label>Sản phẩm liên quan</label>
+                      <div class="row">
+                        <div class="col-6 col-md-6 relative">
+                          <b>Tên sản phẩm</b>
+                          <input oninput="findRelatedProduct()" id="input_find_subcategory_related" class="form-control" type="text" placeholder="Nhập tên sản phẩm liên quan . . .">
+                          <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                          <div onscroll="loadMoreSubCategory(this)" id="div_load_related_product" ></div>
+                        </div>
+                        <div class="col-6 col-md-4 div-sub-relative">
+                          <div>
+                            <b>Tên thay thế</b>
+                            <input id="name_replace_product" onkeypress="enterAddRelatedProduct()" class="form-control" type="text" placeholder="Nhập tên sản phẩm liên quan . . .">
+                          </div>
+                          <div>
+                            <button onclick="addRelatedProduct()" class="btn btn-primary btn-add-relative">Thêm</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row div-related-product">
+            
+                        </div>
+                      </div>
+                      <div>
+                        <button onclick="confirmSave()" class="btn btn-danger btn-save">Lưu thay đổi</button>
+                      </div>
+                    </div>
+                    
+                </div>
+                
+             
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+
+        <%- include('../../footer') %>
+<!--  -->
+        <!-- ====================================== -->
+        <script src="/assets/ckeditor/ckeditor.js"></script>
+        <script src="/assets/ckeditor/samples/js/sample.js"></script>
+        <script src="/assets/js/imageuploadify.js"></script>
+        <script>
+          $('input[name="image_product"]').imageuploadify();
+          initSample();
+          const id_subcategory = '<%- id_subcategory %>'
+        </script>
+        <script src="/js/ContentsManagement/SubCategory/edit_up_to_web.js"></script>
+
+</body>
+</html>

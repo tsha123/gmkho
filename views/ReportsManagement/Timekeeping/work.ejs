@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/styleWork.css">
+    <%- include("../../header",{title:"Chấm công | Làm việc"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-4 col-md-2 col-lg-2">
+                  <label>Thời gian</label>
+                  <input id="fromdate" onchange="getData()" value="<%- fromdate %>" class="form-control" type="date">
+                </div>
+                <div class="col-4 col-md-1 div-relative">
+                  <label onclick="showPopupDonwload()"  id="btnDownload">Tải báo cáo <i class="mdi mdi-download text-success"></i></label>
+                </div>
+                <div class="col-2 col-md-1 div-relative">
+                  <button id="btnAdd" onclick="showPopupAdd()" class="btn btn-primary">Thêm mới</button>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupDownload" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chọn ngày</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-6 col-md-6">
+                    <label>Từ ngày</label>
+                    <input type="date" class="form-control" id="fromdateReport" >
+                  </div>
+                  <div class="col-6 col-md-6">
+                    <label>Đến ngày</label>
+                    <input type="date" id="todateReport" class="form-control">
+                  </div>
+                </div>
+              </div>
+       
+              <div class="modal-footer">
+                <button type="button" onclick="downloadReport()"  class="btn btn-primary">Tải báo cáo</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+              <!--  -->
+    
+                <!--  -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chọn ngày</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col col-md-12">
+                    <label>Nhân viên</label>
+                    <select id="selectEmployee" ></select>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Vào sáng</label>
+                    <input id="add_in_morning" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Ra sáng</label>
+                    <input id="add_out_morning" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Vào chiều</label>
+                    <input id="add_in_afternoon" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Ra chiều</label>
+                    <input id="add_out_afternoon" type="time" class="form-control">
+                  </div>
+                </div>
+              </div>
+       
+              <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()"  class="btn btn-primary">Chấm công</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Chọn ngày</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <label>Vào sáng</label>
+                    <input id="edit_in_morning" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Ra sáng</label>
+                    <input id="edit_out_morning" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Vào chiều</label>
+                    <input id="edit_in_afternoon" type="time" class="form-control">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label>Ra chiều</label>
+                    <input id="edit_out_afternoon" type="time" class="form-control">
+                  </div>
+                </div>
+              </div>
+       
+              <div class="modal-footer">
+                <button type="button" id="btn_save_edit"  class="btn btn-primary">Lưu chỉnh sửa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+
+            <script src="/assets/dataTable/vfs_fonts.js"></script>
+            <script src="/assets/dataTable/pdfmake.min.js"></script>
+            <script src="/assets/dataTable/jszip.min.js"></script>
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+
+            <script src="/js/ReportsManagement/Timekeeping/work.js"></script>
+            <script>getData()</script>
+            </body>
+
+</html>

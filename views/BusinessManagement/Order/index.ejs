@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/order.css">
+    <%- include('../../header',{title:"Đơn hàng web | Tìm kiếm"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                  <label>Hiển thị</label>
+                  <select onchange="getData()" id="selectLimit">
+                    <option value="<%- limit %>"><%- limit %></option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+                <div  class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                  <label>Tìm kiếm</label>
+                  <input  id="keyFind" placeholder="Mã phiếu , tên khách hàng . . ." value="<%- key %>" class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Từ ngày</label>
+                  <input id="fromdate" onchange="getData()" value="<%- fromdate %>" type=date class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                  <label>Đến ngày</label>
+                  <input onchange="getData()" id="todate" type="date" value="<%- todate %>" class="form-control">
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 col-xl-2">
+                    <label>Trạng thái</label>
+                    <select id="selectStatus">
+                        <option value="">Tất cả</option>
+                        <option value="Chưa xử lý">Chưa xử lý</option>
+                        <option value="Chờ lấy hàng">Chờ lấy hàng</option>
+                        <option value="Đang giao hàng">Đang giao hàng</option>
+                        <option value="Hoàn thành">Hoàn thành</option>
+                    </select>
+                </div>
+                <div class="col col-md-2 col-lg-2 col-xl-2">
+                  <button onclick="showPopupCreate()" class="btn btn-success">Tạo phiếu</button>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                  <table class="table table-hover" id="table-main">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Khách hàng</th>                     
+                        <th>Liên hệ</th>                     
+                        <th>Ngày đặt</th>
+                        <th>Sản phẩm</th>
+                        <th>Trạng thái</th>
+                        <th>Tổng tiền</th>
+                        <th>Chi tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyTable">
+                      
+                    </tbody>
+                </table>
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupEdit" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chi tiết phiếu</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="div-customer">
+                      
+                    </div>
+                    <div class="div-product">
+                      <b>Chi tiết sản phẩm</b>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Mã SP</th>
+                            <th>Giá bán</th>
+                            <th>VAT</th>
+                            <th>CK</th>
+                            <th>Giảm giá</th>
+                            <th>Số lượng</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" id="btnExport" class="btn btn-danger" >Xuất hàng</button>
+                      <i type="button" id="btnPrint" class="fas fa-print btn btn-primary" ></i>
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!-- ====================================== -->
+        <div id="popupUpdateStatus" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Cập nhập trạng thái</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <span>Bạn có chắc cập nhập trạng thái đơn sang hoàn thành</span>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" id="btnSaveStatus" class="btn btn-danger" >Xác nhận</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!--  -->
+        <div id="popupCreateForm" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-90" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Tạo đơn hàng</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="div-customer">
+                      <div class="row">
+                        <div class="col-6 col-md-3">
+                          <div id="div_find_supplier" class="relative">
+                            <label>Tên khách hàng</label>
+                            <input placeholder="Nhập tên nhà cung cấp hoặc số điện thoại" type="text" oninput="findSupplier()" class="form-control" autocomplete="off">
+                            <div class="spinner-border text-primary" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                            <div onscroll="loadmoreSupplier()"></div>
+                          </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                          <label>Số điện thoại</label>
+                          <input class="form-control" placeholder="Số điện thoại" type="text">
+                        </div>
+                        <div class="col-6 col-md-3">
+                          <label>Địa chỉ</label>
+                          <input class="form-control" placeholder="Địa chỉ khách hàng" type="text">
+                        </div>
+                        <div class="col-6 col-md-3">
+                          <label>Điểm:</label>
+                          <input class="number form-control" value="0" id="point_current" disabled placeholder="Điểm khách hàng" type="text">
+                        </div>
+                        <div class="col-4 col-md-4">
+                          <label>Mã giảm giá</label>
+                          <input class="form-control" placeholder="nhập mã giảm giá">
+                          <button class="btn btn-success">Áp dung</button>
+                        </div>
+                        <div class="col-4 col-md-4">
+                          <label>Đổi điểm</label>
+                          <input value="0" class="number form-control" placeholder="nhập mã giảm giá">
+                          <button class="btn btn-success">Đổi điểm</button>
+                        </div>
+                        <div class="col-4 col-md-4">
+                          <label>Tổng tiền: </label>
+                          <div class="money">
+                            Tổng : 0 &nbsp; Giảm giá: 0 &nbsp; Đổi điểm: 0
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="div-product">
+                     <table class="table table-hover">
+                       <thead>
+                         <tr>
+                           <th>Tên sản phẩm</th>
+                           <th>Giá bán</th>
+                           <th>Số lượng</th>
+                           <th>VAT</th>
+                           <th>Chiết khấu</th>
+                           <th>Giảm giá</th>
+                           <th>Bảo hành</th>
+                           <th></th>
+                         </tr>
+                       </thead>
+                       <tbody></tbody>
+                     </table>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-danger" >Xác nhận</button>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+        <!--  -->
+        <div id="popupTranfer" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Chuyển giao cho quản lý</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <label>Chọn nhân viên</label>
+                    <select name="select_employee" id="select_employee_tranfer">
+                        <option value="">______________</option>
+                    </select>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" class="btn btn-danger" >Xác nhận</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <%- include('../../footer') %>
+        
+        <script>
+              var limit = '<%- limit %>'
+              var page = '<%- page %>'
+              var key = '<%- key %>'
+              var fromdate = '<%- fromdate %>'
+              var todate = '<%- todate %>'
+              var order_status = '<% if(locals.order_status){ %><%- order_status %><% }else{ %><% } %>'; 
+
+              $("#selectStatus").val(order_status).change()
+              $("#selectStatus").attr("onchange",`getData()`)
+        </script>
+
+        <script src="/js/BusinessManagement/Order/index.js"></script>
+          </body>
+
+</html>

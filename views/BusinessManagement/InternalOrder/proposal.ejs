@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/internal_order.css">
+    <%- include('../../header',{title:"Đơn hàng nôi bộ | Đề xuất"}) %>
+        <div class="page-content">
+            <div class="header-table">
+              <div>
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/internal-order-management/proposaled">Được đề xuất</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/internal-order-management/proposal">Đề xuất</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="row">
+                <div class="col-6 col-md-2 col-lg-2 col-xl-1 col-sm-3 ">
+                  <label>Hiển thị</label>
+                  <select onchange="getData()" id="selectLimit">
+                    <option value="<%- limit %>"><%- limit %></option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+                <div  class="col-6 col-md-2 col-lg-2 col-xl-2 col-sm-3">
+                  <label>Tìm kiếm</label>
+                  <input id="keyFind" placeholder="Mã phiếu , tên nhà cung cấp hoặc tên sản phẩm . . ." value="<%- key %>" class="form-control">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                  <label>Từ ngày</label>
+                  <input id="fromdate" onchange="getData()" value="<%- fromdate %>" type=date class="form-control">
+                </div>
+                <div class="col-6 col-md-3 col-lg-2">
+                  <label>Đến ngày</label>
+                  <input onchange="getData()" id="todate" type="date" value="<%- todate %>" class="form-control">
+                </div>
+               
+                <div class="col-6 col-md-2">
+                  <label>Chọn kho</label>
+                  <select onchange="getData()" name="warehouse" id="selectWarehouse"></select>
+                </div>
+                <div class="col-6 col-md-2">
+                  <label>Trạng thái</label>
+                  <select  onchange="getData()" id="selectStatus">
+                    <option value="">Tất cả</option>
+                    <option value="Chưa xử lý">Chưa xử lý</option>
+                    <option value="Đã xuất">Chờ nhập kho</option>
+                    <option value="Hoàn thành">Đã hoàn thành</option>
+                  </select>
+                </div>
+                <div class="col-6 col-md-1 relative">
+                  <button class="btn btn-success" onclick="showPopupAdd()"><i class="fas fa-plus"></i></button>
+              </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                  <table class="table table-hover" id="table-main">
+                    <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Mã phiếu</th>                     
+                        <th>Ngày đề xuất</th>
+                        <th>Từ kho</th>
+                        <th>Tới kho</th>
+                        <th>Sản phẩm</th>
+                        <th>Trạng thái</th>
+                        <th>Chi tiết</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyTable">
+                      
+                    </tbody>
+                </table>
+                </div>
+                <div id="divPagination">
+                   
+                </div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog model-95" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Đề xuất tới kho khác</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row div-warehouse">
+                      <div class="col-6 col-md-3">
+                        <label>Từ kho</label>
+                        <select name="warehouse"></select>
+                      </div>
+                      <div class="col-6 col-md-3">
+                        <label>Tới kho</label>
+                        <select name="to-warehouse"></select>
+                      </div>
+                    </div>
+                      <div class="row">
+                          <div class="col col-md-12">
+                            <table class="table table-hover">
+                              <thead>
+                                <tr>                          
+                                  <th>Tên SP</th>
+                                  <th>Giá bán</th>
+                                  <th>VAT</th>
+                                  <th>CK</th>
+                                  <th>Số lượng</th>
+                                  <th>Bảo hành</th>
+                                  <th></th>
+
+                                </tr>
+                              </thead>
+                              <tbody id="tbodyAdd"></tbody>
+                          </table>
+                          </div>
+                         
+                      </div>
+                      <div class="row div-note">
+                        <div class="col-12 col-md-6">
+                          <table class="table">
+                            <tr>
+                              <th>Tổng tiền</th>
+                              <th></th>
+                            </tr>
+                            <tr>
+                              <th>Ghi chú</th>
+                              <th><textarea placeholder="Nhập ghi chú" class="form-control"></textarea></th>
+                            </tr>
+                          </table>
+                        </div>
+                        
+                      </div>
+                  </div>
+               
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                      <button type="button" onclick="confirmProposal()" class="btn btn-danger" >Đề xuất</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div id="popupEdit" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog model-95" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết phiếu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="tabProposal"  href="javascript:void(0)">Chi tiết đề xuất</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="tabExport" href="javascript:void(0)">Chi tiết xuất</a>
+                    </li>
+                   
+                  </ul>
+                  <div id="div_proposal">
+                    <div>
+                      <table class="table hover-table">
+                        
+                      </table>
+                    </div>
+                    <div>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                           <th>Tên SP</th>
+                           <th>Giá bán</th>
+                           <th>VAT</th>
+                           <th>CK</th>
+                           <th>Số lượng</th>
+                           <th>Bảo hành</th>
+                           <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyEdit">
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div id="div_export">
+                    <div class="row">
+                      <div class="col col-md-12">
+                        <table id="tableCustomerExport" class="table">
+                          
+                        </table>
+                      </div>
+                      <div class="col col-md-12">
+                        <table id="tableProductTabeExport" class="table">
+                            <thead>
+                              <tr>
+                                <th>STT</th>                             
+                                <th>Tên SP</th>
+                                <th>Mã sp</th>
+                                <th>Giá xuất</th>
+                                <th>VAT</th>
+                                <th>CK</th>
+                                <th>Số lượng</th>
+                                <th>Bảo hành</th>
+                                <th>Giảm giá</th>
+                                <th>Tổng tiền</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div id="div-payment">
+                          <table class="table">
+                              <tr>
+                                <td>Tổng tiền</td>
+                                <td><input id="totalMoney" class="form-control number" value="0" disabled></td>
+                                <td>Đã thanh toán</td>
+                                <td><input id="paid"  oninput="changeMoneyImport()" class="form-control number" value="0"></td>
+                                <td>Còn nợ</td>
+                                <td><input id="debt" class="form-control number" disabled value="0"></td>
+                                <td>Hình thức TT</td>
+                                <td><select id="selectTypePayment"></select></td>
+                              </tr>
+                              <tr>
+                                <td>Nhà cung cấp</td>
+                                <td>
+                                  <div id="div_find_supplier" class="relative">
+                                    <input placeholder="Nhập tên nhà cung cấp hoặc số điện thoại" oninput="findSupplier()" class="form-control">
+                                    <div class="spinner-border text-primary" role="status">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div onscroll="loadmoreSupplier()" id="div_list_supplier"></div>
+                                  </div>
+                                </td>
+                                <td>Ghi chú</td>
+                                <td colspan="7"><input name="note" class="form-control" placeholder="Nhập ghi chú"></td>
+                              </tr>
+                          </table>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+                </div>
+             
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" id="btnSaveEdit" onclick="confirmProposal()" class="btn btn-danger" >Lưu thay đổi</button>
+                    <button type="button" id="btnImport" onclick="confirmProposal()" class="btn btn-danger" >Xác nhận nhập</button>
+                    <button type="button" id="btnPrintImport"  class="btn btn-danger" ><i class="fas fa-print"></i> In Phiếu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popupDelete" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Xóa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                  <span>Bạn có chắc muốn xóa phiếu đề xuất này?</span>
+              </div>
+           
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="button" id="btnDelete" class="btn btn-danger" >Xóa</button>
+              </div>
+          </div>
+      </div>
+  </div>
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+        
+        <script>
+              var limit = '<%- limit %>'
+              var page = '<%- page %>'
+              var key = '<%- key %>'
+              var fromdate = '<%- fromdate %>'
+              var todate = '<%- todate %>'
+              var id_warehouse = '<%- id_warehouse %>'
+        </script>
+        
+       <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+        <script src="/assets/js/xlsx.core.min.js"></script>
+        <script src="/js/BusinessManagement/InternalOrder/proposal.js"></script>
+          </body>
+
+</html>

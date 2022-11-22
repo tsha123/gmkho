@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/category.css">
+    <%- include('../../../header',{title:"Quản lý tin tức"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+                <div class="row">
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Hiển thị</label>
+                        <select onchange="getData()" id="selectLimit">
+                          <option value="<%- limit %>"><%- limit %></option>
+                          <option>10</option>
+                          <option>20</option>
+                          <option>50</option>
+                          <option>80</option>
+                          <option>100</option>
+                      </select>
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Từ ngày</label>
+                        <input id="fromdate" onchange="getData()"  class="form-control" type="date" value="<%- fromdate %>">
+                    </div>
+                    <div class="col-4 col-md-2 col-lg-2">
+                        <label>Tới ngày</label>
+                        <input id="todate" onchange="getData()" class="form-control" type="date" value="<%- todate %>">
+                    </div>
+                    <div class="col-2 col-md-2 col-lg-2">
+                        <label>Loại tin tức</label>
+                        <select onchange="getData()" id="select_type">
+                            <option value="">Tất cả</option>
+                        </select>
+                    </div>
+                    <div class="col-8 col-md-2">
+                        <label>Tìm kiếm</label>
+                        <input oninput="getData(false)" id="keyFind" autocomplete="off" value="<%- key %>" placeholder="Nhập tên hoặc số điện thoại . . ." type="text" class="form-control">
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-1 col-xl-1 relative">
+                        <div class="btn-add">
+                            <div><button onclick="showPopup('popup_add_type')" class="btn btn-warning"><i class="fas fa-plus"></i></button></div>
+                        </div>
+                    </div>
+                    <div class="col-5 col-md-4 col-lg-1 col-xl-1 relative">
+                        <div class="btn-add">
+                            <div><button id="btnAdd" onclick="newPage('/news-management/edit-news')" class="btn btn-success"><i class="mdi mdi-chart-pie"></i> <span class="hide-on-mobile">Thêm mới</span></button></div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="div-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tiêu đề</th>
+                                <th>Thứ tự</th>
+                                <th>Loại tin tức</th>
+                                <th>Ảnh</th>
+                                <th>Chỉnh sửa</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyTable"></tbody>
+                    </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <div id="popup_add_type" data-keyboard="true" data-backdrop="static" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm kiểu tin tức</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                      <div>
+                            <label>Nhập tên kiểu</label>
+                            <input type="text" id="input_add_type" class="form-control" placeholder="nhập tên kiểu tin tức">
+                      </div>                 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirm_add_type()" class="btn btn-danger" >Thêm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ====================================== -->
+        <%- include('../../../footer') %>
+            <script>
+                var limit = '<%- limit %>'
+                var page = '<%- page %>'
+                var key = '<%- key %>'
+                var type_news = '<% if(locals.type_news){%><%- type_news%><%}else{%><%}%> '
+
+            </script>
+            <script src="https://cdn.jsdelivr.net/alasql/0.3/alasql.min.js"></script>
+            <script src="/assets/js/xlsx.core.min.js"></script>
+            <script src="/js/ContentsManagement/GM-Feed/News/index.js"></script>
+
+            </body>
+
+</html>

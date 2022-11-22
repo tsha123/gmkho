@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="/css/calendar.css">
+    <%- include("../../header",{title:"Lịch trực"}) %>
+
+        <div class="page-content">
+            <div class="header-table">
+              <div class="row">
+                <div class="col-4 col-md-2 col-lg-2">
+                  <label>Thời gian</label>
+                  <input id="fromdate" onchange="getData()" value="<%- fromdate %>" class="form-control" type="date">
+                </div>
+               
+                <div class="col-1 col-md-1 relative">
+                  <i onclick="showPopupAdd()" style="font-size: 25px;" class="mdi mdi-plus-circle-outline text-success"></i>
+                </div>
+              </div>
+            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
+                  <table class="table" id="dataTable" style="width:100%">
+                  </table>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Thêm mới +</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <label>Tên nhân viên</label>
+                <select id="addSelectEmployee" name="selectEmployee"></select>
+                <label>Ngày</label>
+                <input class="form-control" id="addTime" type="date">
+                <div>
+                  <div class="div-flex" >
+                    <b>Ca trưa</b>
+                    <input onchange="changeTimeAdd('addnoon',this)" type="checkbox">
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-md-6">
+                      <label>Từ</label>
+                      <input id="addInNoon" class="form-control" type="time">
+                    </div>
+                    <div class="col-6 col-md-6">
+                      <label>Đến</label>
+                      <input id="addOutNoon" class="form-control" type="time">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="div-flex" >
+                    <b>Ca tối</b>
+                    <input onchange="changeTimeAdd('addnight',this)" type="checkbox">
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-md-6">
+                      <label>Từ</label>
+                      <input id="addInNight" class="form-control" type="time">
+                    </div>
+                    <div class="col-6 col-md-6">
+                      <label>Đến</label>
+                      <input id="addOutNight" class="form-control" type="time">
+                    </div>
+                  </div>
+                </div>
+              </div>
+       
+              <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <!--  -->
+        <div id="popupDelete" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title"><i class="mdi mdi-calendar-remove"></i>Xóa lịch</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Bạn có chắc muốn xóa lịch trực này</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()" data-dismiss="modal" id="btnDelete" class="btn btn-primary">Đồng ý</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+
+            <script src="/js/ReportsManagement/Calendar/index.js"></script>
+            <script>getData()</script>
+            </body>
+
+</html>
