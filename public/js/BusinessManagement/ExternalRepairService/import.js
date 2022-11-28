@@ -100,7 +100,7 @@ function drawTable(){
 
 function findProduct() {
     if (event.which == 13) {
-        const input = $(event.path[0])
+        const input = $(event.target)
         const tr = $(input).closest('tr')
         const key = $(input).val().trim()
         const div_loading = $(input).closest('td').find('div')[0]
@@ -151,9 +151,9 @@ function findProduct() {
 
 function changeMoney() {
     
-    const classes_input = $(event.path[0]).attr("class")
+    const classes_input = $(event.target).attr("class")
     if (typeof classes_input != 'undefined' && classes_input.includes('number')) {
-        const input = $(event.path[0])
+        const input = $(event.target)
         if ($(input).val().trim().length == 0) {
             $(input).val(0)
         }
@@ -222,8 +222,8 @@ function changeMoney() {
 
 function removeRow() {
     if (!is_click_discount) {
-        const tr = $(event.path[0]).closest('tr')
-        const tbody = $(event.path[0]).closest('tbody')
+        const tr = $(event.target).closest('tr')
+        const tbody = $(event.target).closest('tbody')
     
         if( $(tr).index() != $(tbody).find('tr').length-1 ){
             $(tr).remove()
@@ -237,14 +237,14 @@ function removeRow() {
 
 
 // function loadmoreSupplier() {
-//     const div = $(event.path[0])
+//     const div = $(event.target)
 //     if ($(div).scrollTop() + $(div).innerHeight() >= $(div)[0].scrollHeight) {
 //         findSupplier()
 //     }
 // }
 
 function selectSupplier(index) {
-    $($(event.path[0]).closest('div')).empty()
+    $($(event.target).closest('div')).empty()
     const div = $("#div_find_supplier").parent()
     id_user = arrSupplier[index]._id
     $($(div).find('input')[0]).val(arrSupplier[index].user_fullname)
@@ -331,7 +331,7 @@ $("#btnConfirm").click(e => {
 })
 
 function getValueCodeDiscount() {
-    const td = $(event.path[0]).parent()
+    const td = $(event.target).parent()
     const input = $(td).find('input')[0]
     const voucher_code = $($(td).find('input')[0]).val()
     const totalMoney = changeMoney()
@@ -366,7 +366,7 @@ function getMoneyPoint() {
         error_change_point()
         return
     }
-    const parent = $(event.path[0]).parent()
+    const parent = $(event.target).parent()
     const input = $(parent).find('input')[0]
     $(input).val(money(tryParseInt($(input).val())))
     const point_number = tryParseInt($(input).val())
@@ -404,7 +404,7 @@ function error_change_point() {
 
 function findEmployee(isMore=false) {
     
-    const td = $(event.path[0]).parent()
+    const td = $(event.target).parent()
     const input = $(td).find('input')[0]
     const div_loading = $(td).find('.spinner-border')[0]
     const div_employee = $(td).find(".div-employee")[0]
@@ -446,7 +446,7 @@ function findEmployee(isMore=false) {
 }
 
 function loadmoreEmployee() {
-    const div = $(event.path[0])
+    const div = $(event.target)
     if ($(div).scrollTop() + $(div).innerHeight() >= $(div)[0].scrollHeight) {
         offsetEmployee++
         findEmployee(true)
@@ -454,7 +454,7 @@ function loadmoreEmployee() {
 }
 
 function selectEmployee(index) {
-    const parent_one = $(event.path[0]).closest('td')
+    const parent_one = $(event.target).closest('td')
     const input = $(parent_one).find('input')[0]
     const div_employee = $(parent_one).find(".div-employee")[0]
     $(div_employee).empty()

@@ -45,13 +45,6 @@ function drawTable() {
             </div>
             <div onscroll="loadmoreEmployee()" class="div-employee"></div>
         </td>
-        <td>
-            <input oninput="findEmployee()" value="" class="form-control" placeholder="Nhập tên nhân viên . . .">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div onscroll="loadmoreEmployee()" class="div-employee"></div>
-        </td>
         <td><i onclick="removeRow()" class="mdi mdi-delete-forever"></i></td>
     </tr>
     `)
@@ -105,65 +98,6 @@ function success_find_id_product(data, element) {
     changeMoney()
     drawTable()
 }
-// function findSupplier() {
-
-//     id_user = null
-//     const type = event.type
-//     const div = $("#div_find_supplier")
-
-//     const input = $(div).find('input')[0]
-//     const divLoading = $(div).find('.spinner-border')[0]
-//     const div_show = $(div).find('div')[1]
-//     if (type == 'input')  pageSupplier = 1
-//     if (type == 'scroll') pageSupplier++
-
-
-//     if ($(input).val().trim().length > 0) {
-//         $(divLoading).show()
-//         callAPI('GET', `${API_USER}/findOther?`, {
-//             key: $(input).val(),
-//             limit: 10,
-//             page:pageSupplier
-//         }, users => {
-//             $(divLoading).hide()
-//             if (type == 'input') {
-//                 $(div_show).empty()
-//                 arrSupplier = []
-//             }
-
-//             users.map(user => {
-//                 $(div_show).append(`
-//                     <li><a href="javascript:void(0)" onclick="selectSupplier(${arrSupplier.length})" >Tên: ${user.user_fullname} - SĐT: ${user.user_phone}</a></li>
-//                 `)
-//                 arrSupplier.push(user)
-//             })
-//         } ,undefined, undefined,false)
-//     }
-//     else {
-//         $(div_show).empty()
-//     }
-
-// }
-
-// function findProduct(call_back) {
-//     if (event.which == 13) {
-//         const input = $(event.target)
-//         const tr = $(input).closest('tr')
-//         const key = $(input).val().trim()
-//         const div_loading = $(input).closest('td').find('div')[0]
-
-//         $(div_loading).show()
-//         callAPI('GET',API_PRODUCT,{
-//             key:key,
-//         }, data => {
-//            call_back(data)
-//         },(data)=>{
-//             $(div_loading).hide()
-//             errAjax(data, event) 
-//         },false,false)
-//     }
-// }
-
 
 function changeMoney() {
 
@@ -299,7 +233,7 @@ $("#btnConfirm").click(e => {
             const product_warranty = tryParseInt($(inputs[6]).val())
             const product_quantity = 1
             const id_employee = $(inputs[7]).attr("name")
-            const id_employee_setting = $(inputs[8]).attr("name")
+            // const id_employee_setting = $(inputs[8]).attr("name")
 
             arrProduct.push({
                 id_product: id_product,
@@ -310,7 +244,7 @@ $("#btnConfirm").click(e => {
                 product_warranty: product_warranty,
                 product_quantity: product_quantity,
                 id_employee: id_employee,
-                id_employee_setting: id_employee_setting
+                // id_employee_setting: id_employee_setting
             })
 
         }
@@ -332,7 +266,7 @@ $("#btnConfirm").click(e => {
     const url_api = `${API_EXPORT}/export-sale`
     hidePopup('popupConfirm')
 
-    const id_employee_setting = $(".div-employee-setting input").attr("name")
+    // const id_employee_setting = $(".div-employee-setting input").attr("name")
     callAPI('POST', url_api, {
         arrProduct: JSON.stringify(arrProduct),
         id_user: id_user,
@@ -342,7 +276,7 @@ $("#btnConfirm").click(e => {
         point_number: point_number,
         type_export: type_export,
         id_fundbook: id_fundbook,
-        id_employee_setting: id_employee_setting
+        // id_employee_setting: id_employee_setting
     }, (data) => {
         success("Thành công")
         resetPage()

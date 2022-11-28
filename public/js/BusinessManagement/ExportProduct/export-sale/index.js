@@ -308,7 +308,7 @@ function confirmSaveEdit(index) {
 
 function changeMoney() {
 
-    const input = $(event.path[0])
+    const input = $(event.target)
     $(input).val(money(tryParseInt($(input).val())))
     const modelBoby = $("#popupEdit .modal-body")
     const tableProduct = $(modelBoby).find('table')[1]

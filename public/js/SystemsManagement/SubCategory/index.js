@@ -72,8 +72,6 @@ function drawTable(data)
                 <td class="right">${money(data[i].subcategory_import_price)}</td>
                 <td class="right">${money(data[i].subcategory_export_price)}</td>
                 <td class="right">${money(data[i].subcategory_discount)}</td>
-                <td class="right">${money(data[i].subcategory_part)}</td>
-                <td class="right">${money(data[i].subcategory_point)}</td>
                 <td>
                     <i onclick="detailSubCategory(${i})" class="mdi mdi-information text-primary detail" title="Chi tiết sản phẩm"></i>
                     <a class="mdi mdi-grease-pencil detail text-success" target="_blank" href="/subcategory-contents-management?id_subcategory=${data[i]._id}"></a>
@@ -94,11 +92,11 @@ function confirmAdd()
     const subcategory_ck = tryParseInt($("#addCK").val())
     const subcategory_discount = tryParseInt($("#addDiscount").val())
     const subcategory_warranty = tryParseInt($("#addWarranty").val())
-    const subcategory_part = tryParseInt($("#addPart").val())
-    const subcategory_point = tryParseInt($("#addPoint").val())
+    // const subcategory_part = tryParseInt($("#addPart").val())
+    // const subcategory_point = tryParseInt($("#addPoint").val())
     const subcategory_unit = $("#addUnit").val().trim().length == 0?"Chiếc":$("#addUnit").val().trim()
-    const number_warning = tryParseInt($("#addWarning").val())
-    const subcategory_export_price_web = tryParseInt($("#addExportPriceWeb").val())
+    // const number_warning = tryParseInt($("#addWarning").val())
+    // const subcategory_export_price_web = tryParseInt($("#addExportPriceWeb").val())
     const id_category = $("#addCategory option:selected").val()
     
     if(id_category.length != 24 ){
@@ -120,12 +118,8 @@ function confirmAdd()
         subcategory_ck:subcategory_ck,
         subcategory_discount:subcategory_discount,
         subcategory_warranty:subcategory_warranty,
-        subcategory_part:subcategory_part,
-        subcategory_point:subcategory_point,
         subcategory_unit:subcategory_unit,
-        number_warning:number_warning,
         id_category:id_category,
-        subcategory_export_price_web:subcategory_export_price_web
     },()=>{
         success("Thành công")
         getData()
@@ -320,11 +314,11 @@ function detailSubCategory(index)
     $("#editCK").val(money(arrData[index].subcategory_ck))
     $("#editDiscount").val(money(arrData[index].subcategory_discount))
     $("#editWarranty").val(money(arrData[index].subcategory_warranty))
-    $("#editPart").val(money(arrData[index].subcategory_part))
-    $("#editPoint").val(money(arrData[index].subcategory_point))
-    $("#editPoint").val(money(arrData[index].subcategory_point))
+    // $("#editPart").val(money(arrData[index].subcategory_part))
+    // $("#editPoint").val(money(arrData[index].subcategory_point))
+    // $("#editPoint").val(money(arrData[index].subcategory_point))
     $("#editUnit").val(money(arrData[index].subcategory_unit))
-    $("#editExportPriceWeb").val(money(arrData[index].subcategory_export_price_web))
+    // $("#editExportPriceWeb").val(money(arrData[index].subcategory_export_price_web))
 
     $("#btnConfirmEdit").attr("onclick",`confirmSaveEdit(${index})`)
     showPopup('popupEdit')
@@ -339,9 +333,9 @@ function confirmSaveEdit(index)
     const subcategory_ck = tryParseInt($("#editCK").val())
     const subcategory_discount = tryParseInt($("#editDiscount").val())
     const subcategory_warranty = tryParseInt($("#editWarranty").val())
-    const subcategory_part = tryParseInt($("#editPart").val())
-    const subcategory_point = tryParseInt($("#editPoint").val())
-    const subcategory_export_price_web = tryParseInt($("#editExportPriceWeb").val())
+    // const subcategory_part = tryParseInt($("#editPart").val())
+    // const subcategory_point = tryParseInt($("#editPoint").val())
+    // const subcategory_export_price_web = tryParseInt($("#editExportPriceWeb").val())
     const subcategory_unit = $("#editUnit").val().trim().length == 0?"Chiếc":$("#editUnit").val().trim()
     const id_category = $("#editCategory option:selected").val()
 
@@ -364,11 +358,11 @@ function confirmSaveEdit(index)
         subcategory_ck:subcategory_ck,
         subcategory_discount:subcategory_discount,
         subcategory_warranty:subcategory_warranty,
-        subcategory_part:subcategory_part,
-        subcategory_point:subcategory_point,
+        // subcategory_part:subcategory_part,
+        // subcategory_point:subcategory_point,
         subcategory_unit:subcategory_unit,
         id_category:id_category,
-        subcategory_export_price_web:subcategory_export_price_web,
+        // subcategory_export_price_web:subcategory_export_price_web,
         id_subcategory:arrData[index]._id
     } , (data)=>{
         success("Thành công")

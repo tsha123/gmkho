@@ -167,9 +167,9 @@ export const create_form = async(req, res) => {
         }
 
         if ((receive_money + money_point + money_voucher_code) == total) { // cộng điểm cho khách
-            await ModelUser.findByIdAndUpdate(dataUser._id, { $inc: { user_point: (totalPointPlus - point_number) } })
+            // await ModelUser.findByIdAndUpdate(dataUser._id, { $inc: { user_point: (totalPointPlus - point_number) } })
         } else {
-            await ModelUser.findByIdAndUpdate(dataUser._id, { $inc: (-point_number) })
+            // await ModelUser.findByIdAndUpdate(dataUser._id, { $inc: (-point_number) })
         }
         // await update_part(id_branch, totalPart)
 

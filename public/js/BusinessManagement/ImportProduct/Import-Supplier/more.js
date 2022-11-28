@@ -125,7 +125,7 @@ function findProduct(input){  //tìm kiếm sản phẩm
 }
 
 function loadmoreProduct(){  // khi kéo thẻ div xuống sẽ load thêm sản phẩm
-    const div = $(event.path[0])
+    const div = $(event.target)
     if($(div).scrollTop() + $(div).innerHeight() >= $(div)[0].scrollHeight) {
         offsetSubcategory ++
         const key = $($(div).closest('td').find('input')[0]).val().trim()
@@ -160,9 +160,9 @@ function loadmoreProduct(){  // khi kéo thẻ div xuống sẽ load thêm sản
 
 function selectProduct(index){ //chọn sản phẩm trên từng dòng
 
-    const tr = $(event.path[0]).closest('tr')
-    const tbody = $(event.path[0]).closest('tbody')
-    const td = $(event.path[0]).closest('td')
+    const tr = $(event.target).closest('tr')
+    const tbody = $(event.target).closest('tbody')
+    const td = $(event.target).closest('td')
     $(td).find('.div-product').empty()
     $($(tr).find('input')[0]).val(arrSubCategory[index].subcategory_name)  // tên sản phẩm
     $($(tr).find('input')[0]).attr("name",arrSubCategory[index]._id) // mã sản phảm được gán vào name của input
@@ -183,9 +183,9 @@ function selectProduct(index){ //chọn sản phẩm trên từng dòng
 
 function changeMoney() {
     
-    const classes_input = $(event.path[0]).attr("class")
+    const classes_input = $(event.target).attr("class")
     if (typeof classes_input != 'undefined' && classes_input.includes('number')) {
-        const input = $(event.path[0])
+        const input = $(event.target)
         if ($(input).val().trim().length == 0) {
             $(input).val(0)
         }
@@ -209,8 +209,8 @@ function changeMoney() {
 }
 
 function removeRow(){  // xóa dòng
-    const tr = $(event.path[0]).closest('tr')
-    const tbody = $(event.path[0]).closest('tbody')
+    const tr = $(event.target).closest('tr')
+    const tbody = $(event.target).closest('tbody')
 
     if( $(tr).index() != $(tbody).find('tr').length-1 ){ // nếu không phải dòng cuối dùng thì xóa bình thường
         $(tr).remove()
@@ -220,7 +220,7 @@ function removeRow(){  // xóa dòng
 }
 
 function inputID_Product2() {  // sự kiện nhập mã phụ
-    const tr = $(event.path[0]).closest('tr')
+    const tr = $(event.target).closest('tr')
     const inputName = $($(tr).find('input')[0]).val().trim()  // cột giá trị
     const inputNumber = $(tr).find('input')[5]  // cột số lượng
     let number = 0
@@ -236,7 +236,7 @@ function inputID_Product2() {  // sự kiện nhập mã phụ
                     newStringId += `${id.trim()} / `
                 }
             })
-            $(event.path[0]).val(newStringId)  // gán lại giá trị vào ô giá trị
+            $(event.target).val(newStringId)  // gán lại giá trị vào ô giá trị
             $(inputNumber).val(money(number)) // gán lại số lượng
       
             if(number == 0 && inputName.length > 0){
@@ -253,7 +253,7 @@ function inputID_Product2() {  // sự kiện nhập mã phụ
 }
 
 function changeNumber() { // cập nhập số lượng, có 2 trường hợp , nếu ô mã phụ rỗng thì lên bình thường , còn lại ko đc sửa vì mã phụ quyết định số lượng
-    const tr = $(event.path[0]).closest('tr')
+    const tr = $(event.target).closest('tr')
     const inputNumber = $(tr).find('input')[5] // input số lượng
     let number = 0
     let stringid = $($(tr).find('input')[1]).val().trim()
@@ -277,14 +277,14 @@ function changeNumber() { // cập nhập số lượng, có 2 trường hợp ,
 
 
 // function loadmoreSupplier() {  // load more nhà cung cấp khi kéo thẻ div
-//     const div = $(event.path[0])
+//     const div = $(event.target)
 //     if ($(div).scrollTop() + $(div).innerHeight() >= $(div)[0].scrollHeight) {
 //         findSupplier()
 //     }
 // }
 
 function selectSupplier(index) {
-    $($(event.path[0]).closest('div')).empty()
+    $($(event.target).closest('div')).empty()
     const div = $("#div_find_supplier").parent()
     id_user = arrSupplier[index]._id
     $($(div).find('input')[0]).val(arrSupplier[index].user_fullname)
