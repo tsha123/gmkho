@@ -68,31 +68,31 @@
               </div>
               <div class="modal-body">
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                       <b>Tên nhân viên</b>
                       <input placeholder="Nhập tên nhân viên" type="text" class="form-control" id="addName">
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                       <b>Số điện thoại</b>
                       <input placeholder="Số điện thoại" type="text" autocomplete="off" class="form-control" id="addPhone">
                     </div>
-                    <!-- <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-6">
+                      <b>Địa chỉ</b>
+                      <input placeholder="Địa chỉ nhân viên" type="text" class="form-control" id="addAddress">
+                    </div>
+                    <div class="col-6 col-md-3">
                       <b>Tài khoản bank</b>
                       <input placeholder="Tài khoản ngân hàng" type="text" class="form-control" id="addBanknumber">
                     </div>
                     <div class="col-6 col-md-3">
                       <b>Tên bank</b>
                       <input placeholder="Tên ngân hàng" type="text" class="form-control" id="addBankname">
-                    </div> -->
-                    <div class="col-4">
+                    </div>
+                    <div class="col-6 col-md-3">
                       <b>Chức vụ</b>
                       <select id="addSelectGroup" name="selectGroup"></select>
                     </div>
-                    <div class="col-6">
-                      <b>Địa chỉ</b>
-                      <input placeholder="Địa chỉ nhân viên" type="text" class="form-control" id="addAddress">
-                    </div>
-                    <!-- <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-3">
                       <b>Trình độ học vấn</b>
                       <input placeholder="Trình độ học vấn" type="text" class="form-control" id="addLevel">
                     </div>
@@ -111,8 +111,8 @@
                     <div class="col-6 col-md-3">
                       <b>% Doanh số</b>
                       <input placeholder="% doanh số của chi nhánh" type="text" class="form-control" id="addPercent">
-                    </div> -->
-                    <div class="col-6">
+                    </div>
+                    <div class="col-6 col-md-12">
                       <b>Mật khẩu</b>
                       <input placeholder="Mât khẩu" type="text" type="text" class="form-control" id="addPassword">
                     </div>
@@ -137,7 +137,7 @@
         </div>
         
         <!-- Popup -->
-        <!-- Popup chỉnh sửa -->
+        <!-- Popup thêm mới -->
         <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
           <div class="modal-dialog model-80" role="document">
             <div class="modal-content">
@@ -149,32 +149,31 @@
               </div>
               <div class="modal-body">
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                       <b>Tên nhân viên</b>
                       <input placeholder="Nhập tên nhân viên" class="form-control" id="editName">
                     </div>
-                    <div class="col-4">
+                    <div class="col-6 col-md-3">
                       <b>Số điện thoại</b>
                       <input placeholder="Số điện thoại" autocomplete="off" class="form-control" id="editPhone">
                     </div>
-                    
-                    <!-- <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-6">
+                      <b>Địa chỉ</b>
+                      <input placeholder="Địa chỉ nhân viên" class="form-control" id="editAddress">
+                    </div>
+                    <div class="col-6 col-md-3">
                       <b>Tài khoản bank</b>
                       <input placeholder="Tài khoản ngân hàng" class="form-control" id="editBanknumber">
                     </div>
                     <div class="col-6 col-md-3">
                       <b>Tên bank</b>
                       <input placeholder="Tên ngân hàng" class="form-control" id="editBankname">
-                    </div> -->
-                    <div class="col-4">
+                    </div>
+                    <div class="col-6 col-md-3">
                       <b>Chức vụ</b>
                       <select id="editSelectGroup" name="selectGroup"></select>
                     </div>
-                    <div class="col-6">
-                      <b>Địa chỉ</b>
-                      <input placeholder="Địa chỉ nhân viên" class="form-control" id="editAddress">
-                    </div>
-                    <!-- <div class="col-6 col-md-3">
+                    <div class="col-6 col-md-3">
                       <b>Trình độ học vấn</b>
                       <input placeholder="Trình độ học vấn" class="form-control" id="editLevel">
                     </div>
@@ -189,35 +188,38 @@
                     <div class="col-6 col-md-3">
                       <b>Phụ cấp ăn trưa</b>
                       <input placeholder="Phụ cấp ăn trưa" oninput="inputNumber(this)" class="number form-control" id="editLunchAllowance">
-                    </div> -->
-                    <div class="col-6 ">
-                      <b>Mật khẩu</b>
-                      <input placeholder="Mât khẩu" type="text" class="form-control" id="editPassword">
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 col-md-3">
+                      <b>% Doanh số</b>
+                      <input value="0" placeholder="% doanh số của chi nhánh" class="form-control" id="editPercent">
+                    </div>
+                    <div class="col-6 col-md-12">
                       <b>Cơ sở công tác</b>
                       <select name="select_branch" id="edit_select_branch">
                         <%- html_branch %>
                       </select>
                     </div>
+                    <div class="col-6 col-md-12">
+                      <b>Mật khẩu</b>
+                      <input placeholder="Mât khẩu" type="text" class="form-control" id="editPassword">
+                    </div>
                     
-                    <div class="col-6">
-                      <b>Trạng thái</b>
-                      <div style="display: flex;">
-                        <div class="form-check form-check-success">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="editStatus" value="true" checked=""> Đang hoạt động <i class="input-helper"></i>
-                          </label>
-                        </div>
-                        <div class="form-check form-check-primary">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="editStatus" value="false" > Đã nghỉ <i class="input-helper"></i>
-                          </label>
-                        </div>
+                  </div>
+                  <div class="row">
+                    <b>Trạng thái</b>
+                    <div style="display: flex;">
+                      <div class="form-check form-check-success">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="editStatus" value="true" checked=""> Đang hoạt động <i class="input-helper"></i>
+                        </label>
+                      </div>
+                      <div class="form-check form-check-primary">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="editStatus" value="false" > Đã nghỉ <i class="input-helper"></i>
+                        </label>
                       </div>
                     </div>
                   </div>
-                  
               </div>
               <div class="row">
                 <div class="col-12 col-md-12 div-image relative">

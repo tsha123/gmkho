@@ -3,152 +3,275 @@
 
 <html lang="en">
 
-    <head>
-        <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
-        <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="/css/branch.css">
-        <%- include('../../header',{title:"Quản lý chi nhánh"}) %>
+<head>
+    <link rel="stylesheet" href="/assets/dataTable/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="/assets/dataTable/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/branch.css">
+    <%- include('../../header',{title:"Quản lý chi nhánh"}) %>
 
-            <div class="page-content">
-                <div class="header-table">
-                    <div class="page-header">
-                        <button onclick="showPopup('popupAdd',true)" class="btn btn-primary">Thêm mới <i
-                                class="mdi mdi-plus-circle"></i></button>
-                    </div>
-                </div>
-                <div class="container-fluid">
-                    <div id="divTable" class="div-table">
-
-                    </div>
-                    <div id="divPagination"></div>
+        <div class="page-content">
+            <div class="header-table">
+                <div class="page-header">
+                    <button onclick="showPopup('popupAdd',true)" class="btn btn-primary">Thêm mới <i class="mdi mdi-plus-circle"></i></button>
                 </div>
             </div>
-            <!-- POPUP ====================================-->
-            <!-- Popup -->
-            <!-- Popup thêm mới -->
-            <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog model-80" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Thêm mới chi nhánh</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-3">
-                                    <b>Tên chi nhánh</b>
-                                    <input class="form-control" id="addName" type="text"
-                                        placeholder="Nhập tên chi nhánh">
-                                </div>
-                                <div class="col-3">
-                                    <b>Số điện thoại</b>
-                                    <input class="form-control" id="addPhone" type="text"
-                                        placeholder="Nhập số điện thoại của chi nhánh">
-                                </div>
-                                <div class="col-3">
-                                    <b>Địa chỉ</b>
-                                    <input class="form-control" id="addAddress" type="text"
-                                        placeholder="Nhập địa chỉ chi nhánh">
-                                </div>
-                                <div class="col-3">
-                                    <label>Email </label>
-                                    <input class="form-control" placeholder="nhập email" id="email_add" type="text">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6 div-image-branch">
-                                    <b>Logo</b>
-                                    <img onclick="changeImage('inputAddLogo')" id="logoAdd">
-                                    <input oninput="paste_Image(this,'logoAdd')" id="inputAddLogo" type="file"
-                                        accept="image/*">
-                                </div>
-                                <div class="col-12 col-md-6 div-image-branch">
-                                    <b>Ảnh</b>
-                                    <img id="imageAdd" onclick="changeImage('inputAddImage')">
-                                    <input oninput="paste_Image(this,'imageAdd')" id="inputAddImage" type="file"
-                                        accept="image/*">
-                                </div>
-                            </div>
+            <div class="container-fluid">
+                <div id="divTable" class="div-table">
 
-                            <div class="modal-footer">
-                                <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+                <div id="divPagination"></div>
+            </div>
+        </div>
+        <!-- POPUP ====================================-->
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupAdd" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm mới chi nhánh</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-4">
+                                <b>Tên chi nhánh</b>
+                                <input class="form-control" id="addName" type="text" placeholder="Nhập tên chi nhánh">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Số điện thoại</b>
+                                <input class="form-control" id="addPhone" type="text" placeholder="Nhập số điện thoại của chi nhánh">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <b>Tiêu đề phiếu in</b>
+                                <input class="form-control" id="addHeader" type="text" placeholder="Nhập tiêu đề khi in phiếu">
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <b>Ghi chú in phiếu</b>
+                                <input class="form-control" id="addNote" type="text" placeholder="Nhập ghi chú khi in phiếu">
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <b>Địa chỉ</b>
+                                <input class="form-control" id="addAddress" type="text" placeholder="Nhập địa chỉ chi nhánh">
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <b>IP WIFI <i class="mdi mdi-wifi"></i></b>
+                                <input class="form-control" id="ipwifi_add" type="text" placeholder="Nhập địa chỉ wifi chấm công">
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Muộn tối đa <i class="mdi mdi-wifi"></i></b>
+                                <input class="number form-control" id="late_limit_add" oninput="inputNumber(this)" placeholder="Nhập địa chỉ wifi chấm công">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Giờ vào sáng </label>
+                                <input class="form-control" id="in_morning_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Giờ ra sáng</label>
+                                <input class="form-control" id="out_morning_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Giờ vào chiều</label>
+                                <input class="form-control" id="in_afternoon_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Giờ ra chiều</label>
+                                <input class="form-control" id="out_afternoon_add" type="time">
+                            </div>
+                        </div>
+                       
+
+                        <div class="row">
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Vào trực trưa</label>
+                                <input class="form-control" id="in_noon_schedule_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Ra trực trưa</label>
+                                <input class="form-control" id="out_noon_schedule_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Vào trực tối</label>
+                                <input class="form-control" id="in_night_schedule_add" type="time">
+                            </div>
+                            <div class="col-6 col-sm-6 col-md-3">
+                                <label>Ra trực tối</label>
+                                <input class="form-control" id="out_night_schedule_add" type="time">
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Popup -->
-            <!-- Popup chỉnh sửa -->
-            <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
-                <div class="modal-dialog model-80" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Chỉnh sửa chi nhánh</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label>Địa chỉ trên map (link)</label>
+                            <input class="form-control" placeholder="nhập link google map" id="map_address_add" type="text">
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-3">
-                                    <b>Tên chi nhánh</b>
-                                    <input class="form-control" id="editName" placeholder="Nhập tên chi nhánh">
-                                </div>
-                                <div class="col-3">
-                                    <b>Số điện thoại</b>
-                                    <input class="form-control" id="editPhone"
-                                        placeholder="Nhập số điện thoại của chi nhánh">
-                                </div>
-
-                                <div class="col-3">
-                                    <b>Địa chỉ</b>
-                                    <input class="form-control" id="editAddress" placeholder="Nhập địa chỉ chi nhánh">
-                                </div>
-
-                                <div class="col-3">
-                                    <label>Email </label>
-                                    <input class="form-control" placeholder="nhập email" id="email_edit" type="text">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-6 div-image-branch">
-                                    <b>Logo</b>
-                                    <img onclick="changeImage('inputEditLogo')" id="logoEdit">
-                                    <input oninput="paste_Image(this,'logoEdit')" id="inputEditLogo" type="file"
-                                        accept="image/*">
-                                </div>
-                                <div class="col-12 col-md-6 div-image-branch">
-                                    <b>Ảnh</b>
-                                    <img id="imageEdit" onclick="changeImage('inputEditImage')">
-                                    <input oninput="paste_Image(this,'imageEdit')" id="inputEditImage" type="file"
-                                        accept="image/*">
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" id="confirmEdit" class="btn btn-danger">Chỉnh sửa</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Email </label>
+                            <input class="form-control" placeholder="nhập email" id="email_add" type="text">
                         </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ hoạt động</label>
+                            <input class="form-control" placeholder="giờ hoạt động của chi nhánh" id="time_active_add" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 div-image-branch">
+                            <b>Logo</b>
+                            <img onclick="changeImage('inputAddLogo')" id="logoAdd">
+                            <input oninput="paste_Image(this,'logoAdd')" id="inputAddLogo" type="file" accept="image/*">
+                        </div>
+                        <div class="col-12 col-md-6 div-image-branch">
+                            <b>Ảnh</b>
+                            <img id="imageAdd" onclick="changeImage('inputAddImage')">
+                            <input oninput="paste_Image(this,'imageAdd')" id="inputAddImage" type="file" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="confirmAdd()" class="btn btn-primary">Thêm mới</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     </div>
                 </div>
             </div>
-            <!-- Popup -->
-            <!-- ====================================== -->
-            <%- include('../../footer') %>
-                <!-- <script src="/assets/dataTable/vfs_fonts.js"></script> -->
-                <!-- <script src="/assets/dataTable/pdfmake.min.js"></script> -->
-                <!-- <script src="/assets/dataTable/jszip.min.js"></script> -->
-                <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
-                <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+        </div>
 
-                <!-- <script src="/assets/dataTable/buttons.print.min.js"></script> -->
-                <!-- <script src="/assets/dataTable/buttons.html5.min.js"></script> -->
-                <script src="/js/SystemsManagement/Branch/index.js"></script>
-                </body>
+        <!-- Popup -->
+        <!-- Popup thêm mới -->
+        <div id="popupEdit" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog model-80" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chỉnh sửa chi nhánh</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-4">
+                                <b>Tên chi nhánh</b>
+                                <input class="form-control" id="editName" placeholder="Nhập tên chi nhánh">
+                            </div>
+                            <div class="col-6 col-md-4">
+                                <b>Số điện thoại</b>
+                                <input class="form-control" id="editPhone" placeholder="Nhập số điện thoại của chi nhánh">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <b>Tiêu đề phiếu in</b>
+                                <input class="form-control" id="editHeader" placeholder="Nhập tiêu đề khi in phiếu">
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <b>Ghi chú in phiếu</b>
+                                <input class="form-control" id="editNote" placeholder="Nhập ghi chú khi in phiếu">
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <b>Địa chỉ</b>
+                                <input class="form-control" id="editAddress" placeholder="Nhập địa chỉ chi nhánh">
+                            </div>
+                            <div  class="col-6 col-md-3 div-wifi">
+                                <b>IP WIFI <i class="mdi mdi-wifi"></i></b>
+                                <input class="form-control" id="ipwifi_edit" onkeypress="add_list_wifi()" type="text" placeholder="Nhập địa chỉ wifi chấm công">
+                                <div onclick="get_ip_wifi()" class="btn btn-primary">
+                                    <i class="fas fa-wifi"></i>
+                                    <span class="hide-on-mobile hide-on-tablet">Lấy IP</span>
+                                </div>
+                                <div id="list_edit_wifi" class="list-wifi">
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <b>Muộn tối đa <i class="mdi mdi-wifi"></i></b>
+                                <input class="number form-control" id="late_limit_edit" oninput="inputNumber(this)" placeholder="Nhập địa chỉ wifi chấm công">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ vào sáng </label>
+                            <input class="form-control" id="in_morning_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ ra sáng</label>
+                            <input class="form-control" id="out_morning_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ vào chiều</label>
+                            <input class="form-control" id="in_afternoon_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ ra chiều</label>
+                            <input class="form-control" id="out_afternoon_edit" type="time">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Vào trực trưa</label>
+                            <input class="form-control" id="in_noon_schedule_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Ra trực trưa</label>
+                            <input class="form-control" id="out_noon_schedule_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Vào trực tối</label>
+                            <input class="form-control" id="in_night_schedule_edit" type="time">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Ra trực tối</label>
+                            <input class="form-control" id="out_night_schedule_edit" type="time">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6">
+                            <label>Địa chỉ trên map (link)</label>
+                            <input class="form-control" placeholder="nhập link google map" id="map_address_edit" type="text">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Email </label>
+                            <input class="form-control" placeholder="nhập email" id="email_edit" type="text">
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <label>Giờ hoạt động</label>
+                            <input class="form-control" placeholder="giờ hoạt động của chi nhánh" id="time_active_edit" type="text">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 div-image-branch">
+                            <b>Logo</b>
+                            <img onclick="changeImage('inputEditLogo')" id="logoEdit">
+                            <input oninput="paste_Image(this,'logoEdit')" id="inputEditLogo" type="file" accept="image/*">
+                        </div>
+                        <div class="col-12 col-md-6 div-image-branch">
+                            <b>Ảnh</b>
+                            <img id="imageEdit" onclick="changeImage('inputEditImage')">
+                            <input oninput="paste_Image(this,'imageEdit')" id="inputEditImage" type="file" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="confirmEdit" class="btn btn-danger">Chỉnh sửa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Popup -->
+        <!-- ====================================== -->
+        <%- include('../../footer') %>
+            <!-- <script src="/assets/dataTable/vfs_fonts.js"></script> -->
+            <!-- <script src="/assets/dataTable/pdfmake.min.js"></script> -->
+            <!-- <script src="/assets/dataTable/jszip.min.js"></script> -->
+            <script src="/assets/dataTable/jquery.dataTables.min.js"></script>
+            <script src="/assets/dataTable/dataTables.buttons.min.js"></script>
+
+            <!-- <script src="/assets/dataTable/buttons.print.min.js"></script> -->
+            <!-- <script src="/assets/dataTable/buttons.html5.min.js"></script> -->
+            <script src="/js/SystemsManagement/Branch/index.js"></script>
+            </body>
 
 </html>

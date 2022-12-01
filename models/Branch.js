@@ -21,7 +21,7 @@ const SchemaBranch = new mongoose.Schema({
 		...validator.schemaString
 	},
 	branch_ipwifi:{
-		...validator.schemaString
+		...validator.schemaArray
 	},
 	branch_logo:{
 		...validator.schemaString

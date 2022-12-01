@@ -13,34 +13,39 @@
                     <div class="col-4 col-md-2 col-lg-2">
                         <label>Hiển thị</label>
                         <select onchange="getData()" id="selectLimit">
-                          <option value="<%- limit %>"><%- limit %></option>
-                          <option>10</option>
-                          <option>20</option>
-                          <option>50</option>
-                          <option>80</option>
-                          <option>100</option>
-                      </select>
+                            <option value="<%- limit %>">
+                                <%- limit %>
+                            </option>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>50</option>
+                            <option>80</option>
+                            <option>100</option>
+                        </select>
                     </div>
                     <div class="col-4 col-md-2 col-lg-2">
                         <label>Từ ngày</label>
-                        <input id="fromdate" class="form-control" value="<%- fromdate %>">
+                        <input id="fromdate" class="form-control" onchange="getData()" type="date" value="<%- fromdate %>">
                     </div>
                     <div class="col-4 col-md-2 col-lg-2">
                         <label>Tới ngày</label>
-                        <input id="todate" class="form-control" value="<%- todate %>">
+                        <input id="todate" class="form-control" onchange="getData()" type="date" value="<%- todate %>">
                     </div>
                     <div class="col-8 col-md-3">
                         <label>Tìm kiếm</label>
-                        <input oninput="getData(false)" id="keyFind" autocomplete="off" value="<%- key %>" placeholder="Nhập tên hoặc số điện thoại . . ." type="text" class="form-control">
+                        <input oninput="getData(false)" id="keyFind" autocomplete="off" value="<%- key %>"
+                            placeholder="Nhập tên hoặc số điện thoại . . ." type="text" class="form-control">
                     </div>
-                
+
                     <div class="col-5 col-md-4 col-lg-2 col-xl-2 relative">
                         <div class="btn-add">
-                            <div><button id="btnAdd" onclick="newPage('/promotion-news-management/edit-promotion')" class="btn btn-success"><i class="mdi mdi-chart-pie"></i> <span class="hide-on-mobile"> Thêm mới </span></button></div>
-                           
+                            <div><button id="btnAdd" onclick="newPage('/promotion-news-management/edit-promotion')"
+                                    class="btn btn-success"><i class="mdi mdi-chart-pie"></i> <span
+                                        class="hide-on-mobile"> Thêm mới </span></button></div>
+
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
             <div class="container-fluid">
@@ -54,7 +59,7 @@
                                 <th>Bài viết</th>
                                 <th>Số hiển thị</th>
                                 <th>Chỉnh sửa</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody id="tbodyTable"></tbody>

@@ -6,6 +6,7 @@ import * as helper from "../helper/helper.js"
 import * as validator from "../helper/validator.js"
 import sanitize from "mongo-sanitize"
 
+import { data_chart } from "../api/ControllerAdmin/index.js"
 //
 async function get_data_website_components() {
     let data_website_component = await Model_Website_Component.findById(_id_website_component)
@@ -35,6 +36,7 @@ async function get_data_website_components() {
 //
 function createControllerAdmin(app) {
     login(app)
+    data_chart(app)
 }
 
 export const home = async (req, res) => {
@@ -56,6 +58,10 @@ export const employee_management = async (req, res) => {
 
 export const permission = async (req, res) => {
     return res.render("SystemsManagement/Permission/index")
+}
+
+export const backup_data= async (req, res) => {
+    return res.render("SystemsManagement/BackupData/index")
 }
 
 export const branch = async (req, res) => {
@@ -441,4 +447,3 @@ const get_html_branch = async ()=>{
     })
     return html
 }
-

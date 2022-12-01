@@ -47,44 +47,63 @@
               </div>
             </div>
             <div class="container-fluid">
-                <div id="divTable" class="div-table">
-                  <table class="table table-hover" id="table-main">
-                    <thead>
-                      <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Mã phụ</th>
-                        <th>Giá nhập</th>
-                        <th>VAT</th>
-                        <th>CK</th>
-                        <th>Số lượng</th>
-                        <th>Bảo hành</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody id="tbodyTable">
-                      
-                    </tbody>
-                </table>
-                </div>
-                <div id="divPagination">
-                    <table class="table">
-                        <tr>
-                          <td>Tổng tiền</td>
-                          <td><input id="totalMoney" class="form-control number" value="0" disabled></td>
-                          <td>Đã thanh toán</td>
-                          <td><input id="paid"  oninput="changeMoney()" class="form-control number" value="0"></td>
-                          <td>Còn nợ</td>
-                          <td><input id="debt" class="form-control number" disabled value="0"></td>
-                          <td>Hình thức TT</td>
-                          <td><select id="selectTypePayment"></select></td>
-                        </tr>
-                        <tr>
-                          <td>Ghi chú</td>
-                          <td colspan="6"><input name="note" class="form-control" placeholder="Nhập ghi chú"></td>
-                          <td class="center"><button data-target="#popupConfirm" data-toggle="modal" class="btn btn-primary">Xác nhận</button></td>
-                        </tr>
+              <div class="row">
+                  <div class="col col-md-9">
+                    <div id="divTable" class="div-table">
+                      <table class="table table-hover" id="table-main">
+                        <thead>
+                          <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Mã phụ</th>
+                            <th>Giá nhập</th>
+                            <th>VAT</th>
+                            <th>CK</th>
+                            <th>Số lượng</th>
+                            <th>Bảo hành</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbodyTable">
+                          
+                        </tbody>
                     </table>
-                </div>
+                    </div>
+                    <div id="divPagination">
+                        <table class="table">
+                            <tr>
+                              <td>Tổng tiền</td>
+                              <td><input id="totalMoney" class="form-control number" value="0" disabled></td>
+                              <td>Đã thanh toán</td>
+                              <td><input id="paid"  oninput="changeMoney()" class="form-control number" value="0"></td>
+                              <td>Còn nợ</td>
+                              <td><input id="debt" class="form-control number" disabled value="0"></td>
+                              <td>Hình thức TT</td>
+                              <td><select id="selectTypePayment"></select></td>
+                            </tr>
+                            <tr>
+                              <td>Ghi chú</td>
+                              <td colspan="6"><input name="note" class="form-control" placeholder="Nhập ghi chú"></td>
+                              <td class="center"><button data-target="#popupConfirm" data-toggle="modal" class="btn btn-primary">Xác nhận</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                  </div>
+                  <div class="col col-md-3" style="display: flex; align-items: flex-end;">
+                     
+                        <table class="table table-bordered" id="table_two" style="display: block; margin-top:auto;">
+                            <thead>
+                              <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Tổng tiền</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                      
+                  </div>
+              </div>
+                
             </div>
         </div>
         <!-- POPUP ====================================-->

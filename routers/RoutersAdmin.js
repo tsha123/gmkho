@@ -112,6 +112,8 @@ routerAdmin.get("/voucher-management", router.voucher)
 routerAdmin.get("/users-management", router.user)
 //Phân quyền
 routerAdmin.get("/permission-management", router.permission)
+// Sao lưu dữ liệu
+routerAdmin.get("/backup-data", router.backup_data)
 //#endregion Quản lý hệ thống -SystemsManagement
 //========================================================================================================================
 //#region content management

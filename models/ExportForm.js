@@ -52,14 +52,15 @@ const SchemaProductExportFor = {
 
     },
     id_employee: {
-        ...validator.schemaObjectId,
+        ...validator.schemaString,
     },
     id_employee_setting: {
-        ...validator.schemaObjectId,
+        ...validator.schemaString,
     },
     id_import_return: { // id phiếu nhập trả lại , nếu khi nhập hàng khách trả lại sẽ cập nhập cái này vào phiếu xuất
         ...validator.schemaObjectId,
     },
+
 
 }
 
@@ -93,13 +94,13 @@ const SchemaExportForm = new mongoose.Schema({
     id_employee_create: {
         ...validator.schemaObjectId,
     },
-    export_form_status_paid: {...validator.schemaBooleanFalse },
+    export_form_status_paid: { ...validator.schemaBooleanFalse },
     export_form_product: {
         ...validator.schemaArray,
         type: [SchemaProductExportFor]
     },
-    export_form_note: {...validator.schemeString },
-    export_form_type: {...validator.schemeString },
+    export_form_note: { ...validator.schemeString },
+    export_form_type: { ...validator.schemeString },
     voucher_code: {
         ...validator.schemeString
     },
@@ -115,14 +116,24 @@ const SchemaExportForm = new mongoose.Schema({
     money_point: {
         ...validator.schemeNumber
     },
-    order_time_trafer: {...validator.schemaDatetime }
+    order_time_trafer: { ...validator.schemaDatetime },
+    export_status_by_app: {
+        ...validator.schemaBoolean
+    },
+    payment_temp:{
+        ...validator.schemaNumber
+    },
+    id_fundbook_temp:{
+        ...validator.schemaObjectId
+    },
+    export_source:{...validator.schemaString}
 }, { timestamps: true });
 
 
 validator.schePre(SchemaExportForm)
 
 
-SchemaExportForm.post(['save'], async(docs) => {
+SchemaExportForm.post(['save'], async (docs) => {
     var arrSubcategory = []
     for (let i = 0; i < docs.export_form_product.length; i++) {
         await ModelSubCategory.findByIdAndUpdate(docs.export_form_product[i].id_subcategory, {

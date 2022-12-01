@@ -1,0 +1,15 @@
+<button onclick="backupProcess1">backup</button>
+
+<script>
+    const backupProcess1 = spawn("mongodump", ["--db=gaming_market", "--archive=./dump/abc.gzip", "--gzip"])
+    backupProcess.on("exit", (code, signal) => {
+        if (code) {
+            console.log("backup process exited with code ", code)
+        } else if (signal) console.error("backup process was killed with singal ", signal)
+        else {
+            console.log("Successfully backup the database")
+            // task.stop();
+            // break;
+        }
+    })
+</script>

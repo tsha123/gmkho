@@ -64,8 +64,8 @@
                                     <th>Giá nhập</th>
                                     <th>Giá bán</th>
                                     <th>Giảm giá</th>
-                                    <!-- <th>Part thưởng</th>
-                                    <th>Điểm thưởng</th> -->
+                                    <th>Part thưởng</th>
+                                    <th>Điểm thưởng</th>
                                     <th>Chi tiết</th>
                                 </tr>
                             </thead>
@@ -88,59 +88,52 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-6 ">
+                                <div class="col-6 col-md-4">
                                     <label>Danh mục</label>
                                     <select name="selectCategory" id="addCategory"></select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-md-5">
                                     <label>Tên sản phẩm</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
-                                        id="addName">
+                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" id="addName">
                                 </div>
-                                <!-- <div class="col-12 col-md-3">
+                                <div class="col-12 col-md-3">
                                     <label>Giá bán trên web</label>
                                     <input type="text" id="addExportPriceWeb" oninput="inputNumber()" value="0" class="number form-control" placeholder="nhập giá bán trên web">
-                                </div> -->
+                                </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-4">
-                                    <label>Đơn vị tính</label>
-                                    <input class="form-control" value="Chiếc" id="addUnit" placeholder="Tồn tối đa">
-                                </div>
-                                <div class="col-4">
+                                <div class="col-6 col-md-3">
                                     <label>Giá nhập</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addImportPrice"
                                         placeholder="Nhập giá nhập">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6 col-md-3">
                                     <label>Giá bán</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addExportPrice"
                                         placeholder="Nhập giá bán">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>VAT(%)</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addVAT"
                                         placeholder="Nhập thuế VAT">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Chiết khấu(%)</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addCK"
                                         placeholder="Nhập chiết khấu">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Giảm giá</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addDiscount"
                                         placeholder="Giảm giá">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Bảo hành (tháng)</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addWarranty"
                                         placeholder="Bảo hành">
                                 </div>
-                                <!-- <div class="col-6 col-md-3">
+                                <div class="col-6 col-md-3">
                                     <label>Part thưởng</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addPart"
                                         placeholder="Part thưởng">
@@ -149,14 +142,18 @@
                                     <label>Điểm thưởng</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addPoint"
                                         placeholder="Điểm thưởng">
-                                </div> -->
-                                <!-- </div> -->
-                                <!-- <div class="row"> -->
-                                <!-- <div class="col-6 col-md-6">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6">
                                     <label>Số lượng cảnh báo</label>
                                     <input class="number form-control" oninput="inputNumber(this)" id="addWarning"
                                         placeholder="Tồn tối đa">
-                                </div> -->
+                                </div>
+                                <div class="col-6 col-md-6">
+                                    <label>Đơn vị tính</label>
+                                    <input class="form-control" value="Chiếc" id="addUnit" placeholder="Tồn tối đa">
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -180,53 +177,67 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12 col-md-4">
                                     <label>Danh mục</label>
                                     <select name="selectCategory" id="editCategory"></select>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-md-5">
                                     <label>Tên sản phẩm</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                                    <input  type="text" class="form-control" placeholder="Nhập tên sản phẩm"
                                         id="editName">
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <label>Giá bán trên web</label>
+                                    <input type="text" id="editExportPriceWeb" value="0" class="number form-control" oninput="inputNumber()" placeholder="Nhập giá bán trên web">
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-4">
-                                    <label>Đơn vị tính</label>
-                                    <input class="form-control" value="Chiếc" id="editUnit" placeholder="Tồn tối đa">
-                                </div>
-                                <div class="col-4">
+                                <div class="col-6 col-md-3">
                                     <label>Giá nhập</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editImportPrice"
                                         placeholder="Nhập giá nhập">
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6 col-md-3">
                                     <label>Giá bán</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editExportPrice"
                                         placeholder="Nhập giá bán">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>VAT(%)</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editVAT"
                                         placeholder="Nhập thuế VAT">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Chiết khấu(%)</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editCK"
                                         placeholder="Nhập chiết khấu">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Giảm giá</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editDiscount"
                                         placeholder="Giảm giá">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <label>Bảo hành (tháng)</label>
                                     <input class="number form-control" oninput="inputNumber()" id="editWarranty"
                                         placeholder="Bảo hành">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Part thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editPart"
+                                        placeholder="Part thưởng">
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <label>Điểm thưởng</label>
+                                    <input class="number form-control" oninput="inputNumber()" id="editPoint"
+                                        placeholder="Điểm thưởng">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6">
+                                    <label>Đơn vị tính</label>
+                                    <input class="form-control" value="Chiếc" id="editUnit" placeholder="Tồn tối đa">
                                 </div>
                             </div>
                         </div>
