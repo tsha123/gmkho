@@ -208,7 +208,7 @@ export const update = async(app) => {
     app.put(prefixApi, helper.authenToken, async(req, res) => {
         try {
             if (!await helper.checkPermission("61e4cc4369a5d379b7a29821", req.body._caller.id_employee_group)) return res.status(403).send("Thất bại! Bạn không có quyền truy cập chức năng này")
-
+        
             const subcategory_name = req.body.subcategory_name
             const subcategory_import_price = validator.tryParseInt(req.body.subcategory_import_price)
             const subcategory_export_price = validator.tryParseInt(req.body.subcategory_export_price)
@@ -227,7 +227,8 @@ export const update = async(app) => {
             const id_subcategory = req.body.id_subcategory
             const dataSub = await ModelSubCategory.findById(id_subcategory)
             if (!dataSub) return res.status(400).send("Thất bại! Không tìm thấy sản phẩm")
-            try {
+         
+
                 const updateNew = await ModelSubCategory.findByIdAndUpdate(dataSub._id, {
                     subcategory_name: subcategory_name,
                     subcategory_import_price: subcategory_import_price,
@@ -236,19 +237,16 @@ export const update = async(app) => {
                     subcategory_ck: subcategory_ck,
                     subcategory_discount: subcategory_discount,
                     subcategory_warranty: subcategory_warranty,
-                    subcategory_part: subcategory_part,
-                    subcategory_point: subcategory_point,
+                    // subcategory_part: subcategory_part,
+                    // subcategory_point: subcategory_point,
                     subcategory_unit: subcategory_unit,
-                    subcategory_export_price_web:subcategory_export_price_web,
+                    // subcategory_export_price_web:subcategory_export_price_web,
                     id_category: id_category,
                 })
                 if (!updateNew) return res.status(400).send("Thất bại! Có lỗi xảy ra")
                 return res.json(updateNew)
 
-            } catch (e) {
-                console.log(e)
-                return res.status(500).send("Thất bại! Có lỗi xảy ra")
-            }
+           
         } catch (e) {
             console.log(e)
             return res.status(500).send("Thất bại! Có lỗi xảy ra")

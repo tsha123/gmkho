@@ -170,8 +170,7 @@ export const throwValue = (val) => {
 //#region parse
 export const tryParseInt = function (str) {
     try {
-        if (!isDefine(str)) return 0
-        return Math.round(str.toString().replaceAll(",", "")) || 0
+        return parseInt(str)
     } catch (e) {
         return 0
     }

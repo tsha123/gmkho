@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-dotenv.config();
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -8,7 +7,6 @@ import logger from 'morgan';
 import * as connectDB from './connectDB.js';
 import routerAdmin from './routers/RoutersAdmin.js';
 import moment from 'moment-timezone';
-import { spawn } from 'child_process';
 
 import cron from 'node-cron';
 import * as validator from './helper/validator.js';
@@ -725,67 +723,111 @@ app.get('/cak', async (req, res) => {
     return res.json(arrrData);
 });
 
-const backupRestore = (
-    type,
-    db = 'gaming_market',
-    archive = `./dump/${new Date()}`,
-    ...other
-) => {
-    const cmd = {
-        backup: 'mongodump',
-        restore: 'mongorestore',
-    };
-    return new Promise((resolve, reject) => {
-        const process = spawn(cmd[type], [
-            `--db=${db}`,
-            `--archive=${archive}`,
-            '--gzip',
-        ]);
-        process.on('exit', (code, signal) => {
-            if (code) {
-                console.log(`${type} process exited with code ${code}`);
-                return {
-                    status: false,
-                    message: `${type} process exited with code ${code}`,
-                };
-            }
-            if (signal) {
-                console.error(
-                    `${type} process was killed with signal ${signal}`
-                );
-                return {
-                    status: false,
-                    message: `${type} process was killed with signal ${signal}`,
-                }
-            }
-            console.log(`Successfully ${type} the database`);
-            return resolve({ code, signal });
-        });
+// const backupRestore = (
+//     type,
+//     db = 'gaming_market',
+//     archive = `./dump/${new Date()}`
+// ) => {
+//     const cmd = {
+//         backup: 'mongodump',
+//         restore: 'mongorestore',
+//     };
+//     return new Promise((resolve, reject) => {
+//         const process = spawn(cmd[type], [
+//             `--db=${db}`,
+//             `--archive=${archive}`,
+//             '--gzip',
+//         ]);
+//         process.on('exit', (code, signal) => {
+//             if (code) {
+//                 console.log(`${type} process exited with code ${code}`);
+//                 return {
+//                     status: false,
+//                     message: `${type} process exited with code ${code}`,
+//                 };
+//             }
+//             if (signal) {
+//                 console.error(
+//                     `${type} process was killed with signal ${signal}`
+//                 );
+//                 return {
+//                     status: false,
+//                     message: `${type} process was killed with signal ${signal}`,
+//                 };
+//             }
+//             console.log(`Successfully ${type} the database`);
+//             return resolve({ code, signal });
+//         });
+//     });
+// };
+
+import { spawn } from 'child_process';
+import { env } from 'process';
+
+const dumpData = (db, name) => {
+    const backupProcess = spawn('mongodump', [
+        `--db=${db}`,
+        `--archive=${name}`,
+        '--gzip',
+    ]);
+
+    backupProcess.on('exit', (code, signal) => {
+        if (code) {
+            console.log(`backup process exited with code ${code}`);
+            return;
+        }
+        if (signal) {
+            console.error(`backup process was killed with signal ${signal}`);
+            return;
+        }
+        console.log(`Successfully backup the database`);
     });
-};
+}
+
+const restoreData = (db, name) => {
+    const restoreProcess = spawn('mongorestore', [
+        `--db=${db}`,
+        `--archive=${name}`,
+        '--gzip',
+        '--drop'
+    ]);
+
+    restoreProcess.on('exit', (code, signal) => {
+        if (code) {
+            console.log(`restore process exited with code ${code}`);
+            return;
+        }
+        if (signal) {
+            console.error(`restore process was killed with signal ${signal}`);
+            return;
+        }
+        console.log(`Successfully restore the database`);
+        return;
+    });
+}
+
 
 app.get('/backup-now', async (req, res) => {
-    const data = await backupRestore(
-        'backup',
-        'gaming_market',
-    );
-    return res.json(data);
-});
-app.get('/restore-now', async (req, res) => {
-    const data = await backupRestore(
-        'restore',
-        'gaming_market',
-        './dump/Thu Dec 01 2022 07/44/57 GMT+0700 (Indochina Time)'
-        '--gzip'
-    );
-    return res.json(data);
+    const db = env.DB_NAME;
+    // const currentDay= new Date().toISOString().slice(0, 10);
+    const currentDay = 'test';
+    const archive = `./dump/${currentDay}.gz`;
+    dumpData(db, archive);
 });
 
-const autoBackup = cron.schedule('10 46 * * * *', async () => {
-    await backupRestore(
-        'backup',
-        'gaming_market',
-    );
+app.get('/restore-now', async (req, res) => {
+    const db = env.DB_NAME;
+    // const currentDay= new Date().toISOString().slice(0, 10);
+    const archive = `./dump/test.gz`;
+    restoreData(db, archive);
+    
+});
+
+const autoBackup = cron.schedule('* * * 10 * *', async () => {
+    const db = env.DB_NAME;
+    const currentDay= new Date().toISOString().slice(0, 10);
+    const archive = `./dump/auto/${currentDay}.gz`;
+    dumpData(db, archive);
 });
 autoBackup.start();
 
